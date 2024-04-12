@@ -6,6 +6,8 @@
 #+date: \today
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 
+# https://orgmode.org/worg/exporters/beamer/tutorial.html
+
 * Introduction
 ** Problem Description
 ** Mixed Integer Linear Programming
