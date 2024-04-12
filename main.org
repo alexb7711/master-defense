@@ -11,6 +11,21 @@
 * Introduction
 ** Problem Description
 ** Mixed Integer Linear Programming
+
+\begin{subequations}
+\label{eq:milp-structure}
+\begin{align}
+&\text{max}        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               &\label{eq:fuzzy-milp-objective}\\
+&\text{subject to} &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)& \label{eq:fuzzy-milp-constraint}\\
+&                  &x_j \ge 0&                              &(j = 1,2,...,n)& \label{eq:fuzzy-milp-continuous}\\
+&                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)& \label{eq:fuzzy-milp-integer}\\
+&\end{align}
+\end{subequations}
+
+- $J$: Objective function
+- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
+- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
+
 ** The Berth Allocation Problem
 ** The Position Allocation Problem
 * The Position Allocation Problem Approach With Linear Battery Dynamics

@@ -1,7 +1,7 @@
-% Created 2024-04-12 Fri 13:09
+% Created 2024-04-12 Fri 14:19
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -32,55 +32,70 @@
 
 
 \section{Introduction}
-\label{sec:orgc729397}
-\begin{frame}[label={sec:org22f76e8}]{Problem Description}
+\label{sec:org1b24747}
+\begin{frame}[label={sec:org1d252b8}]{Problem Description}
 \end{frame}
-\begin{frame}[label={sec:org4930233}]{Mixed Integer Linear Programming}
+\begin{frame}[label={sec:orgd781c09}]{Mixed Integer Linear Programming}
+\begin{itemize}
+\item \(J\): Objective function
+\item \(x_j \in \mathbb{R}\) and \(y_k \in \mathbb{Z}^+\): Decision Variables
+\item \(c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}\): Parameters
+\end{itemize}
+
+\begin{subequations}
+\label{eq:milp-structure}
+\begin{align}
+&\text{max}        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               &\label{eq:fuzzy-milp-objective}\\
+&\text{subject to} &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)& \label{eq:fuzzy-milp-constraint}\\
+&                  &x_j \ge 0&                              &(j = 1,2,...,n)& \label{eq:fuzzy-milp-continuous}\\
+&                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)& \label{eq:fuzzy-milp-integer}\\
+&\end{align}
+\end{subequations}
 \end{frame}
-\begin{frame}[label={sec:org4418fd2}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:org8c75753}]{The Berth Allocation Problem}
 \end{frame}
-\begin{frame}[label={sec:org2272474}]{The Position Allocation Problem}
+\begin{frame}[label={sec:org088f08b}]{The Position Allocation Problem}
 \end{frame}
 \section{The Position Allocation Problem Approach With Linear Battery Dynamics}
-\label{sec:orgaedbfc8}
-\begin{frame}[label={sec:org2ad8a7a}]{Introduction}
+\label{sec:org21e723b}
+\begin{frame}[label={sec:org7c57304}]{Introduction}
 \end{frame}
-\begin{frame}[label={sec:org9cdd227}]{Packing Constraints}
+\begin{frame}[label={sec:org18c1518}]{Packing Constraints}
 \end{frame}
-\begin{frame}[label={sec:orga9d0b90}]{Linear Battery Dynamic Constraints}
+\begin{frame}[label={sec:org7e672a1}]{Linear Battery Dynamic Constraints}
 \end{frame}
-\begin{frame}[label={sec:org5d9ca19}]{The BEB Charging Problem}
+\begin{frame}[label={sec:orge549c74}]{The BEB Charging Problem}
 \end{frame}
-\begin{frame}[label={sec:org82fbdab}]{Results}
+\begin{frame}[label={sec:orgc86aa21}]{Results}
 \end{frame}
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:orgea2ee48}
-\begin{frame}[label={sec:orgd0dfe8f}]{Introduction}
+\label{sec:org2b4e136}
+\begin{frame}[label={sec:org7cd79e2}]{Introduction}
 \end{frame}
-\begin{frame}[label={sec:orgab42f36}]{Simulated Annealing}
+\begin{frame}[label={sec:org6f8391b}]{Simulated Annealing}
 \end{frame}
-\begin{frame}[label={sec:orge854b6f}]{Optimization Problem}
+\begin{frame}[label={sec:orge2b13c2}]{Optimization Problem}
 \end{frame}
-\begin{frame}[label={sec:orgbd6d356}]{Algorithm}
+\begin{frame}[label={sec:org8a6db78}]{Algorithm}
 \end{frame}
-\begin{frame}[label={sec:org3408069}]{Results - What Is In The Thesis}
+\begin{frame}[label={sec:org2a0786a}]{Results - What Is In The Thesis}
 \end{frame}
-\begin{frame}[label={sec:org0270a51}]{What Happened?}
+\begin{frame}[label={sec:org2002e98}]{What Happened?}
 \begin{itemize}
 \item Score Divergence
 \item Difficult Schedules are\ldots{} difficult\ldots{}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org17ac5a2}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org5841e7a}]{How To Resolve This Problem?}
 \end{frame}
-\begin{frame}[label={sec:org206ad5c}]{Results - What Is Not In The Thesis}
+\begin{frame}[label={sec:orgfd80d86}]{Results - What Is Not In The Thesis}
 \end{frame}
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org6e039b3}
-\begin{frame}[label={sec:org4397e0b}]{Introduction}
+\label{sec:org4fec74f}
+\begin{frame}[label={sec:org43194e5}]{Introduction}
 \end{frame}
-\begin{frame}[label={sec:org6f71426}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:orgb8380b3}]{Non-Linear Battery Dynamics Model}
 \end{frame}
-\begin{frame}[label={sec:org1586dd2}]{Results}
+\begin{frame}[label={sec:orgebf0dc6}]{Results}
 \end{frame}
 \end{document}
