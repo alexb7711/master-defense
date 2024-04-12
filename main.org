@@ -1,0 +1,34 @@
+#+TITLE:A SIMULATED ANNEALING APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+OPTIONS: H:2
+#+date: \today
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+* Introduction
+** Problem Description
+** Mixed Integer Linear Programming
+** The Berth Allocation Problem
+** The Position Allocation Problem
+* The Position Allocation Problem Approach With Linear Battery Dynamics
+** Introduction
+** Packing Constraints
+** Linear Battery Dynamic Constraints
+** The BEB Charging Problem
+** Results
+* The Simulated Annealing Approach With Linear Battery Dynamics
+** Introduction
+** Simulated Annealing
+** Optimization Problem
+** Algorithm
+** Results - What Is In The Thesis
+** What Happened?
+- Score Divergence
+- Difficult Schedules are... difficult...
+** How To Resolve This Problem?
+** Results - What Is Not In The Thesis
+* The Simulated Annealing Approach With Non-Linear Battery Dynamics
+** Introduction
+** Non-Linear Battery Dynamics Model
+** Results
