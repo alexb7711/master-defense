@@ -10,6 +10,23 @@
 
 * Introduction
 ** Problem Description
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- total of $n_A$ buses in the fleet
+- $n_V$ visits[fn:1] to the station divided between the $n_A$ buses
+- Each bus in initialized with a charge of $\alpha_b \kappa_i$
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- After each visit the bus goes on its route and discharges by $\Delta_i$
+- The charge is not allowed to go below $\nu_b \kappa_i$ during operational hours
+- Each bus is required to finish the day with a minimum charge of $\beta_b \kappa_i$[fn:2]
+
 ** Mixed Integer Linear Programming
 
 \begin{subequations}
@@ -26,26 +43,113 @@
 - $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
 - $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
 
+** The Berth Allocation Problem[fn:3]
+The BAP solves the problem of optimally assigning incoming vessels to berth positions to be serviced
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
+\end{figure}
+
 ** The Berth Allocation Problem
+The BAP is a variant of the rectangle packing problem
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.5\textwidth]{img/spatiotemporal-packing}
+\end{figure}
+
+** The Berth Allocation Problem
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- Vessels move down toward the quay
+- Recieve service
+- Exit to the right
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics{img/bap}
+    \label{subfig:bapexample}
+\end{figure}
+
+
 ** The Position Allocation Problem
-* The Position Allocation Problem Approach With Linear Battery Dynamics
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics{img/pap}
+    \label{subfig:papexample}
+\end{figure}
+- High level explanation
+- PAP assumptions
+* The Position Allocation Problem Approach With Linear Battery Dynamic
 ** Introduction
+- What needs to change from the PAP
+- Contributions
+  - Charger minimization
+  - Minimize consumption cost
+  - BEB charge tracking
+** Objective Function
+- High level explanation
 ** Packing Constraints
+- High level explanation of how the constraints work
 ** Linear Battery Dynamic Constraints
-** The BEB Charging Problem
+- High level explanation of how the constraints work
 ** Results
+- How long it ran for
+- Plots!
 * The Simulated Annealing Approach With Linear Battery Dynamics
 ** Introduction
+- High level explanation
+  - Set of vessels
+  - Schedule to place in berths to be serviced: image of berthing ships
+  - Is essentially a rectangle packing problem: Example schedule plot
 ** Simulated Annealing
+- Basic introduction to what it is
 ** Optimization Problem
+- Simplifications made
+- List constraints
 ** Algorithm
+- Outline components of the SA algorithm
 ** Results - What Is In The Thesis
+- How long it ran for
+- It's sort of working, but not really
 ** What Happened?
 - Score Divergence
 - Difficult Schedules are... difficult...
 ** How To Resolve This Problem?
+- Reverse search and weight the visit indices
 ** Results - What Is Not In The Thesis
+- How long it ra for
+- Plots! WOW!
 * The Simulated Annealing Approach With Non-Linear Battery Dynamics
 ** Introduction
+- Why even consider this?
+- Why use SA
 ** Non-Linear Battery Dynamics Model
+- Show function
+- Show plots
 ** Results
+- Figures!
+
+* Footnotes
+
+[fn:3] https://www.mdpi.com/2077-1312/11/7/1280
+[fn:2] PAP application only
+
+[fn:1]  A visit is when a bus arrives, receives a charge, and then departs
