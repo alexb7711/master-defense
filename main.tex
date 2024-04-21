@@ -1,4 +1,4 @@
-% Created 2024-04-20 Sat 11:07
+% Created 2024-04-21 Sun 17:28
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -16,6 +16,7 @@
 \author{Alexander Brown}
 \date{\today}
 \title{A SIMULATED ANNEALING APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM}
+\AtBeginSection{\frame{\sectionpage}}
 \hypersetup{
  pdfauthor={Alexander Brown},
  pdftitle={A SIMULATED ANNEALING APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM},
@@ -32,13 +33,13 @@
 
 
 \section{Introduction}
-\label{sec:orgb8562d0}
-\begin{frame}[label={sec:orgca43c22}]{Problem Description}
+\label{sec:org1502e2d}
+\begin{frame}[label={sec:org74eedf6}]{Problem Description}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
 \item total of \(n_A\) buses in the fleet
-\item \(n_V\) visits\footnote{A visit is when a bus arrives, receives a charge, and then departs} to the station divided between the \(n_A\) buses
+\item \(n_V\) visits\footnote{A visit describes when a bus arrives, assigned a charge queue, and then departs} to the station divided between the \(n_A\) buses
 \item Each bus in initialized with a charge of \(\alpha_b \kappa_i\)
 \end{itemize}
 \end{column}
@@ -53,16 +54,13 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgf4f2cec}]{Mixed Integer Linear Programming}
-\begin{subequations}
-\label{eq:milp-structure}
-\begin{align}
-&\text{max}        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               &\label{eq:fuzzy-milp-objective}\\
-&\text{subject to} &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)& \label{eq:fuzzy-milp-constraint}\\
-&                  &x_j \ge 0&                              &(j = 1,2,...,n)& \label{eq:fuzzy-milp-continuous}\\
-&                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)& \label{eq:fuzzy-milp-integer}\\
-&\end{align}
-\end{subequations}
+\begin{frame}[label={sec:org531f924}]{Mixed Integer Linear Programming}
+\begin{align*}
+\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
+\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
+                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
+                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
+\end{align*}
 
 \begin{itemize}
 \item \(J\): Objective function
@@ -71,25 +69,14 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org20f3c86}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
-The BAP solves the problem of optimally assigning incoming vessels to berth positions to be serviced
-
+\begin{frame}[label={sec:orgac9ba57}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgaee3668}]{The Berth Allocation Problem}
-The BAP is a variant of the rectangle packing problem
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.5\textwidth]{img/spatiotemporal-packing}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:orgb5f7cd6}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:orgd64a9b0}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -109,61 +96,256 @@ The BAP is a variant of the rectangle packing problem
 \end{columns}
 \end{frame}
 
+\begin{frame}[label={sec:org57b447f}]{The Berth Allocation Problem}
+\begin{itemize}
+\item A variant of the rectangle packing problem
+\item Solves the problem of optimally assigning incoming vessels to be serviced
+\begin{itemize}
+\item \(\mathbb{O}\): Spatiotemporal allocations for vessels
+\item \(O\): Time horizon and berthing space
+\end{itemize}
+\end{itemize}
 
-\begin{frame}[label={sec:org810cc46}]{The Position Allocation Problem}
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.5\textwidth]{img/spatiotemporal-packing}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org3450988}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Service flow is left to right
+\item Single charger type
+\item All arrivals are considered unique
+\item Service times are assumed to be known
+\end{itemize}
 \end{column}
+
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
     \includegraphics{img/pap}
     \label{subfig:papexample}
 \end{figure}
-\begin{itemize}
-\item High level explanation
-\item PAP assumptions
-\end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
+
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:orgd798e25}
-\begin{frame}[label={sec:org956b6d6}]{Introduction}
+\label{sec:orgccfa8fe}
+\begin{frame}[label={sec:orga8a9c62}]{Requirements for BEB implementation}
 \begin{itemize}
-\item What needs to change from the PAP
-\item Contributions
-\begin{itemize}
-\item Charger minimization
+\item Charges must be able to be tracked
+\item Service time is unknown
+\item Accommodate chargers of different speeds
+\item Minimize charger count
 \item Minimize consumption cost
-\item BEB charge tracking
-\end{itemize}
+\item Encourage slow charger use for battery health
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga9e83bb}]{Objective Function}
+
+\begin{frame}[label={sec:orgeed0860}]{Objective Function}
+\begin{equation*}
+\label{eq:objective}
+	\min \sum_{i=1}^N \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
+\end{equation*}
+
 \begin{itemize}
-\item High level explanation
-\end{itemize}
-\end{frame}
-\begin{frame}[label={sec:org389ed8e}]{Packing Constraints}
+\item Sum over each visit and each charge queue
+\item Cost of assignment is based on the selected queue
 \begin{itemize}
-\item High level explanation of how the constraints work
+\item Order chargers from slow to fast
+\item Increase cost of assignment as queue index increases
+\end{itemize}
+\item Consumption cost
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga10b90b}]{Linear Battery Dynamic Constraints}
+
+\begin{frame}[label={sec:orgd93039e}]{Packing Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item High level explanation of how the constraints work
+\item Used to ensure that individual rectangles do not overlap
+\item \(\sigma_{ij}\) establishes temporal ordering when active
+\item \(\psi_{ij}\) establishes spacial ordering when active
 \end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0
+\end{equation*}
+\begin{equation*}
+    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1
+\end{equation*}
+\begin{equation*}
+    \sigma_{ij} + \sigma_{ji} \leq 1
+\end{equation*}
+\begin{equation*}
+    \psi_{ij} + \psi_{ji} \leq 1
+\end{equation*}
+\begin{equation*}
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
+\end{equation*}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:org1e8eeff}]{Results}
+
+\begin{frame}[label={sec:orga4e4df7}]{Packing Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item How long it ran for
-\item Plots!
+\item Calculates the charge duration
+\item Ensures the arrival time is before the initial charge time
+\item The initial charge time must be early enough as to not go over the time horizon
+\item The detach time must be before the departure time
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    s_i + u_i = d_i
+\end{equation*}
+\begin{equation*}
+    a_i \leq u_i \leq (T - s_i)
+\end{equation*}
+\begin{equation*}
+    d_i \leq \tau_i
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orgc18292e}]{Linear Battery Dynamic Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Calculates the charge for the next visit
+\item Ensures the current charge is above the minimum charge threshold
+\item Ensures the current charge is below the battery capacity
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i}
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i}
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orgbf6f1fd}]{Bilinear Linearization Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Linearization of bilinear terms
+\end{itemize}
+
+\begin{equation*}
+    \label{eq:giq_cases}
+    g_{iq} =
+    \begin{cases}
+        s_i & w_{iq} = 1 \\
+        0 & w_{iq} = 0
+    \end{cases}.
+\end{equation*}
+\end{column}
+
+
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    s_i - (1 - w_{iq})M \leq g_{iq}
+\end{equation*}
+\begin{equation*}
+    s_i \geq g_{iq}
+\end{equation*}
+\begin{equation*}
+    Mw_{iq} \geq g_{iq}
+\end{equation*}
+\begin{equation*}
+    0 \leq g_{iq}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orgb72498c}]{Charging Queue Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Ensure only one queue is selected per visit
+\item Convert vector representation of queue selection to an integer
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    \sum_{q=1}^{n_Q} w_{iq} = 1
+\end{equation*}
+\begin{equation*}
+    v_i = \sum_{q=1}^{n_Q} qw_{iq}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}[label={sec:org682ecc3}]{Results}
+\begin{itemize}
+\item Executed for 7200 seconds (2 hours)
+\item \(T = 24\)
+\item \(n_V = 338\)
+\item \(n_A = 35\)
+\item \(\alpha_i = 90\%\);  \(\nu_i = 20\%\);  \(\beta_i = 70\%\)
+\item \(\forall q \in \{n_B + 1, n_B + 2,..., n_B + n_C \}; m_q = 1000q\)
 \end{itemize}
 \end{frame}
+
+\begin{frame}[label={sec:org0c0a129}]{Results}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/schedule-qin}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org33e8cab}]{Results}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap.pdf}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/charger-count-slow-milp-pap.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orgdbaa326}]{Results}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/power-milp-pap}
+\end{figure}
+\end{frame}
+
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:org8bb97b5}
-\begin{frame}[label={sec:org0d58bb9}]{Introduction}
+\label{sec:orgd0a0107}
+\begin{frame}[label={sec:orgdbf2fc6}]{Introduction}
 \begin{itemize}
 \item High level explanation
 \begin{itemize}
@@ -173,60 +355,60 @@ The BAP is a variant of the rectangle packing problem
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgdab8638}]{Simulated Annealing}
+\begin{frame}[label={sec:org103c036}]{Simulated Annealing}
 \begin{itemize}
 \item Basic introduction to what it is
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgd9a0677}]{Optimization Problem}
+\begin{frame}[label={sec:orgdba6a68}]{Optimization Problem}
 \begin{itemize}
 \item Simplifications made
 \item List constraints
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2f2c4e7}]{Algorithm}
+\begin{frame}[label={sec:org2f30f7a}]{Algorithm}
 \begin{itemize}
 \item Outline components of the SA algorithm
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2ea4f73}]{Results - What Is In The Thesis}
+\begin{frame}[label={sec:org4d68c59}]{Results - What Is In The Thesis}
 \begin{itemize}
 \item How long it ran for
 \item It's sort of working, but not really
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6dd5a9c}]{What Happened?}
+\begin{frame}[label={sec:orgd23a45a}]{What Happened?}
 \begin{itemize}
 \item Score Divergence
 \item Difficult Schedules are\ldots{} difficult\ldots{}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org8518f48}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org9f4a0a2}]{How To Resolve This Problem?}
 \begin{itemize}
 \item Reverse search and weight the visit indices
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org52c3f8c}]{Results - What Is Not In The Thesis}
+\begin{frame}[label={sec:org57c2e71}]{Results - What Is Not In The Thesis}
 \begin{itemize}
 \item How long it ra for
 \item Plots! WOW!
 \end{itemize}
 \end{frame}
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org54657f3}
-\begin{frame}[label={sec:org214a814}]{Introduction}
+\label{sec:org2d768b3}
+\begin{frame}[label={sec:orgb1aa547}]{Introduction}
 \begin{itemize}
 \item Why even consider this?
 \item Why use SA
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org8b13bc8}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:orga09244c}]{Non-Linear Battery Dynamics Model}
 \begin{itemize}
 \item Show function
 \item Show plots
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgf9b0797}]{Results}
+\begin{frame}[label={sec:org6e53342}]{Results}
 \begin{itemize}
 \item Figures!
 \end{itemize}

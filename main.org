@@ -5,6 +5,7 @@
 #+OPTIONS: H:2
 #+date: \today
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
 
 # https://orgmode.org/worg/exporters/beamer/tutorial.html
 
@@ -29,34 +30,21 @@
 
 ** Mixed Integer Linear Programming
 
-\begin{subequations}
-\label{eq:milp-structure}
-\begin{align}
-&\text{max}        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               &\label{eq:fuzzy-milp-objective}\\
-&\text{subject to} &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)& \label{eq:fuzzy-milp-constraint}\\
-&                  &x_j \ge 0&                              &(j = 1,2,...,n)& \label{eq:fuzzy-milp-continuous}\\
-&                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)& \label{eq:fuzzy-milp-integer}\\
-&\end{align}
-\end{subequations}
+\begin{align*}
+\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
+\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
+                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
+                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
+\end{align*}
 
 - $J$: Objective function
 - $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
 - $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
 
 ** The Berth Allocation Problem[fn:3]
-The BAP solves the problem of optimally assigning incoming vessels to berth positions to be serviced
-
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
-\end{figure}
-
-** The Berth Allocation Problem
-The BAP is a variant of the rectangle packing problem
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.5\textwidth]{img/spatiotemporal-packing}
 \end{figure}
 
 ** The Berth Allocation Problem
@@ -79,12 +67,28 @@ The BAP is a variant of the rectangle packing problem
     \label{subfig:bapexample}
 \end{figure}
 
+** The Berth Allocation Problem
+- A variant of the rectangle packing problem
+- Solves the problem of optimally assigning incoming vessels to be serviced
+  - $\mathbb{O}$: Spatiotemporal allocations for vessels
+  - $O$: Time horizon and berthing space
+
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.5\textwidth]{img/spatiotemporal-packing}
+\end{figure}
 
 ** The Position Allocation Problem
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
+- Service flow is left to right
+- Single charger type
+- All arrivals are considered unique
+- Service times are assumed to be known
+
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -95,24 +99,203 @@ The BAP is a variant of the rectangle packing problem
     \includegraphics{img/pap}
     \label{subfig:papexample}
 \end{figure}
-- High level explanation
-- PAP assumptions
+
 * The Position Allocation Problem Approach With Linear Battery Dynamic
-** Introduction
-- What needs to change from the PAP
-- Contributions
-  - Charger minimization
-  - Minimize consumption cost
-  - BEB charge tracking
+** Requirements for BEB implementation
+- Charges must be able to be tracked
+- Service time is unknown
+- Accommodate chargers of different speeds
+- Minimize charger count
+- Minimize consumption cost
+- Encourage slow charger use for battery health
+
 ** Objective Function
-- High level explanation
+\begin{equation*}
+\label{eq:objective}
+	\min \sum_{i=1}^N \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
+\end{equation*}
+
+- Sum over each visit and each charge queue
+- Cost of assignment is based on the selected queue
+  - Order chargers from slow to fast
+  - Increase cost of assignment as queue index increases
+- Consumption cost
+
 ** Packing Constraints
-- High level explanation of how the constraints work
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Used to ensure that individual rectangles do not overlap
+- $\sigma_{ij}$ establishes temporal ordering when active
+- $\psi_{ij}$ establishes spacial ordering when active
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{equation*}
+    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0
+\end{equation*}
+\begin{equation*}
+    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1
+\end{equation*}
+\begin{equation*}
+    \sigma_{ij} + \sigma_{ji} \leq 1
+\end{equation*}
+\begin{equation*}
+    \psi_{ij} + \psi_{ji} \leq 1
+\end{equation*}
+\begin{equation*}
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
+\end{equation*}
+
+** Packing Constraints
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Calculates the charge duration
+- Ensures the arrival time is before the initial charge time
+- The initial charge time must be early enough as to not go over the time horizon
+- The detach time must be before the departure time
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{equation*}
+    s_i + u_i = d_i
+\end{equation*}
+\begin{equation*}
+    a_i \leq u_i \leq (T - s_i)
+\end{equation*}
+\begin{equation*}
+    d_i \leq \tau_i
+\end{equation*}
+
 ** Linear Battery Dynamic Constraints
-- High level explanation of how the constraints work
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+ - Calculates the charge for the next visit
+ - Ensures the current charge is above the minimum charge threshold
+ - Ensures the current charge is below the battery capacity
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i}
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i}
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i}
+\end{equation*}
+
+** Bilinear Linearization Constraints
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Linearization of bilinear terms
+
+#+begin_src latex
+\begin{equation*}
+    \label{eq:giq_cases}
+    g_{iq} =
+    \begin{cases}
+        s_i & w_{iq} = 1 \\
+        0 & w_{iq} = 0
+    \end{cases}.
+\end{equation*}
+#+end_src
+
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{equation*}
+    s_i - (1 - w_{iq})M \leq g_{iq}
+\end{equation*}
+\begin{equation*}
+    s_i \geq g_{iq}
+\end{equation*}
+\begin{equation*}
+    Mw_{iq} \geq g_{iq}
+\end{equation*}
+\begin{equation*}
+    0 \leq g_{iq}
+\end{equation*}
+
+** Charging Queue Constraints
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Ensure only one queue is selected per visit
+- Convert vector representation of queue selection to an integer
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{equation*}
+    \sum_{q=1}^{n_Q} w_{iq} = 1
+\end{equation*}
+\begin{equation*}
+    v_i = \sum_{q=1}^{n_Q} qw_{iq}
+\end{equation*}
+
+
 ** Results
-- How long it ran for
-- Plots!
+- Executed for 7200 seconds (2 hours)
+- $T = 24$
+- $n_V = 338$
+- $n_A = 35$
+-  $\alpha_i = 90\%$;  $\nu_i = 20\%$;  $\beta_i = 70\%$
+- $\forall q \in \{n_B + 1, n_B + 2,..., n_B + n_C \}; m_q = 1000q$
+
+** Results
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/schedule-qin}
+\end{figure}
+
+** Results
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/charger-count-slow-milp-pap}
+\end{figure}
+
+** Results
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/power-milp-pap}
+\end{figure}
+
 * The Simulated Annealing Approach With Linear Battery Dynamics
 ** Introduction
 - High level explanation
@@ -151,5 +334,4 @@ The BAP is a variant of the rectangle packing problem
 
 [fn:3] https://www.mdpi.com/2077-1312/11/7/1280
 [fn:2] PAP application only
-
-[fn:1]  A visit is when a bus arrives, receives a charge, and then departs
+[fn:1]  A visit describes when a bus arrives, assigned a charge queue, and then departs
