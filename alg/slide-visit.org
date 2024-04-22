@@ -1,0 +1,26 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+    \scriptsize
+    \caption{Slide Visit Algorithm} \label{alg:slide-visit}
+    \LinesNumbered
+    \TitleOfAlgo{Slide Visit}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+      \SetKwFunction{Purge}{Purge}
+
+      \Begin
+      {
+        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+        $C \leftarrow \bar{C}_{i.q_i}$\tcc*{Get the time availability of the purged visit}
+
+        \tcc{If there is time available in $C$}
+        \If{($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+        {
+          \Return{($i, \I, (\I_{i.q_i},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return updated visit}
+        }
+
+          \Return{($\varnothing$)}\tcc*{Return nothing}
+      }
+    \end{algorithm}
+#+end_src

@@ -1,0 +1,23 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+    \scriptsize
+    \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+      \SetKwFunction{Purge}{Purge}
+
+      \Begin
+      {
+        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+        $q \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+
+        \If(\tcc*[f]{If there is time available in $C_{q}$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$\bar{\C}_{i.q}$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+        {
+          \tcc{Return visit, note $u$ and $d$ are the original inital/final charge times.}
+          \Return{($i, \I, (q,\I_{i.u}, \I_{i.d}),\bar{\C}$)}
+        }
+
+        \Return{($\varnothing$)}\tcc*{Return nothing}
+      }
+    \end{algorithm}
+#+end_src

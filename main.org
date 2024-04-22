@@ -115,11 +115,8 @@
 	\min \sum_{i=1}^N \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
 \end{equation*}
 
-- Sum over each visit and each charge queue
-- Cost of assignment is based on the selected queue
-  - Order chargers from slow to fast
-  - Increase cost of assignment as queue index increases
-- Consumption cost
+- $w_{iq} m_q$: Assignment cost
+- $g_{iq} \epsilon_q$: Consumption cost
 
 ** Packing Constraints
 *** Left
@@ -297,18 +294,127 @@
 \end{figure}
 
 * The Simulated Annealing Approach With Linear Battery Dynamics
-** Introduction
-- High level explanation
-  - Set of vessels
-  - Schedule to place in berths to be serviced: image of berthing ships
-  - Is essentially a rectangle packing problem: Example schedule plot
 ** Simulated Annealing
-- Basic introduction to what it is
-** Optimization Problem
-- Simplifications made
-- List constraints
-** Algorithm
-- Outline components of the SA algorithm
+- Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
+- The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
+- Within the SA process there are three key components
+  - Cooling Schedule
+  - Acceptance Criteria
+  - Generation Mechanisms
+** Cooling Schedule
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- The cooling equation models the rate at which the temperature decreases over time in the SA process.
+- The temperature is high, SA encourages exploration. As the temperature decreases, exploitation is encouraged.
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_src latex
+  \begin{figure}[t!]
+    \centering \includegraphics[width=0.9\textwidth]{img/geometric.png}
+    \label{fig:geometric}
+  \end{figure}
+
+  \begin{equation*}
+  t_m = \beta t_{m-1}
+  \end{equation*}
+#+end_src
+
+** Acceptance Criteria
+#+name: eq:candaccept
+\begin{equation}
+f(\mathbb{I},\bar{\mathbb{I}},t_m) =
+\begin{cases}
+  1                   & \Delta E > 0 \\
+  e^{- \frac{\Delta E}{t_m}} & \text{otherwise}
+\end{cases}
+\end{equation}
+
+** Generation Mechanisms - Primitive Functions
+- New Visit: Move a bus from a wait queue to charge queue
+- Slide Visit: Change the charge duration of a visit
+- New Charger: Move a visit to a new charger
+- Wait: Move a visit to its idle queue
+- New Window: Execute Wait then New Visit primitives
+
+** Generation Mechanisms - Wrapper Functions
+- Charge Schedule Generation: Iterate through each visit and execute New Visit
+- Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
+
+** Objective Function
+\begin{equation*}
+  J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
+\end{equation*}
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- Demand cost
+  - $p_{T_p}[h] = \frac{1}{T_p} \sum_{h-\frac{T_p}{dt}+1}^h p_h$
+  - $p_d = \max(p_{fix}, p_{max})$
+  - $p_{max} = \max\limits_{h \in H}p_{T_p}[h]$
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $\epsilon_{q_i}r_{q_i}$: Assignment Cost
+- $z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i})$: Penalty Function
+- $z_c r_{q_i} s_i$: Consumption Cost
+
+** Constraints
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+  \begin{equation*}
+      \label{seq:c0}
+      u_j - d_i - (\sigma_{ij} - 1)T \ge 0
+  \end{equation*}
+  \begin{equation*}
+      \label{seq:c1}
+      q_j - q_i - 1 - (\psi_{ij} - 1)Q \ge 0
+  \end{equation*}
+  \begin{equation*}
+      \label{seq:c2}
+      \sigma_{ij} + \sigma_{ji} \le 1
+  \end{equation*}
+  \begin{equation*}
+     \label{seq:c3}
+      \psi_{ij} + \psi_{ji} \le 1
+  \end{equation*}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+  \begin{equation*}
+      \label{seq:c4}
+      \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \ge 1
+  \end{equation*}
+  \begin{equation*}
+      \label{seq:c5}
+      s_i = d_i - u_i
+  \end{equation*}
+  \begin{equation*}
+      \label{seq:c6}
+       \eta_{\xi_i} = \eta_{i} + r_{q_i}s_i - \Delta_i
+  \end{equation*}
+  \begin{equation*}
+      \label{seq:c7}
+      \kappa_{\Xi_i} \geq \eta_{i} + r_{q_i}s_i
+  \end{equation*}
+  \begin{equation*}
+      \label{seq:c8}
+      a_i \leq u_i \leq d_i \le e_i \le \mathcal{T}
+  \end{equation*}
+
 ** Results - What Is In The Thesis
 - How long it ran for
 - It's sort of working, but not really

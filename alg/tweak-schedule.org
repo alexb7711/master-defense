@@ -1,0 +1,23 @@
+#+begin_export latex
+\begin{algorithm}[H]
+\scriptsize
+\caption{Perturb schedule algorithm} \label{alg:perturb-schedule}
+
+    \LinesNumbered
+    \TitleOfAlgo{Perturb Schedule}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{PGF}{PGF}
+
+    \Begin
+    {
+        $\I_i\leftarrow\; \U_{\I}$\tcc*{Randomly select a visit}
+        $i \leftarrow\; \I_i$\tcc*{Extract visit index}
+        $y \leftarrow [y_1, y_2, ...]$\tcc*{Define the weight of each primitive generator}
+        $PGF \leftarrow\; \W^y_{[1,n_G]}$\tcc*{Select one of the generator functions}
+        $\bar{\Sol} \leftarrow$ \PGF{($i$, $\I$, $\C$)}\tcc*{Excecute the generator function}
+        \Return{($0, \bar{\I}$, $\bar{\C}$)}
+    }
+\end{algorithm}
+#+end_export

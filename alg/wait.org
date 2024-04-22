@@ -1,0 +1,19 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+  \scriptsize
+  \caption{Wait algorithm} \label{alg:wait}
+      \LinesNumbered
+      \TitleOfAlgo{Wait}
+      \KwIn{$\Sol$}
+      \KwOut{$\bar{\Sol}$}
+
+      \SetKwFunction{Purge}{Purge}
+
+      \Begin
+      {
+        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+        $\bar{\C}'_{\I_{i.\Gamma_i}} \leftarrow \C' \cup \{[\I_{i.a}, \I_{i.e}]\}$\tcc*{Update the charger availability matrix for wait queue $\bar{\C}_{i.q_i}$}
+        \Return{$(i, \I, (\I_{i.b}, \I_{i.a}, \I_{i.e}), \bar{\C})$}\tcc*[f]{Return visit}
+      }
+    \end{algorithm}
+#+end_src

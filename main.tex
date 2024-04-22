@@ -1,4 +1,4 @@
-% Created 2024-04-21 Sun 17:28
+% Created 2024-04-21 Sun 21:36
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -33,8 +33,8 @@
 
 
 \section{Introduction}
-\label{sec:org1502e2d}
-\begin{frame}[label={sec:org74eedf6}]{Problem Description}
+\label{sec:org312b084}
+\begin{frame}[label={sec:orgf160924}]{Problem Description}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -54,7 +54,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org531f924}]{Mixed Integer Linear Programming}
+\begin{frame}[label={sec:orgfd5618f}]{Mixed Integer Linear Programming}
 \begin{align*}
 \text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
 \text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
@@ -69,14 +69,14 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgac9ba57}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
+\begin{frame}[label={sec:org61ecc3f}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgd64a9b0}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:org98dcbdc}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -96,7 +96,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org57b447f}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:org149e1b1}]{The Berth Allocation Problem}
 \begin{itemize}
 \item A variant of the rectangle packing problem
 \item Solves the problem of optimally assigning incoming vessels to be serviced
@@ -113,7 +113,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org3450988}]{The Position Allocation Problem}
+\begin{frame}[label={sec:orgfb7912f}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -135,8 +135,8 @@
 \end{frame}
 
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:orgccfa8fe}
-\begin{frame}[label={sec:orga8a9c62}]{Requirements for BEB implementation}
+\label{sec:orge593a11}
+\begin{frame}[label={sec:orgac98189}]{Requirements for BEB implementation}
 \begin{itemize}
 \item Charges must be able to be tracked
 \item Service time is unknown
@@ -147,24 +147,19 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgeed0860}]{Objective Function}
+\begin{frame}[label={sec:orga0619d4}]{Objective Function}
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^N \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
 \end{equation*}
 
 \begin{itemize}
-\item Sum over each visit and each charge queue
-\item Cost of assignment is based on the selected queue
-\begin{itemize}
-\item Order chargers from slow to fast
-\item Increase cost of assignment as queue index increases
-\end{itemize}
-\item Consumption cost
+\item \(w_{iq} m_q\): Assignment cost
+\item \(g_{iq} \epsilon_q\): Consumption cost
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgd93039e}]{Packing Constraints}
+\begin{frame}[label={sec:org953b413}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -194,7 +189,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orga4e4df7}]{Packing Constraints}
+\begin{frame}[label={sec:org52cf2b0}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -219,7 +214,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgc18292e}]{Linear Battery Dynamic Constraints}
+\begin{frame}[label={sec:orge7d6b60}]{Linear Battery Dynamic Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -243,7 +238,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgbf6f1fd}]{Bilinear Linearization Constraints}
+\begin{frame}[label={sec:org8f89b69}]{Bilinear Linearization Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -278,7 +273,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb72498c}]{Charging Queue Constraints}
+\begin{frame}[label={sec:orgc3af91c}]{Charging Queue Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -299,7 +294,7 @@
 \end{frame}
 
 
-\begin{frame}[label={sec:org682ecc3}]{Results}
+\begin{frame}[label={sec:org48074fa}]{Results}
 \begin{itemize}
 \item Executed for 7200 seconds (2 hours)
 \item \(T = 24\)
@@ -310,7 +305,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org0c0a129}]{Results}
+\begin{frame}[label={sec:orge28bda6}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
@@ -321,18 +316,18 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org33e8cab}]{Results}
+\begin{frame}[label={sec:org538fd7f}]{Results}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap.pdf}
+    \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/charger-count-slow-milp-pap.pdf}
+    \includegraphics[width=0.6\textwidth]{img/charger-count-slow-milp-pap}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgdbaa326}]{Results}
+\begin{frame}[label={sec:org997a1a5}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
@@ -344,71 +339,180 @@
 \end{frame}
 
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:orgd0a0107}
-\begin{frame}[label={sec:orgdbf2fc6}]{Introduction}
+\label{sec:orgfb47929}
+\begin{frame}[label={sec:org14409c9}]{Simulated Annealing}
 \begin{itemize}
-\item High level explanation
+\item Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
+\item The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
+\item Within the SA process there are three key components
 \begin{itemize}
-\item Set of vessels
-\item Schedule to place in berths to be serviced: image of berthing ships
-\item Is essentially a rectangle packing problem: Example schedule plot
+\item Cooling Schedule
+\item Acceptance Criteria
+\item Generation Mechanisms
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org103c036}]{Simulated Annealing}
+\begin{frame}[label={sec:org4acf4ab}]{Cooling Schedule}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item Basic introduction to what it is
+\item The cooling equation models the rate at which the temperature decreases over time in the SA process.
+\item The temperature is high, SA encourages exploration. As the temperature decreases, exploitation is encouraged.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{figure}[t!]
+  \centering \includegraphics[width=0.9\textwidth]{img/geometric.png}
+  \label{fig:geometric}
+\end{figure}
+
+\begin{equation*}
+t_m = \beta t_{m-1}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:org8b1b38a}]{Acceptance Criteria}
+\begin{equation}
+\label{eq:candaccept}
+f(\mathbb{I},\bar{\mathbb{I}},t_m) =
+\begin{cases}
+  1                   & \Delta E > 0 \\
+  e^{- \frac{\Delta E}{t_m}} & \text{otherwise}
+\end{cases}
+\end{equation}
+\end{frame}
+
+\begin{frame}[label={sec:org2f39dd3}]{Generation Mechanisms - Primitive Functions}
+\begin{itemize}
+\item New Visit: Move a bus from a wait queue to charge queue
+\item Slide Visit: Change the charge duration of a visit
+\item New Charger: Move a visit to a new charger
+\item Wait: Move a visit to its idle queue
+\item New Window: Execute Wait then New Visit primitives
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgdba6a68}]{Optimization Problem}
+
+\begin{frame}[label={sec:org8068f8b}]{Generation Mechanisms - Wrapper Functions}
 \begin{itemize}
-\item Simplifications made
-\item List constraints
+\item Charge Schedule Generation: Iterate through each visit and execute New Visit
+\item Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org2f30f7a}]{Algorithm}
+
+\begin{frame}[label={sec:org41f7a0c}]{Objective Function}
+\begin{equation*}
+  J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
+\end{equation*}
+
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item Outline components of the SA algorithm
+\item Demand cost
+\begin{itemize}
+\item \(p_{T_p}[h] = \frac{1}{T_p} \sum_{h-\frac{T_p}{dt}+1}^h p_h\)
+\item \(p_d = \max(p_{fix}, p_{max})\)
+\item \(p_{max} = \max\limits_{h \in H}p_{T_p}[h]\)
 \end{itemize}
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \(\epsilon_{q_i}r_{q_i}\): Assignment Cost
+\item \(z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i})\): Penalty Function
+\item \(z_c r_{q_i} s_i\): Consumption Cost
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:org4d68c59}]{Results - What Is In The Thesis}
+
+\begin{frame}[label={sec:org3112b8c}]{Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    \label{seq:c0}
+    u_j - d_i - (\sigma_{ij} - 1)T \ge 0
+\end{equation*}
+\begin{equation*}
+    \label{seq:c1}
+    q_j - q_i - 1 - (\psi_{ij} - 1)Q \ge 0
+\end{equation*}
+\begin{equation*}
+    \label{seq:c2}
+    \sigma_{ij} + \sigma_{ji} \le 1
+\end{equation*}
+\begin{equation*}
+   \label{seq:c3}
+    \psi_{ij} + \psi_{ji} \le 1
+\end{equation*}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{equation*}
+    \label{seq:c4}
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \ge 1
+\end{equation*}
+\begin{equation*}
+    \label{seq:c5}
+    s_i = d_i - u_i
+\end{equation*}
+\begin{equation*}
+    \label{seq:c6}
+     \eta_{\xi_i} = \eta_{i} + r_{q_i}s_i - \Delta_i
+\end{equation*}
+\begin{equation*}
+    \label{seq:c7}
+    \kappa_{\Xi_i} \geq \eta_{i} + r_{q_i}s_i
+\end{equation*}
+\begin{equation*}
+    \label{seq:c8}
+    a_i \leq u_i \leq d_i \le e_i \le \mathcal{T}
+\end{equation*}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orgabbde5b}]{Results - What Is In The Thesis}
 \begin{itemize}
 \item How long it ran for
 \item It's sort of working, but not really
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgd23a45a}]{What Happened?}
+\begin{frame}[label={sec:org5b1c91a}]{What Happened?}
 \begin{itemize}
 \item Score Divergence
 \item Difficult Schedules are\ldots{} difficult\ldots{}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org9f4a0a2}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org62c161c}]{How To Resolve This Problem?}
 \begin{itemize}
 \item Reverse search and weight the visit indices
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org57c2e71}]{Results - What Is Not In The Thesis}
+\begin{frame}[label={sec:org379f22f}]{Results - What Is Not In The Thesis}
 \begin{itemize}
 \item How long it ra for
 \item Plots! WOW!
 \end{itemize}
 \end{frame}
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org2d768b3}
-\begin{frame}[label={sec:orgb1aa547}]{Introduction}
+\label{sec:org858de26}
+\begin{frame}[label={sec:org0cfc2b0}]{Introduction}
 \begin{itemize}
 \item Why even consider this?
 \item Why use SA
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orga09244c}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:org1a2136a}]{Non-Linear Battery Dynamics Model}
 \begin{itemize}
 \item Show function
 \item Show plots
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6e53342}]{Results}
+\begin{frame}[label={sec:orgc018cc6}]{Results}
 \begin{itemize}
 \item Figures!
 \end{itemize}
