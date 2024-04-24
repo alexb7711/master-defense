@@ -1,4 +1,4 @@
-% Created 2024-04-21 Sun 21:36
+% Created 2024-04-23 Tue 22:58
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -12,6 +12,34 @@
 \usepackage{amssymb}
 \usepackage{capt-of}
 \usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}             % Algorithms
+\usepackage{tikz}                           % Draw stuff
+\usetikzlibrary{arrows.meta}                % Arrows for tikz
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{gray}{#1}}
+\newcommand{\T}{\mathcal{T}}                % To make it clear the difference
+\newcommand{\Tau}{T}                        % between Tau and T
+\newcommand{\AC}{AC(u, d, v, \eta)}         % Set the parameters for AC once
+\newcommand{\UC}{UC(u, d, v)}               % Set the parameters for UC once
+\newcommand{\ACi}{AC(u_i, d_i, q_i, \eta_i)}% Set the parameters for AC once
+\newcommand{\UCi}{UC(u_i, d_i, q_i)}        % Set the parameters for UC once
+\newcommand{\Not}{\textbf{not }}            % Custom `not' operator
+\newcommand{\visit}{(i, b, a, e, u, d, q, \eta, \xi)}
+\newcommand{\I}{\mathbb{I}}                 % Set of visit tuples
+\newcommand{\C}{\mathbb{C}}                 % Charger availability information
+\newcommand{\U}{\mathcal{U}}                % Uniform distribution
+\newcommand{\W}{\mathcal{W}}                % Weighted distribution
+\newcommand{\Sol}{\mathbb{S}}               % A shorthand for visit tuple
+\newcommand{\M}{\mathbb{M}}                 % A shorthand for the metadata
+\newcommand{\Hd}{\mathbb{H}}                % Set of discrete times
+\newcommand{\Nu}{\mathcal{V}}               % Draw a nice Nu
+\newcommand{\Iset}{I}                       % Set of visits 1-I
+\newcommand{\Isetinit}{I_0}                 % Set of visits inital visits
+\newcommand{\Isetfinal}{I_f}                % Set of visits final visits
+\newcommand{\Bset}{B}                       % Set of visits 1-B
+\newcommand{\Qset}{Q}                       % Set of visits 1-Q
+\newcommand{\Jset}{J}                       % Set of visits 1-J
+\newcommand{\Jsetq}{\mathbb{J}}             % Set of visits 1-J for queue active times
+\newcommand{\Hset}{H}                       % Set of visits 1-H
 \usetheme{default}
 \author{Alexander Brown}
 \date{\today}
@@ -33,20 +61,20 @@
 
 
 \section{Introduction}
-\label{sec:org312b084}
-\begin{frame}[label={sec:orgf160924}]{Problem Description}
+\label{sec:org969f020}
+\begin{frame}[label={sec:org104f8ce}]{Problem Description}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item total of \(n_A\) buses in the fleet
-\item \(n_V\) visits\footnote{A visit describes when a bus arrives, assigned a charge queue, and then departs} to the station divided between the \(n_A\) buses
+\item Fleet size of \(n_A\) buses
+\item \(n_V\) visits\footnote{A visit describes when a bus arrives, assigned a charge queue, and then departs} divided between the \(n_A\) buses
 \item Each bus in initialized with a charge of \(\alpha_b \kappa_i\)
 \end{itemize}
 \end{column}
 
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item After each visit the bus goes on its route and discharges by \(\Delta_i\)
+\item Each is has a paired route with a discharges of \(\Delta_i\)
 \item The charge is not allowed to go below \(\nu_b \kappa_i\) during operational hours
 \item Each bus is required to finish the day with a minimum charge of \(\beta_b \kappa_i\)\footnote{PAP application only}
 \end{itemize}
@@ -54,7 +82,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgfd5618f}]{Mixed Integer Linear Programming}
+\begin{frame}[label={sec:org22d85e8}]{Mixed Integer Linear Programming}
 \begin{align*}
 \text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
 \text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
@@ -69,14 +97,14 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org61ecc3f}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
+\begin{frame}[label={sec:org290b434}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org98dcbdc}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:orgaa0e5c3}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -96,7 +124,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org149e1b1}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:org8c97969}]{The Berth Allocation Problem}
 \begin{itemize}
 \item A variant of the rectangle packing problem
 \item Solves the problem of optimally assigning incoming vessels to be serviced
@@ -113,7 +141,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgfb7912f}]{The Position Allocation Problem}
+\begin{frame}[label={sec:org71d548e}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -135,8 +163,8 @@
 \end{frame}
 
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:orge593a11}
-\begin{frame}[label={sec:orgac98189}]{Requirements for BEB implementation}
+\label{sec:orged02fef}
+\begin{frame}[label={sec:orgf8e7f42}]{Requirements For BEB Implementation}
 \begin{itemize}
 \item Charges must be able to be tracked
 \item Service time is unknown
@@ -147,10 +175,10 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orga0619d4}]{Objective Function}
+\begin{frame}[label={sec:orge4e4ea6}]{Objective Function}
 \begin{equation*}
 \label{eq:objective}
-	\min \sum_{i=1}^N \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
+	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
 \end{equation*}
 
 \begin{itemize}
@@ -159,7 +187,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org953b413}]{Packing Constraints}
+\begin{frame}[label={sec:orgdc13d2f}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -189,7 +217,68 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org52cf2b0}]{Packing Constraints}
+\begin{frame}[label={sec:org3816939}]{Packing Constraints}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Used to ensure that individual rectangles do not overlap
+\item \(\sigma_{ij}\) establishes temporal ordering when active
+\item \(\psi_{ij}\) establishes spacial ordering when active
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{figure}
+    \centering
+    \scalebox{0.33}{
+      \centering
+        \begin{tikzpicture}
+          % Variables
+          \def \arrx   {2.0}
+          \def \initx  {3.5}
+          \def \endx   {8.5}
+          \def \depx   {10.0}
+          \def \yshift {5}
+
+          % Axis
+          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+          % Rectangles
+          \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+          \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+          \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+          \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+          % X-axis labels
+          \node [below,align=center] at (\arrx,0) {\scriptsize Arrival     \\ \scriptsize Time \\ $a_D$};
+          \node [below, align=center] at (\initx,0) {\scriptsize Charge    \\ \scriptsize Initiation  \\ $u_D$};
+          \node [below, align=center] at (\endx,0) {\scriptsize Charge     \\ \scriptsize End \\ $d_D$};
+          \node [below, align=center] at (\depx,0) {\scriptsize Departure  \\ \scriptsize Time \\ $e_D$};
+
+          % Y-axis labels
+          \node[rotate=90] at (-1, 2.25) {Queue 1};
+          \node[rotate=90] at (-1, 7.25) {Queue 2};
+          \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+          % Vertical lines
+          \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+          \draw[dashed] (\initx,\yshift)--(\initx,0);
+          \draw[dashed] (\endx,\yshift)--(\endx,0);
+          \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+          % Horizontal lines
+          \draw[dotted] (0, 4.5) -- (15, 4.5);
+          \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+        \end{tikzpicture}
+      }
+      \label{fig:spacial-and-temporal-constr}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orgff90b16}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -214,7 +303,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orge7d6b60}]{Linear Battery Dynamic Constraints}
+\begin{frame}[label={sec:orgce2edbe}]{Linear Battery Dynamic Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -238,7 +327,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8f89b69}]{Bilinear Linearization Constraints}
+\begin{frame}[label={sec:org7c914d3}]{Bilinear Linearization Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -273,7 +362,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgc3af91c}]{Charging Queue Constraints}
+\begin{frame}[label={sec:org7c68433}]{Charging Queue Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -294,7 +383,7 @@
 \end{frame}
 
 
-\begin{frame}[label={sec:org48074fa}]{Results}
+\begin{frame}[label={sec:org79dee46}]{Results}
 \begin{itemize}
 \item Executed for 7200 seconds (2 hours)
 \item \(T = 24\)
@@ -305,7 +394,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orge28bda6}]{Results}
+\begin{frame}[label={sec:orge174623}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
@@ -316,7 +405,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org538fd7f}]{Results}
+\begin{frame}[label={sec:orge113ce5}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap}
@@ -327,7 +416,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org997a1a5}]{Results}
+\begin{frame}[label={sec:org9e69d3b}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
@@ -339,8 +428,8 @@
 \end{frame}
 
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:orgfb47929}
-\begin{frame}[label={sec:org14409c9}]{Simulated Annealing}
+\label{sec:org864a83d}
+\begin{frame}[label={sec:org8ccc806}]{Simulated Annealing}
 \begin{itemize}
 \item Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
 \item The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
@@ -352,7 +441,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org4acf4ab}]{Cooling Schedule}
+\begin{frame}[label={sec:org73f9386}]{Cooling Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -374,7 +463,7 @@ t_m = \beta t_{m-1}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8b1b38a}]{Acceptance Criteria}
+\begin{frame}[label={sec:org4ec8034}]{Acceptance Criteria}
 \begin{equation}
 \label{eq:candaccept}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
@@ -385,7 +474,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{equation}
 \end{frame}
 
-\begin{frame}[label={sec:org2f39dd3}]{Generation Mechanisms - Primitive Functions}
+\begin{frame}[label={sec:org5d1daec}]{Generation Mechanisms - Primitive Functions}
 \begin{itemize}
 \item New Visit: Move a bus from a wait queue to charge queue
 \item Slide Visit: Change the charge duration of a visit
@@ -395,14 +484,192 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org8068f8b}]{Generation Mechanisms - Wrapper Functions}
+\begin{frame}[label={sec:org418f18b}]{New Visit}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{New visit algorithm}
+  \label{alg:new-visit}
+  \LinesNumbered
+  \TitleOfAlgo{New Visit}
+  \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+  \SetKwFunction{Union}{Union}
+  \SetKwFunction{findFreeTime}{findFreeTime}
+
+  \Begin
+    {
+      $i \leftarrow \Sol_{i}$\tcc*{Extract visit index}
+      $a \leftarrow \I_{i.a}$\tcc*{Extract the arrivial time for visit $i$}
+      $e \leftarrow \I_{i.e}$\tcc*{Extract the departure time for visit $i$}
+      $q \leftarrow \I_{i.q}$\tcc*{Extract the current charge queue for visit $i$}
+      $\bar{q} \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+      $C \leftarrow \mathcal{U}_{\C_q}$\tcc*{Select a random time slice from $\C_q$}
+
+      \If(\tcc*[f]{If there is time available in $C_q^j$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C, i, q, a, e$} $\not\in \varnothing$}
+         {
+           \Return{($i, (\bar{q},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return visit}
+         }
+
+         \Return{($\varnothing$)}\tcc*{Return nothing}
+    }
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:orgff18050}]{Slide Visit}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{Slide Visit Algorithm} \label{alg:slide-visit}
+  \LinesNumbered
+  \TitleOfAlgo{Slide Visit}
+  \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{Purge}{Purge}
+
+    \Begin
+    {
+      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+      $C \leftarrow \bar{C}_{i.q_i}$\tcc*{Get the time availability of the purged visit}
+
+      \tcc{If there is time available in $C$}
+      \If{($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+      {
+        \Return{($i, \I, (\I_{i.q_i},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return updated visit}
+      }
+
+        \Return{($\varnothing$)}\tcc*{Return nothing}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:orga5f999a}]{New Charger}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{Purge}{Purge}
+
+    \Begin
+    {
+      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+      $q \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+
+      \If(\tcc*[f]{If there is time available in $C_{q}$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$\bar{\C}_{i.q}$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+      {
+        \tcc{Return visit, note $u$ and $d$ are the original inital/final charge times.}
+        \Return{($i, \I, (q,\I_{i.u}, \I_{i.d}),\bar{\C}$)}
+      }
+
+      \Return{($\varnothing$)}\tcc*{Return nothing}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:orgf3e0d2a}]{Wait}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Wait algorithm} \label{alg:wait}
+    \LinesNumbered
+    \TitleOfAlgo{Wait}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{Purge}{Purge}
+
+    \Begin
+    {
+      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+      $\bar{\C}'_{\I_{i.\Gamma_i}} \leftarrow \C' \cup \{[\I_{i.a}, \I_{i.e}]\}$\tcc*{Update the charger availability matrix for wait queue $\bar{\C}_{i.q_i}$}
+      \Return{$(i, \I, (\I_{i.b}, \I_{i.a}, \I_{i.e}), \bar{\C})$}\tcc*[f]{Return visit}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:org18885e4}]{New Window}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{New window algorithm} \label{alg:new-window}
+  \LinesNumbered
+  \TitleOfAlgo{New Window}
+  \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+  \SetKwFunction{NewVisit}{NewVisit}
+  \SetKwFunction{Wait}{Wait}
+
+  \Begin
+  {
+    $\bar{\Sol} \leftarrow$\Wait{$\Sol$}\tcc*{Assign visit to its respective idle queue}
+    \If(\tcc*[f]{Add visit $i$ back in randomly})
+       {
+         $\bar{\bar{\Sol}} \leftarrow$ \NewVisit{$\bar{\Sol}$} $\not\in \varnothing$
+       }
+       {
+         \Return{$\bar{\bar{\Sol}}$} \tcc*[f]{Return visit}
+       }
+
+       \Return{($\varnothing$)}\tcc*{Return nothing}
+  }
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:org78442c8}]{Generation Mechanisms - Wrapper Functions}
 \begin{itemize}
 \item Charge Schedule Generation: Iterate through each visit and execute New Visit
 \item Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org41f7a0c}]{Objective Function}
+\begin{frame}[label={sec:org86fa5a2}]{Charge Schedule Generation}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
+    \LinesNumbered
+    \TitleOfAlgo{Candidate Solution Generator}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{NewVisit}{NewVisit}
+
+    \Begin
+    {
+        \tcc{Select an unscheduled BEB visit from a randomly indexed set of visits}
+        \ForEach {$\I_i \in \I$}
+        {
+            ($i, \bar{\I}$, $\bar{\C}$) $\leftarrow$ \NewVisit{($\I_i$, $\I$, $\C$)}\tcc*{Assign the bus to a charger}
+        }
+            \Return{($0, \bar{\I}$, $\bar{\C}$)}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:orgf2a83ae}]{Perturb Schedule}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Perturb schedule algorithm} \label{alg:perturb-schedule}
+
+    \LinesNumbered
+    \TitleOfAlgo{Perturb Schedule}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{PGF}{PGF}
+
+    \Begin
+    {
+        $\I_i\leftarrow\; \U_{\I}$\tcc*{Randomly select a visit}
+        $i \leftarrow\; \I_i$\tcc*{Extract visit index}
+        $y \leftarrow [y_1, y_2, ...]$\tcc*{Define the weight of each primitive generator}
+        $PGF \leftarrow\; \W^y_{[1,n_G]}$\tcc*{Select one of the generator functions}
+        $\bar{\Sol} \leftarrow$ \PGF{($i$, $\I$, $\C$)}\tcc*{Excecute the generator function}
+        \Return{($0, \bar{\I}$, $\bar{\C}$)}
+    }
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:org426d34c}]{Objective Function}
 \begin{equation*}
   J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
 \end{equation*}
@@ -429,7 +696,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org3112b8c}]{Constraints}
+\begin{frame}[label={sec:org62525a4}]{Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -475,44 +742,88 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgabbde5b}]{Results - What Is In The Thesis}
+\begin{frame}[label={sec:org7fa2033}]{Results - What Is In The Thesis}
 \begin{itemize}
 \item How long it ran for
 \item It's sort of working, but not really
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org5b1c91a}]{What Happened?}
+\begin{frame}[label={sec:org0074f2f}]{Results - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-milp}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-quinn}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orgfc425df}]{Results - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-quick}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-heuristic}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orgf0eb70b}]{Results - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orge245a87}]{Results - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org729c3a5}]{What Happened?}
 \begin{itemize}
 \item Score Divergence
 \item Difficult Schedules are\ldots{} difficult\ldots{}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org62c161c}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org1265c8c}]{How To Resolve This Problem?}
 \begin{itemize}
 \item Reverse search and weight the visit indices
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org379f22f}]{Results - What Is Not In The Thesis}
+\begin{frame}[label={sec:org6fc210c}]{Results - What Is Not In The Thesis}
 \begin{itemize}
 \item How long it ra for
 \item Plots! WOW!
 \end{itemize}
 \end{frame}
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org858de26}
-\begin{frame}[label={sec:org0cfc2b0}]{Introduction}
+\label{sec:orge2a9cf8}
+\begin{frame}[label={sec:orga90b8f3}]{Introduction}
 \begin{itemize}
 \item Why even consider this?
 \item Why use SA
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org1a2136a}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:orgbcc7368}]{Non-Linear Battery Dynamics Model}
 \begin{itemize}
 \item Show function
 \item Show plots
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc018cc6}]{Results}
+\begin{frame}[label={sec:org654a3b3}]{Results}
 \begin{itemize}
 \item Figures!
 \end{itemize}

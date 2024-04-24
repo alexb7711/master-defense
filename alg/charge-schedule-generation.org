@@ -1,0 +1,22 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+  \scriptsize
+  \caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
+      \LinesNumbered
+      \TitleOfAlgo{Candidate Solution Generator}
+      \KwIn{$\Sol$}
+      \KwOut{$\bar{\Sol}$}
+
+      \SetKwFunction{NewVisit}{NewVisit}
+
+      \Begin
+      {
+          \tcc{Select an unscheduled BEB visit from a randomly indexed set of visits}
+          \ForEach {$\I_i \in \I$}
+          {
+              ($i, \bar{\I}$, $\bar{\C}$) $\leftarrow$ \NewVisit{($\I_i$, $\I$, $\C$)}\tcc*{Assign the bus to a charger}
+          }
+              \Return{($0, \bar{\I}$, $\bar{\C}$)}
+      }
+    \end{algorithm}
+#+end_src

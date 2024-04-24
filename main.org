@@ -5,26 +5,61 @@
 #+OPTIONS: H:2
 #+date: \today
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
 #+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
+
+#+latex_header: \usepackage[ruled]{algorithm2e}             % Algorithms
+#+latex_header: \usepackage{tikz}                           % Draw stuff
+#+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
+
+# =========================================================================================================================
+# Custom commands
+#+latex_header: \newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{gray}{#1}}
+
+#+latex_header: \newcommand{\T}{\mathcal{T}}                % To make it clear the difference
+#+latex_header: \newcommand{\Tau}{T}                        % between Tau and T
+#+latex_header: \newcommand{\AC}{AC(u, d, v, \eta)}         % Set the parameters for AC once
+#+latex_header: \newcommand{\UC}{UC(u, d, v)}               % Set the parameters for UC once
+#+latex_header: \newcommand{\ACi}{AC(u_i, d_i, q_i, \eta_i)}% Set the parameters for AC once
+#+latex_header: \newcommand{\UCi}{UC(u_i, d_i, q_i)}        % Set the parameters for UC once
+#+latex_header: \newcommand{\Not}{\textbf{not }}            % Custom `not' operator
+#+latex_header: \newcommand{\visit}{(i, b, a, e, u, d, q, \eta, \xi)}
+#+latex_haeder:                                             % Single visit tuple
+#+latex_header: \newcommand{\I}{\mathbb{I}}                 % Set of visit tuples
+#+latex_header: \newcommand{\C}{\mathbb{C}}                 % Charger availability information
+#+latex_header: \newcommand{\U}{\mathcal{U}}                % Uniform distribution
+#+latex_header: \newcommand{\W}{\mathcal{W}}                % Weighted distribution
+#+latex_header: \newcommand{\Sol}{\mathbb{S}}               % A shorthand for visit tuple
+#+latex_header: \newcommand{\M}{\mathbb{M}}                 % A shorthand for the metadata
+#+latex_header: \newcommand{\Hd}{\mathbb{H}}                % Set of discrete times
+#+latex_header: \newcommand{\Nu}{\mathcal{V}}               % Draw a nice Nu
+
+#+latex_header: \newcommand{\Iset}{I}                       % Set of visits 1-I
+#+latex_header: \newcommand{\Isetinit}{I_0}                 % Set of visits inital visits
+#+latex_header: \newcommand{\Isetfinal}{I_f}                % Set of visits final visits
+#+latex_header: \newcommand{\Bset}{B}                       % Set of visits 1-B
+#+latex_header: \newcommand{\Qset}{Q}                       % Set of visits 1-Q
+#+latex_header: \newcommand{\Jset}{J}                       % Set of visits 1-J
+#+latex_header: \newcommand{\Jsetq}{\mathbb{J}}             % Set of visits 1-J for queue active times
+#+latex_header: \newcommand{\Hset}{H}                       % Set of visits 1-H
 
 # https://orgmode.org/worg/exporters/beamer/tutorial.html
 
 * Introduction
 ** Problem Description
-
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-- total of $n_A$ buses in the fleet
-- $n_V$ visits[fn:1] to the station divided between the $n_A$ buses
+- Fleet size of $n_A$ buses
+- $n_V$ visits[fn:1] divided between the $n_A$ buses
 - Each bus in initialized with a charge of $\alpha_b \kappa_i$
 
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-- After each visit the bus goes on its route and discharges by $\Delta_i$
+- Each is has a paired route with a discharges of $\Delta_i$
 - The charge is not allowed to go below $\nu_b \kappa_i$ during operational hours
 - Each bus is required to finish the day with a minimum charge of $\beta_b \kappa_i$[fn:2]
 
@@ -101,7 +136,7 @@
 \end{figure}
 
 * The Position Allocation Problem Approach With Linear Battery Dynamic
-** Requirements for BEB implementation
+** Requirements For BEB Implementation
 - Charges must be able to be tracked
 - Service time is unknown
 - Accommodate chargers of different speeds
@@ -112,7 +147,7 @@
 ** Objective Function
 \begin{equation*}
 \label{eq:objective}
-	\min \sum_{i=1}^N \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
+	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
 \end{equation*}
 
 - $w_{iq} m_q$: Assignment cost
@@ -149,6 +184,68 @@
     \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
 \end{equation*}
 
+** Packing Constraints
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Used to ensure that individual rectangles do not overlap
+- $\sigma_{ij}$ establishes temporal ordering when active
+- $\psi_{ij}$ establishes spacial ordering when active
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.33}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % X-axis labels
+            \node [below,align=center] at (\arrx,0) {\scriptsize Arrival     \\ \scriptsize Time \\ $a_D$};
+            \node [below, align=center] at (\initx,0) {\scriptsize Charge    \\ \scriptsize Initiation  \\ $u_D$};
+            \node [below, align=center] at (\endx,0) {\scriptsize Charge     \\ \scriptsize End \\ $d_D$};
+            \node [below, align=center] at (\depx,0) {\scriptsize Departure  \\ \scriptsize Time \\ $e_D$};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {Queue 1};
+            \node[rotate=90] at (-1, 7.25) {Queue 2};
+            \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+            % Vertical lines
+            \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+            \draw[dashed] (\initx,\yshift)--(\initx,0);
+            \draw[dashed] (\endx,\yshift)--(\endx,0);
+            \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+            % Horizontal lines
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
 ** Packing Constraints
 *** Left
 :PROPERTIES:
@@ -342,9 +439,24 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 - Wait: Move a visit to its idle queue
 - New Window: Execute Wait then New Visit primitives
 
+** New Visit
+#+include: alg/new-visit.org
+** Slide Visit
+#+include: alg/slide-visit.org
+** New Charger
+#+include: alg/new-charger.org
+** Wait
+#+include: alg/wait.org
+** New Window
+#+include: alg/new-window.org
 ** Generation Mechanisms - Wrapper Functions
 - Charge Schedule Generation: Iterate through each visit and execute New Visit
 - Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
+
+** Charge Schedule Generation
+#+include: alg/charge-schedule-generation.org
+** Perturb Schedule
+#+include: alg/tweak-schedule.org
 
 ** Objective Function
 \begin{equation*}
@@ -418,6 +530,46 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 ** Results - What Is In The Thesis
 - How long it ran for
 - It's sort of working, but not really
+** Results - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-milp}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-quinn}
+\end{figure}
+
+** Results - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-quick}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-heuristic}
+\end{figure}
+
+** Results - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-sa}
+\end{figure}
+
+** Results - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-sa}
+\end{figure}
+
 ** What Happened?
 - Score Divergence
 - Difficult Schedules are... difficult...
