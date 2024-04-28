@@ -528,46 +528,78 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{equation*}
 
 ** Results - What Is In The Thesis
-- How long it ran for
-- It's sort of working, but not really
-** Results - What Is In The Thesis
+| *Model*     | *Execution Time* [s] | *Iteration* [s] |
+|-----------+--------------------+---------------|
+| MILP      |               3600 |           N/A |
+| Quick     |            2275.25 |          0.25 |
+| Heuristic |             3640.4 |           0.4 |
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $T_0 = 99999$
+- $\beta = 0.999$
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $|t| = 3797$
+- $n_K = 500$
+
+** Schedule- What Is In The Thesis
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-milp}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-quinn}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
 \end{figure}
 
-** Results - What Is In The Thesis
+** Schedule - What Is In The Thesis
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-quick}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-heuristic}
-\end{figure}
-
-** Results - What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-sa}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
 \end{figure}
 
-** Results - What Is In The Thesis
+** Charger Count - What Is In The Thesis
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-milp-qin}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-sa}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
+\end{figure}
+
+** Charger Count - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
+\end{figure}
+
+** Power - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
+\end{figure}
+** Energy - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
 \end{figure}
 
 ** What Happened?
@@ -576,8 +608,81 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 ** How To Resolve This Problem?
 - Reverse search and weight the visit indices
 ** Results - What Is Not In The Thesis
-- How long it ra for
-- Plots! WOW!
+
+| *Model*     | *Execution Time* [s] | *Iteration* [s] |
+|-----------+--------------------+---------------|
+| MILP      |               1900 |           N/A |
+| Quick     |             1532.8 |           0.4 |
+| Heuristic |               1916 |           0.5 |
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $T_0 = 90000$
+- $\beta = 0.997$
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $|t| = 3797$
+- $n_K = 500$
+
+** Schedule - What Is Not In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-milp}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-quinn}
+\end{figure}
+
+** Schedule - What Is Not In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+\end{figure}
+
+** Charger Count - What Is Not In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-sa}
+\end{figure}
+
+** Charger Count - What Is Not In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-sa}
+\end{figure}
+
+** Power - What Is Not In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-sa}
+\end{figure}
+** Energy - What Is Not In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
+\end{figure}
+
 * The Simulated Annealing Approach With Non-Linear Battery Dynamics
 ** Introduction
 - Why even consider this?

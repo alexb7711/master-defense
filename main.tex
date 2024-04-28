@@ -1,4 +1,4 @@
-% Created 2024-04-23 Tue 22:58
+% Created 2024-04-28 Sun 13:09
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -61,8 +61,8 @@
 
 
 \section{Introduction}
-\label{sec:org969f020}
-\begin{frame}[label={sec:org104f8ce}]{Problem Description}
+\label{sec:org97b8d56}
+\begin{frame}[label={sec:org7de1fc4}]{Problem Description}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -82,7 +82,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org22d85e8}]{Mixed Integer Linear Programming}
+\begin{frame}[label={sec:orgbc62726}]{Mixed Integer Linear Programming}
 \begin{align*}
 \text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
 \text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
@@ -97,14 +97,14 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org290b434}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
+\begin{frame}[label={sec:orgac59c07}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgaa0e5c3}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:orgbe10ffd}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -124,7 +124,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8c97969}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:orgd691df5}]{The Berth Allocation Problem}
 \begin{itemize}
 \item A variant of the rectangle packing problem
 \item Solves the problem of optimally assigning incoming vessels to be serviced
@@ -141,7 +141,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org71d548e}]{The Position Allocation Problem}
+\begin{frame}[label={sec:org2cd9b13}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -163,8 +163,8 @@
 \end{frame}
 
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:orged02fef}
-\begin{frame}[label={sec:orgf8e7f42}]{Requirements For BEB Implementation}
+\label{sec:org611bc55}
+\begin{frame}[label={sec:orgab617ca}]{Requirements For BEB Implementation}
 \begin{itemize}
 \item Charges must be able to be tracked
 \item Service time is unknown
@@ -175,7 +175,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orge4e4ea6}]{Objective Function}
+\begin{frame}[label={sec:org4054ba1}]{Objective Function}
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
@@ -187,7 +187,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgdc13d2f}]{Packing Constraints}
+\begin{frame}[label={sec:org69dfc82}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -217,7 +217,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org3816939}]{Packing Constraints}
+\begin{frame}[label={sec:org3c7b989}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -278,7 +278,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgff90b16}]{Packing Constraints}
+\begin{frame}[label={sec:orgd2b2d3b}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -303,7 +303,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgce2edbe}]{Linear Battery Dynamic Constraints}
+\begin{frame}[label={sec:org292f257}]{Linear Battery Dynamic Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -327,7 +327,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7c914d3}]{Bilinear Linearization Constraints}
+\begin{frame}[label={sec:orgcd1cdef}]{Bilinear Linearization Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -362,7 +362,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7c68433}]{Charging Queue Constraints}
+\begin{frame}[label={sec:org6ee4366}]{Charging Queue Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -383,7 +383,7 @@
 \end{frame}
 
 
-\begin{frame}[label={sec:org79dee46}]{Results}
+\begin{frame}[label={sec:org9000279}]{Results}
 \begin{itemize}
 \item Executed for 7200 seconds (2 hours)
 \item \(T = 24\)
@@ -394,7 +394,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orge174623}]{Results}
+\begin{frame}[label={sec:org7680282}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
@@ -405,7 +405,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orge113ce5}]{Results}
+\begin{frame}[label={sec:org3d3c6f8}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap}
@@ -416,7 +416,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org9e69d3b}]{Results}
+\begin{frame}[label={sec:org432eaf2}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
@@ -428,8 +428,8 @@
 \end{frame}
 
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:org864a83d}
-\begin{frame}[label={sec:org8ccc806}]{Simulated Annealing}
+\label{sec:org476ff7c}
+\begin{frame}[label={sec:orgb03423e}]{Simulated Annealing}
 \begin{itemize}
 \item Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
 \item The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
@@ -441,7 +441,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org73f9386}]{Cooling Schedule}
+\begin{frame}[label={sec:org6f8f89c}]{Cooling Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -463,7 +463,7 @@ t_m = \beta t_{m-1}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org4ec8034}]{Acceptance Criteria}
+\begin{frame}[label={sec:org4fbca9b}]{Acceptance Criteria}
 \begin{equation}
 \label{eq:candaccept}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
@@ -474,7 +474,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{equation}
 \end{frame}
 
-\begin{frame}[label={sec:org5d1daec}]{Generation Mechanisms - Primitive Functions}
+\begin{frame}[label={sec:org1427bbd}]{Generation Mechanisms - Primitive Functions}
 \begin{itemize}
 \item New Visit: Move a bus from a wait queue to charge queue
 \item Slide Visit: Change the charge duration of a visit
@@ -484,7 +484,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org418f18b}]{New Visit}
+\begin{frame}[label={sec:org6f972c8}]{New Visit}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New visit algorithm}
@@ -516,7 +516,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orgff18050}]{Slide Visit}
+\begin{frame}[label={sec:org97bf6ff}]{Slide Visit}
 \begin{algorithm}[H]
   \scriptsize
   \caption{Slide Visit Algorithm} \label{alg:slide-visit}
@@ -543,7 +543,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orga5f999a}]{New Charger}
+\begin{frame}[label={sec:orge7f1ec1}]{New Charger}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
@@ -567,7 +567,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orgf3e0d2a}]{Wait}
+\begin{frame}[label={sec:org40d9424}]{Wait}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Wait algorithm} \label{alg:wait}
@@ -587,7 +587,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org18885e4}]{New Window}
+\begin{frame}[label={sec:org47c1cbd}]{New Window}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New window algorithm} \label{alg:new-window}
@@ -615,14 +615,14 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org78442c8}]{Generation Mechanisms - Wrapper Functions}
+\begin{frame}[label={sec:org307ad93}]{Generation Mechanisms - Wrapper Functions}
 \begin{itemize}
 \item Charge Schedule Generation: Iterate through each visit and execute New Visit
 \item Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org86fa5a2}]{Charge Schedule Generation}
+\begin{frame}[label={sec:org020c489}]{Charge Schedule Generation}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
@@ -645,7 +645,10 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orgf2a83ae}]{Perturb Schedule}
+\begin{frame}[label={sec:org5429b8e}]{Perturb Schedule}
+\begin{center}
+\scalebox{0.65}{
+\begin{minipage}{1.5\linewidth}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Perturb schedule algorithm} \label{alg:perturb-schedule}
@@ -659,17 +662,32 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
     \Begin
     {
-        $\I_i\leftarrow\; \U_{\I}$\tcc*{Randomly select a visit}
+        $p \leftarrow [false; n_A]$\tcc*{Create vector to track priority routes}
+        $y^i \leftarrow [1.0; n_V]$\tcc*{Create weight vector for index selection}
+        \tcc{Loop through the visits in reverse order}
+        \ForEach{$\I_i \leftarrow \I_{|\I|} \text{ TO } \I_{1}$}
+        {
+            \tcc{If the current visit is part of a priority route}
+            \If{$p_{\I_{i.b}} = true$}{$y^i_{\I_i} = y^i_{\I_{i.\xi}}$\;}
+            \tcc{Else if the current visit's SOC does below the allowed threshold}
+            \ElseIf{$\I_{i.\eta} \le \nu_{\I_{i.b}} \kappa_{\I_{i.b}}$}{
+                $p_{\I_{i.b}} = true$\tcc*{Indicate the current BEB's routes are to be prioritized}
+                $y^i_{\I_i} = \kappa_{\I_{i.b}} (\nu_{\I_{i.b}}\kappa_{\I_{i.b}} - \I_{i.\eta})$\tcc*{Calculate the weight of the current visit}
+            }
+        }
+        $\I_i\leftarrow\; \W^{y^i}_{\I}$\tcc*{Select an index with a weighted distribution}
         $i \leftarrow\; \I_i$\tcc*{Extract visit index}
-        $y \leftarrow [y_1, y_2, ...]$\tcc*{Define the weight of each primitive generator}
-        $PGF \leftarrow\; \W^y_{[1,n_G]}$\tcc*{Select one of the generator functions}
+        $y^p \leftarrow [y^p_1, y^p_2, ...]$\tcc*{Define the weight of each primitive generator}
+        $PGF \leftarrow\; \W^{y^p}_{[1,n_G]}$\tcc*{Select a generator function with weighted distribution}
         $\bar{\Sol} \leftarrow$ \PGF{($i$, $\I$, $\C$)}\tcc*{Excecute the generator function}
         \Return{($0, \bar{\I}$, $\bar{\C}$)}
     }
 \end{algorithm}
+\end{minipage}}
+\end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org426d34c}]{Objective Function}
+\begin{frame}[label={sec:orgace8e46}]{Objective Function}
 \begin{equation*}
   J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
 \end{equation*}
@@ -696,7 +714,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org62525a4}]{Constraints}
+\begin{frame}[label={sec:org4f4de93}]{Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -742,88 +760,208 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7fa2033}]{Results - What Is In The Thesis}
+\begin{frame}[label={sec:orgec63e3f}]{Results - What Is In The Thesis}
+\begin{center}
+\begin{tabular}{lrr}
+\alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
+\hline
+MILP & 3600 & N/A\\[0pt]
+Quick & 2275.25 & 0.25\\[0pt]
+Heuristic & 3640.4 & 0.4\\[0pt]
+\end{tabular}
+\end{center}
+
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item How long it ran for
-\item It's sort of working, but not really
+\item \(T_0 = 99999\)
+\item \(\beta = 0.999\)
 \end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \(|t| = 3797\)
+\item \(n_K = 500\)
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:org0074f2f}]{Results - What Is In The Thesis}
+
+\begin{frame}[label={sec:orga317657}]{Schedule- What Is In The Thesis}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-milp}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-quinn}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgfc425df}]{Results - What Is In The Thesis}
+\begin{frame}[label={sec:orgffa3778}]{Schedule - What Is In The Thesis}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-quick}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/schedule-sa-heuristic}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:orgf0eb70b}]{Results - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-fast-sa}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orge245a87}]{Results - What Is In The Thesis}
+\begin{frame}[label={sec:org1f52deb}]{Charger Count - What Is In The Thesis}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-milp-qin}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper/charger-count-slow-sa}
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org729c3a5}]{What Happened?}
+\begin{frame}[label={sec:orgb951213}]{Charger Count - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org33210fe}]{Power - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
+\end{figure}
+\end{frame}
+\begin{frame}[label={sec:org0deb8bc}]{Energy - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org99fd9eb}]{What Happened?}
 \begin{itemize}
 \item Score Divergence
 \item Difficult Schedules are\ldots{} difficult\ldots{}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org1265c8c}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org0e8233d}]{How To Resolve This Problem?}
 \begin{itemize}
 \item Reverse search and weight the visit indices
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org6fc210c}]{Results - What Is Not In The Thesis}
+\begin{frame}[label={sec:org62fe417}]{Results - What Is Not In The Thesis}
+\begin{center}
+\begin{tabular}{lrr}
+\alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
+\hline
+MILP & 7200 & N/A\\[0pt]
+Quick & 2275.25 & 0.4\\[0pt]
+Heuristic & 3640.4 & 0.5\\[0pt]
+\end{tabular}
+\end{center}
+
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{itemize}
-\item How long it ra for
-\item Plots! WOW!
+\item \(T_0 = 90000\)
+\item \(\beta = 0.997\)
 \end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \(|t| = 3797\)
+\item \(n_K = 500\)
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
+
+\begin{frame}[label={sec:org4e28fa8}]{Schedule - What Is Not In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-milp}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-quinn}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orgc227f3b}]{Schedule - What Is Not In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org33f5370}]{Charger Count - What Is Not In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org74d020d}]{Charger Count - What Is Not In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org83250a6}]{Power - What Is Not In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-sa}
+\end{figure}
+\end{frame}
+\begin{frame}[label={sec:org89aacdb}]{Energy - What Is Not In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
+\end{figure}
+\end{frame}
+
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:orge2a9cf8}
-\begin{frame}[label={sec:orga90b8f3}]{Introduction}
+\label{sec:orgfb4f70d}
+\begin{frame}[label={sec:org49bef64}]{Introduction}
 \begin{itemize}
 \item Why even consider this?
 \item Why use SA
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgbcc7368}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:orgf2038af}]{Non-Linear Battery Dynamics Model}
 \begin{itemize}
 \item Show function
 \item Show plots
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org654a3b3}]{Results}
+\begin{frame}[label={sec:org364998c}]{Results}
 \begin{itemize}
 \item Figures!
 \end{itemize}
