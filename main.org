@@ -603,10 +603,51 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{figure}
 
 ** What Happened?
-- Score Divergence
-- Difficult Schedules are... difficult...
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/score-diverge}
+\end{figure}
+
+- Candidate solutions diverge
+- Hard time handling "difficult" routes
 ** How To Resolve This Problem?
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/score-convergence}
+\end{figure}
+
 - Reverse search and weight the visit indices
+- Be more aggressive in exploiting the best solution
+
+** Score Convergence Comparison
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_center
+Before Fix
+#+end_center
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-diverge}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_center
+After Fix
+#+end_center
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-convergence}
+\end{figure}
+
 ** Results - What Is Not In The Thesis
 
 | *Model*     | *Execution Time* [s] | *Iteration* [s] |
@@ -685,8 +726,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 * The Simulated Annealing Approach With Non-Linear Battery Dynamics
 ** Introduction
-- Why even consider this?
-- Why use SA
+- Higher fidelity in approximating charge at high SOC
+- Implemented in SA for simplicity
 ** Non-Linear Battery Dynamics Model
 - Show function
 - Show plots
