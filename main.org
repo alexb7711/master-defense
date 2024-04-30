@@ -8,9 +8,12 @@
 
 #+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
 
+#+LaTeX_CLASS_options: [aspectratio=169]
+
 #+latex_header: \usepackage[ruled]{algorithm2e}             % Algorithms
 #+latex_header: \usepackage{tikz}                           % Draw stuff
 #+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
+#+latex_header: \usepackage{subcaption}                     % Subfigures
 
 # =========================================================================================================================
 # Custom commands
@@ -49,6 +52,8 @@
 ** Problem Description
 - Introduce the problem
 - What are we trying to solve
+- Mini literature review
+
 ** Problem Description
 *** Left
 :PROPERTIES:
@@ -93,15 +98,22 @@
 \end{figure}
 
 ** The Berth Allocation Problem
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
 - A variant of the rectangle packing problem
 - Solves the problem of optimally assigning incoming vessels to be serviced
   - $\mathbb{O}$: Spatiotemporal allocations for vessels
   - $O$: Time horizon and berthing space
 
-
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.5\textwidth]{img/spatiotemporal-packing}
+    \includegraphics[width=\textwidth]{img/spatiotemporal-packing}
 \end{figure}
 
 ** The Position Allocation Problem
@@ -143,7 +155,59 @@
 - $w_{iq} m_q$: Assignment cost
 - $g_{iq} \epsilon_q$: Consumption cost
 
-** Packing Constraints
+** Constraints
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{equation*}
+    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0
+\end{equation*}
+\begin{equation*}
+    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1
+\end{equation*}
+\begin{equation*}
+    \sigma_{ij} + \sigma_{ji} \leq 1
+\end{equation*}
+\begin{equation*}
+    \psi_{ij} + \psi_{ji} \leq 1
+\end{equation*}
+\begin{equation*}
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
+\end{equation*}
+\begin{equation*}
+    \sum_{q=1}^{n_Q} w_{iq} = 1
+\end{equation*}
+\begin{equation*}
+    v_i = \sum_{q=1}^{n_Q} qw_{iq}
+\end{equation*}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{equation*}
+    s_i + u_i = d_i
+\end{equation*}
+\begin{equation*}
+    a_i \leq u_i \leq (T - s_i)
+\end{equation*}
+\begin{equation*}
+    d_i \leq \tau_i
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i}
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i}
+\end{equation*}
+\begin{equation*}
+    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i}
+\end{equation*}
+
+** Packing Constraints :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -174,7 +238,7 @@
     \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
 \end{equation*}
 
-** Packing Constraints
+** Packing Constraints :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -236,32 +300,8 @@
         \label{fig:spacial-and-temporal-constr}
   \end{figure}
 #+end_src
-** Packing Constraints
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-- Calculates the charge duration
-- Ensures the arrival time is before the initial charge time
-- The initial charge time must be early enough as to not go over the time horizon
-- The detach time must be before the departure time
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{equation*}
-    s_i + u_i = d_i
-\end{equation*}
-\begin{equation*}
-    a_i \leq u_i \leq (T - s_i)
-\end{equation*}
-\begin{equation*}
-    d_i \leq \tau_i
-\end{equation*}
-
-** Linear Battery Dynamic Constraints
+** Packing Constraints :noexport:
+** Linear Battery Dynamic Constraints :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -284,7 +324,7 @@
     \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i}
 \end{equation*}
 
-** Bilinear Linearization Constraints
+** Bilinear Linearization Constraints :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -320,7 +360,7 @@
     0 \leq g_{iq}
 \end{equation*}
 
-** Charging Queue Constraints
+** Charging Queue Constraints :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -340,7 +380,6 @@
     v_i = \sum_{q=1}^{n_Q} qw_{iq}
 \end{equation*}
 
-
 ** Results
 - Executed for 7200 seconds (2 hours)
 - $T = 24$
@@ -349,34 +388,52 @@
 -  $\alpha_i = 90\%$;  $\nu_i = 20\%$;  $\beta_i = 70\%$
 - $\forall q \in \{n_B + 1, n_B + 2,..., n_B + n_C \}; m_q = 1000q$
 
-** Results
+** Schedules
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/schedule-qin}
-\end{figure}
-
-** Results
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/charger-count-slow-milp-pap}
+    \includegraphics[width=\textwidth]{img/schedule-milp-pap}
 \end{figure}
 
-** Results
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
+    \includegraphics[width=\textwidth]{img/schedule-qin}
+\end{figure}
+
+** Fast Charger Count :noexport:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/charger-count-fast-milp-pap}
 \end{figure}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/power-milp-pap}
+    \includegraphics[width=\textwidth]{img/charger-count-slow-milp-pap}
+\end{figure}
+
+** Power And Energy Use
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/energy-milp-pap}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/power-milp-pap}
 \end{figure}
 
 * The Simulated Annealing Approach With Linear Battery Dynamics
@@ -501,16 +558,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
       a_i \leq u_i \leq d_i \le e_i \le \mathcal{T}
   \end{equation*}
 
-** How To Resolve This Problem?
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/score-convergence}
-\end{figure}
-
-- Reverse search and weight the visit indices
-- Be more aggressive in exploiting the best solution
-
-** Results - What Is Not In The Thesis
+** Results
 
 | *Model*     | *Execution Time* [s] | *Iteration* [s] |
 |-----------+--------------------+---------------|
@@ -531,27 +579,51 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 - $|t| = 3797$
 - $n_K = 500$
 
-** Schedule - What Is Not In The Thesis
-\begin{figure}[htpb]
+** Schedule
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex: {\scriptsize
+- Point 1
+- Point 2
+#+latex: }
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-milp}
-\end{figure}
-\begin{figure}[htpb]
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-milp}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-quinn}
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-quinn}
+\end{subfigure}
 \end{figure}
 
-** Schedule - What Is Not In The Thesis
-\begin{figure}[htpb]
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+
+#+latex: {\scriptsize
+- Point 3
+- Point 4
+#+latex: }
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
-\end{figure}
-\begin{figure}[htpb]
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+\end{subfigure}
 \end{figure}
 
-** Charger Count - What Is Not In The Thesis
+** Charger Count :noexport:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-milp-qin}
@@ -561,7 +633,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-sa}
 \end{figure}
 
-** Charger Count - What Is Not In The Thesis
+** Charger Count :noexport:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-milp-qin}
@@ -571,7 +643,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-sa}
 \end{figure}
 
-** Power - What Is Not In The Thesis
+** Power
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-milp-qin}
@@ -580,7 +652,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-sa}
 \end{figure}
-** Energy - What Is Not In The Thesis
+** Energy
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
@@ -708,6 +780,15 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{figure}
 
 ** What Happened?
+** How To Resolve This Problem?
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/score-convergence}
+\end{figure}
+
+- Reverse search and weight the visit indices
+- Be more aggressive in exploiting the best solution
+
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/score-diverge}
