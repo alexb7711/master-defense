@@ -47,6 +47,9 @@
 
 * Introduction
 ** Problem Description
+- Introduce the problem
+- What are we trying to solve
+** Problem Description
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -62,19 +65,6 @@
 - Each is has a paired route with a discharges of $\Delta_i$
 - The charge is not allowed to go below $\nu_b \kappa_i$ during operational hours
 - Each bus is required to finish the day with a minimum charge of $\beta_b \kappa_i$[fn:2]
-
-** Mixed Integer Linear Programming
-
-\begin{align*}
-\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
-\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
-                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
-                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
-\end{align*}
-
-- $J$: Objective function
-- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
-- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
 
 ** The Berth Allocation Problem[fn:3]
 \begin{figure}[htpb]
@@ -313,7 +303,6 @@
 \end{equation*}
 #+end_src
 
-
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -439,24 +428,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 - Wait: Move a visit to its idle queue
 - New Window: Execute Wait then New Visit primitives
 
-** New Visit
-#+include: alg/new-visit.org
-** Slide Visit
-#+include: alg/slide-visit.org
-** New Charger
-#+include: alg/new-charger.org
-** Wait
-#+include: alg/wait.org
-** New Window
-#+include: alg/new-window.org
 ** Generation Mechanisms - Wrapper Functions
 - Charge Schedule Generation: Iterate through each visit and execute New Visit
 - Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
-
-** Charge Schedule Generation
-#+include: alg/charge-schedule-generation.org
-** Perturb Schedule
-#+include: alg/tweak-schedule.org
 
 ** Objective Function
 \begin{equation*}
@@ -527,89 +501,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
       a_i \leq u_i \leq d_i \le e_i \le \mathcal{T}
   \end{equation*}
 
-** Results - What Is In The Thesis
-| *Model*     | *Execution Time* [s] | *Iteration* [s] |
-|-----------+--------------------+---------------|
-| MILP      |               3600 |           N/A |
-| Quick     |            2275.25 |          0.25 |
-| Heuristic |             3640.4 |           0.4 |
-
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- $T_0 = 99999$
-- $\beta = 0.999$
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- $|t| = 3797$
-- $n_K = 500$
-
-** Schedule- What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
-\end{figure}
-
-** Schedule - What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
-\end{figure}
-
-** Charger Count - What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
-\end{figure}
-
-** Charger Count - What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
-\end{figure}
-
-** Power - What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
-\end{figure}
-** Energy - What Is In The Thesis
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
-\end{figure}
-
-** What Happened?
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/score-diverge}
-\end{figure}
-
-- Candidate solutions diverge
-- Hard time handling "difficult" routes
 ** How To Resolve This Problem?
 \begin{figure}[htpb]
 \centering
@@ -618,35 +509,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 - Reverse search and weight the visit indices
 - Be more aggressive in exploiting the best solution
-
-** Score Convergence Comparison
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-#+begin_center
-Before Fix
-#+end_center
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/score-diverge}
-\end{figure}
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-#+begin_center
-After Fix
-#+end_center
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/score-convergence}
-\end{figure}
 
 ** Results - What Is Not In The Thesis
 
@@ -733,6 +595,155 @@ After Fix
 - Show plots
 ** Results
 - Figures!
+
+* Supplemental Slides
+** Supplemental Material :noexport:
+** Mixed Integer Linear Programming*
+
+\begin{align*}
+\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
+\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
+                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
+                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
+\end{align*}
+
+- $J$: Objective function
+- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
+- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
+
+
+** SA Primitive Generators :noexport:
+** New Visit*
+#+include: alg/new-visit.org
+** Slide Visit
+#+include: alg/slide-visit.org
+** New Charger
+#+include: alg/new-charger.org
+** Wait
+#+include: alg/wait.org
+** New Window
+#+include: alg/new-window.org
+
+
+** SA Wrapper Functions :noexport:
+** Charge Schedule Generation*
+#+include: alg/charge-schedule-generation.org
+#+include: alg/tweak-schedule.org
+
+
+** SA Old Results :noexport:
+** Results - What Is In The Thesis*
+| *Model*     | *Execution Time* [s] | *Iteration* [s] |
+|-----------+--------------------+---------------|
+| MILP      |               3600 |           N/A |
+| Quick     |            2275.25 |          0.25 |
+| Heuristic |             3640.4 |           0.4 |
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $T_0 = 99999$
+- $\beta = 0.999$
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $|t| = 3797$
+- $n_K = 500$
+
+** Schedule- What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
+\end{figure}
+
+** Schedule - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
+\end{figure}
+
+** Charger Count - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
+\end{figure}
+
+** Charger Count - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
+\end{figure}
+
+** Power - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
+\end{figure}
+** Energy - What Is In The Thesis
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
+\end{figure}
+
+** What Happened?
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/score-diverge}
+\end{figure}
+
+- Candidate solutions diverge
+- Hard time handling "difficult" routes
+
+** Score Convergence Comparison
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_center
+Before Fix
+#+end_center
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-diverge}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_center
+After Fix
+#+end_center
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-convergence}
+\end{figure}
 
 * Footnotes
 

@@ -1,4 +1,4 @@
-% Created 2024-04-28 Sun 18:25
+% Created 2024-04-30 Tue 11:25
 % Intended LaTeX compiler: pdflatex
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
@@ -61,8 +61,14 @@
 
 
 \section{Introduction}
-\label{sec:orgb1847b3}
-\begin{frame}[label={sec:orgc8244a9}]{Problem Description}
+\label{sec:orge34ca26}
+\begin{frame}[label={sec:orgca447db}]{Problem Description}
+\begin{itemize}
+\item Introduce the problem
+\item What are we trying to solve
+\end{itemize}
+\end{frame}
+\begin{frame}[label={sec:org5eafe2f}]{Problem Description}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -82,29 +88,14 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org898d0f5}]{Mixed Integer Linear Programming}
-\begin{align*}
-\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
-\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
-                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
-                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
-\end{align*}
-
-\begin{itemize}
-\item \(J\): Objective function
-\item \(x_j \in \mathbb{R}\) and \(y_k \in \mathbb{Z}^+\): Decision Variables
-\item \(c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}\): Parameters
-\end{itemize}
-\end{frame}
-
-\begin{frame}[label={sec:org38a85ec}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
+\begin{frame}[label={sec:org846a147}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org641d52c}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:org410f7b5}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -124,7 +115,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8b28e06}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:orgf8432c5}]{The Berth Allocation Problem}
 \begin{itemize}
 \item A variant of the rectangle packing problem
 \item Solves the problem of optimally assigning incoming vessels to be serviced
@@ -141,7 +132,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org16fdfc9}]{The Position Allocation Problem}
+\begin{frame}[label={sec:org9a7059c}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -163,8 +154,8 @@
 \end{frame}
 
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:org1782abe}
-\begin{frame}[label={sec:orgb3c1fec}]{Requirements For BEB Implementation}
+\label{sec:orge8f9f5e}
+\begin{frame}[label={sec:org11233a0}]{Requirements For BEB Implementation}
 \begin{itemize}
 \item Charges must be able to be tracked
 \item Service time is unknown
@@ -175,7 +166,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgc9e110e}]{Objective Function}
+\begin{frame}[label={sec:orge9b1601}]{Objective Function}
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
@@ -187,7 +178,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgccdca7e}]{Packing Constraints}
+\begin{frame}[label={sec:orgccb6af9}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -217,7 +208,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orge08976d}]{Packing Constraints}
+\begin{frame}[label={sec:org53ec7ba}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -278,7 +269,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org667bb36}]{Packing Constraints}
+\begin{frame}[label={sec:org12ef4ee}]{Packing Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -303,7 +294,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org4b73d13}]{Linear Battery Dynamic Constraints}
+\begin{frame}[label={sec:org58a842d}]{Linear Battery Dynamic Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -327,7 +318,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb3ffa70}]{Bilinear Linearization Constraints}
+\begin{frame}[label={sec:orgf2b6e4f}]{Bilinear Linearization Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -362,7 +353,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org32b1257}]{Charging Queue Constraints}
+\begin{frame}[label={sec:org127f41c}]{Charging Queue Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -383,7 +374,7 @@
 \end{frame}
 
 
-\begin{frame}[label={sec:orgdc2d8ee}]{Results}
+\begin{frame}[label={sec:org5d5192e}]{Results}
 \begin{itemize}
 \item Executed for 7200 seconds (2 hours)
 \item \(T = 24\)
@@ -394,7 +385,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgbcf0e85}]{Results}
+\begin{frame}[label={sec:org57cc10a}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/schedule-milp-pap}
@@ -405,7 +396,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org861ef03}]{Results}
+\begin{frame}[label={sec:org5500f89}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/charger-count-fast-milp-pap}
@@ -416,7 +407,7 @@
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgc836fee}]{Results}
+\begin{frame}[label={sec:orgd60348f}]{Results}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/energy-milp-pap}
@@ -428,8 +419,8 @@
 \end{frame}
 
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:org7aad8ab}
-\begin{frame}[label={sec:orgee1e52b}]{Simulated Annealing}
+\label{sec:orga728b37}
+\begin{frame}[label={sec:orge4654c8}]{Simulated Annealing}
 \begin{itemize}
 \item Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
 \item The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
@@ -441,7 +432,7 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgc3cb6f2}]{Cooling Schedule}
+\begin{frame}[label={sec:orgeac4964}]{Cooling Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -463,7 +454,7 @@ t_m = \beta t_{m-1}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org06ada4a}]{Acceptance Criteria}
+\begin{frame}[label={sec:org4013a87}]{Acceptance Criteria}
 \begin{equation}
 \label{eq:candaccept}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
@@ -474,7 +465,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{equation}
 \end{frame}
 
-\begin{frame}[label={sec:org7e570b4}]{Generation Mechanisms - Primitive Functions}
+\begin{frame}[label={sec:orgd74116e}]{Generation Mechanisms - Primitive Functions}
 \begin{itemize}
 \item New Visit: Move a bus from a wait queue to charge queue
 \item Slide Visit: Change the charge duration of a visit
@@ -484,210 +475,14 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org00a452d}]{New Visit}
-\begin{algorithm}[H]
-  \scriptsize
-  \caption{New visit algorithm}
-  \label{alg:new-visit}
-  \LinesNumbered
-  \TitleOfAlgo{New Visit}
-  \KwIn{$\Sol$}
-  \KwOut{$\bar{\Sol}$}
-
-  \SetKwFunction{Union}{Union}
-  \SetKwFunction{findFreeTime}{findFreeTime}
-
-  \Begin
-    {
-      $i \leftarrow \Sol_{i}$\tcc*{Extract visit index}
-      $a \leftarrow \I_{i.a}$\tcc*{Extract the arrivial time for visit $i$}
-      $e \leftarrow \I_{i.e}$\tcc*{Extract the departure time for visit $i$}
-      $q \leftarrow \I_{i.q}$\tcc*{Extract the current charge queue for visit $i$}
-      $\bar{q} \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
-      $C \leftarrow \mathcal{U}_{\C_q}$\tcc*{Select a random time slice from $\C_q$}
-
-      \If(\tcc*[f]{If there is time available in $C_q^j$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C, i, q, a, e$} $\not\in \varnothing$}
-         {
-           \Return{($i, (\bar{q},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return visit}
-         }
-
-         \Return{($\varnothing$)}\tcc*{Return nothing}
-    }
-\end{algorithm}
-\end{frame}
-
-\begin{frame}[label={sec:org9c79581}]{Slide Visit}
-\begin{algorithm}[H]
-  \scriptsize
-  \caption{Slide Visit Algorithm} \label{alg:slide-visit}
-  \LinesNumbered
-  \TitleOfAlgo{Slide Visit}
-  \KwIn{$\Sol$}
-  \KwOut{$\bar{\Sol}$}
-
-    \SetKwFunction{Purge}{Purge}
-
-    \Begin
-    {
-      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
-      $C \leftarrow \bar{C}_{i.q_i}$\tcc*{Get the time availability of the purged visit}
-
-      \tcc{If there is time available in $C$}
-      \If{($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
-      {
-        \Return{($i, \I, (\I_{i.q_i},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return updated visit}
-      }
-
-        \Return{($\varnothing$)}\tcc*{Return nothing}
-    }
-  \end{algorithm}
-\end{frame}
-
-\begin{frame}[label={sec:org151cd61}]{New Charger}
-\begin{algorithm}[H]
-  \scriptsize
-  \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
-  \KwOut{$\bar{\Sol}$}
-
-    \SetKwFunction{Purge}{Purge}
-
-    \Begin
-    {
-      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
-      $q \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
-
-      \If(\tcc*[f]{If there is time available in $C_{q}$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$\bar{\C}_{i.q}$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
-      {
-        \tcc{Return visit, note $u$ and $d$ are the original inital/final charge times.}
-        \Return{($i, \I, (q,\I_{i.u}, \I_{i.d}),\bar{\C}$)}
-      }
-
-      \Return{($\varnothing$)}\tcc*{Return nothing}
-    }
-  \end{algorithm}
-\end{frame}
-
-\begin{frame}[label={sec:org3514f8f}]{Wait}
-\begin{algorithm}[H]
-\scriptsize
-\caption{Wait algorithm} \label{alg:wait}
-    \LinesNumbered
-    \TitleOfAlgo{Wait}
-    \KwIn{$\Sol$}
-    \KwOut{$\bar{\Sol}$}
-
-    \SetKwFunction{Purge}{Purge}
-
-    \Begin
-    {
-      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
-      $\bar{\C}'_{\I_{i.\Gamma_i}} \leftarrow \C' \cup \{[\I_{i.a}, \I_{i.e}]\}$\tcc*{Update the charger availability matrix for wait queue $\bar{\C}_{i.q_i}$}
-      \Return{$(i, \I, (\I_{i.b}, \I_{i.a}, \I_{i.e}), \bar{\C})$}\tcc*[f]{Return visit}
-    }
-  \end{algorithm}
-\end{frame}
-
-\begin{frame}[label={sec:orge8576a8}]{New Window}
-\begin{algorithm}[H]
-  \scriptsize
-  \caption{New window algorithm} \label{alg:new-window}
-  \LinesNumbered
-  \TitleOfAlgo{New Window}
-  \KwIn{$\Sol$}
-  \KwOut{$\bar{\Sol}$}
-
-  \SetKwFunction{NewVisit}{NewVisit}
-  \SetKwFunction{Wait}{Wait}
-
-  \Begin
-  {
-    $\bar{\Sol} \leftarrow$\Wait{$\Sol$}\tcc*{Assign visit to its respective idle queue}
-    \If(\tcc*[f]{Add visit $i$ back in randomly})
-       {
-         $\bar{\bar{\Sol}} \leftarrow$ \NewVisit{$\bar{\Sol}$} $\not\in \varnothing$
-       }
-       {
-         \Return{$\bar{\bar{\Sol}}$} \tcc*[f]{Return visit}
-       }
-
-       \Return{($\varnothing$)}\tcc*{Return nothing}
-  }
-\end{algorithm}
-\end{frame}
-
-\begin{frame}[label={sec:orgbdc5fb3}]{Generation Mechanisms - Wrapper Functions}
+\begin{frame}[label={sec:org463a68a}]{Generation Mechanisms - Wrapper Functions}
 \begin{itemize}
 \item Charge Schedule Generation: Iterate through each visit and execute New Visit
 \item Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgf113630}]{Charge Schedule Generation}
-\begin{algorithm}[H]
-\scriptsize
-\caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
-    \LinesNumbered
-    \TitleOfAlgo{Candidate Solution Generator}
-    \KwIn{$\Sol$}
-    \KwOut{$\bar{\Sol}$}
-
-    \SetKwFunction{NewVisit}{NewVisit}
-
-    \Begin
-    {
-        \tcc{Select an unscheduled BEB visit from a randomly indexed set of visits}
-        \ForEach {$\I_i \in \I$}
-        {
-            ($i, \bar{\I}$, $\bar{\C}$) $\leftarrow$ \NewVisit{($\I_i$, $\I$, $\C$)}\tcc*{Assign the bus to a charger}
-        }
-            \Return{($0, \bar{\I}$, $\bar{\C}$)}
-    }
-  \end{algorithm}
-\end{frame}
-
-\begin{frame}[label={sec:org55cf6ae}]{Perturb Schedule}
-\begin{center}
-\scalebox{0.65}{
-\begin{minipage}{1.5\linewidth}
-\begin{algorithm}[H]
-\scriptsize
-\caption{Perturb schedule algorithm} \label{alg:perturb-schedule}
-
-    \LinesNumbered
-    \TitleOfAlgo{Perturb Schedule}
-    \KwIn{$\Sol$}
-    \KwOut{$\bar{\Sol}$}
-
-    \SetKwFunction{PGF}{PGF}
-
-    \Begin
-    {
-        $p \leftarrow [false; n_A]$\tcc*{Create vector to track priority routes}
-        $y^i \leftarrow [1.0; n_V]$\tcc*{Create weight vector for index selection}
-        \tcc{Loop through the visits in reverse order}
-        \ForEach{$\I_i \leftarrow \I_{|\I|} \text{ TO } \I_{1}$}
-        {
-            \tcc{If the current visit is part of a priority route}
-            \If{$p_{\I_{i.b}} = true$}{$y^i_{\I_i} = y^i_{\I_{i.\xi}}$\;}
-            \tcc{Else if the current visit's SOC does below the allowed threshold}
-            \ElseIf{$\I_{i.\eta} \le \nu_{\I_{i.b}} \kappa_{\I_{i.b}}$}{
-                $p_{\I_{i.b}} = true$\tcc*{Indicate the current BEB's routes are to be prioritized}
-                $y^i_{\I_i} = \kappa_{\I_{i.b}} (\nu_{\I_{i.b}}\kappa_{\I_{i.b}} - \I_{i.\eta})$\tcc*{Calculate the weight of the current visit}
-            }
-        }
-        $\I_i\leftarrow\; \W^{y^i}_{\I}$\tcc*{Select an index with a weighted distribution}
-        $i \leftarrow\; \I_i$\tcc*{Extract visit index}
-        $y^p \leftarrow [y^p_1, y^p_2, ...]$\tcc*{Define the weight of each primitive generator}
-        $PGF \leftarrow\; \W^{y^p}_{[1,n_G]}$\tcc*{Select a generator function with weighted distribution}
-        $\bar{\Sol} \leftarrow$ \PGF{($i$, $\I$, $\C$)}\tcc*{Excecute the generator function}
-        \Return{($0, \bar{\I}$, $\bar{\C}$)}
-    }
-\end{algorithm}
-\end{minipage}}
-\end{center}
-\end{frame}
-
-\begin{frame}[label={sec:org4c2f942}]{Objective Function}
+\begin{frame}[label={sec:orgeb43d2e}]{Objective Function}
 \begin{equation*}
   J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
 \end{equation*}
@@ -714,7 +509,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org3269fbe}]{Constraints}
+\begin{frame}[label={sec:orga22331f}]{Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -760,106 +555,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgc410f74}]{Results - What Is In The Thesis}
-\begin{center}
-\begin{tabular}{lrr}
-\alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
-\hline
-MILP & 3600 & N/A\\[0pt]
-Quick & 2275.25 & 0.25\\[0pt]
-Heuristic & 3640.4 & 0.4\\[0pt]
-\end{tabular}
-\end{center}
-
-\begin{columns}
-\begin{column}{0.5\columnwidth}
-\begin{itemize}
-\item \(T_0 = 99999\)
-\item \(\beta = 0.999\)
-\end{itemize}
-\end{column}
-\begin{column}{0.5\columnwidth}
-\begin{itemize}
-\item \(|t| = 3797\)
-\item \(n_K = 500\)
-\end{itemize}
-\end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}[label={sec:orgeb74b81}]{Schedule- What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:org63c0046}]{Schedule - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:org28f1c4f}]{Charger Count - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:org37af057}]{Charger Count - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:org8c7ded1}]{Power - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
-\end{figure}
-\end{frame}
-\begin{frame}[label={sec:orgf8736ba}]{Energy - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:orgd565965}]{What Happened?}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/score-diverge}
-\end{figure}
-
-\begin{itemize}
-\item Candidate solutions diverge
-\item Hard time handling ``difficult'' routes
-\end{itemize}
-\end{frame}
-\begin{frame}[label={sec:org3be825f}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org6cfc040}]{How To Resolve This Problem?}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/score-convergence}
@@ -871,33 +567,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgd92d20a}]{Score Convergence Comparison}
-\begin{columns}
-\begin{column}{0.5\columnwidth}
-\begin{center}
-Before Fix
-\end{center}
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/score-diverge}
-\end{figure}
-\end{column}
-
-\begin{column}{0.5\columnwidth}
-\begin{center}
-After Fix
-\end{center}
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/score-convergence}
-\end{figure}
-\end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}[label={sec:org5c6b620}]{Results - What Is Not In The Thesis}
+\begin{frame}[label={sec:org7ace618}]{Results - What Is Not In The Thesis}
 \begin{center}
 \begin{tabular}{lrr}
 \alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
@@ -924,7 +594,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb711d57}]{Schedule - What Is Not In The Thesis}
+\begin{frame}[label={sec:org7d98649}]{Schedule - What Is Not In The Thesis}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-milp}
@@ -935,7 +605,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org748884b}]{Schedule - What Is Not In The Thesis}
+\begin{frame}[label={sec:orgf9d88ac}]{Schedule - What Is Not In The Thesis}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
@@ -946,7 +616,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org96db186}]{Charger Count - What Is Not In The Thesis}
+\begin{frame}[label={sec:org4ac4771}]{Charger Count - What Is Not In The Thesis}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-milp-qin}
@@ -957,7 +627,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org9591eee}]{Charger Count - What Is Not In The Thesis}
+\begin{frame}[label={sec:org04e12ea}]{Charger Count - What Is Not In The Thesis}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-milp-qin}
@@ -968,7 +638,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org5d50060}]{Power - What Is Not In The Thesis}
+\begin{frame}[label={sec:org98b6c86}]{Power - What Is Not In The Thesis}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-milp-qin}
@@ -978,7 +648,7 @@ Heuristic & 1916 & 0.5\\[0pt]
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-sa}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:orgcb28c15}]{Energy - What Is Not In The Thesis}
+\begin{frame}[label={sec:orgbdfccae}]{Energy - What Is Not In The Thesis}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
@@ -986,22 +656,362 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{frame}
 
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org9f1efe7}
-\begin{frame}[label={sec:org3044a71}]{Introduction}
+\label{sec:org88097a2}
+\begin{frame}[label={sec:org9a636f2}]{Introduction}
 \begin{itemize}
-\item Why even consider this?
-\item Why use SA
+\item Higher fidelity in approximating charge at high SOC
+\item Implemented in SA for simplicity
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:org000f74c}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:org3da0c2a}]{Non-Linear Battery Dynamics Model}
 \begin{itemize}
 \item Show function
 \item Show plots
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgaa4c080}]{Results}
+\begin{frame}[label={sec:orgba48776}]{Results}
 \begin{itemize}
 \item Figures!
 \end{itemize}
+\end{frame}
+
+\section{Supplemental Slides}
+\label{sec:orgd1dcb18}
+\begin{frame}[label={sec:org125601a}]{Mixed Integer Linear Programming*}
+\begin{align*}
+\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
+\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
+                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
+                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
+\end{align*}
+
+\begin{itemize}
+\item \(J\): Objective function
+\item \(x_j \in \mathbb{R}\) and \(y_k \in \mathbb{Z}^+\): Decision Variables
+\item \(c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}\): Parameters
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[label={sec:orgbf1e7e9}]{New Visit*}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{New visit algorithm}
+  \label{alg:new-visit}
+  \LinesNumbered
+  \TitleOfAlgo{New Visit}
+  \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+  \SetKwFunction{Union}{Union}
+  \SetKwFunction{findFreeTime}{findFreeTime}
+
+  \Begin
+    {
+      $i \leftarrow \Sol_{i}$\tcc*{Extract visit index}
+      $a \leftarrow \I_{i.a}$\tcc*{Extract the arrivial time for visit $i$}
+      $e \leftarrow \I_{i.e}$\tcc*{Extract the departure time for visit $i$}
+      $q \leftarrow \I_{i.q}$\tcc*{Extract the current charge queue for visit $i$}
+      $\bar{q} \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+      $C \leftarrow \mathcal{U}_{\C_q}$\tcc*{Select a random time slice from $\C_q$}
+
+      \If(\tcc*[f]{If there is time available in $C_q^j$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C, i, q, a, e$} $\not\in \varnothing$}
+         {
+           \Return{($i, (\bar{q},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return visit}
+         }
+
+         \Return{($\varnothing$)}\tcc*{Return nothing}
+    }
+\end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:orge421e2d}]{Slide Visit}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{Slide Visit Algorithm} \label{alg:slide-visit}
+  \LinesNumbered
+  \TitleOfAlgo{Slide Visit}
+  \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{Purge}{Purge}
+
+    \Begin
+    {
+      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+      $C \leftarrow \bar{C}_{i.q_i}$\tcc*{Get the time availability of the purged visit}
+
+      \tcc{If there is time available in $C$}
+      \If{($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+      {
+        \Return{($i, \I, (\I_{i.q_i},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return updated visit}
+      }
+
+        \Return{($\varnothing$)}\tcc*{Return nothing}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:org1244394}]{New Charger}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{Purge}{Purge}
+
+    \Begin
+    {
+      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+      $q \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+
+      \If(\tcc*[f]{If there is time available in $C_{q}$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$\bar{\C}_{i.q}$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+      {
+        \tcc{Return visit, note $u$ and $d$ are the original inital/final charge times.}
+        \Return{($i, \I, (q,\I_{i.u}, \I_{i.d}),\bar{\C}$)}
+      }
+
+      \Return{($\varnothing$)}\tcc*{Return nothing}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:org157daf9}]{Wait}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Wait algorithm} \label{alg:wait}
+    \LinesNumbered
+    \TitleOfAlgo{Wait}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{Purge}{Purge}
+
+    \Begin
+    {
+      $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+      $\bar{\C}'_{\I_{i.\Gamma_i}} \leftarrow \C' \cup \{[\I_{i.a}, \I_{i.e}]\}$\tcc*{Update the charger availability matrix for wait queue $\bar{\C}_{i.q_i}$}
+      \Return{$(i, \I, (\I_{i.b}, \I_{i.a}, \I_{i.e}), \bar{\C})$}\tcc*[f]{Return visit}
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}[label={sec:org1d87bfc}]{New Window}
+\begin{algorithm}[H]
+  \scriptsize
+  \caption{New window algorithm} \label{alg:new-window}
+  \LinesNumbered
+  \TitleOfAlgo{New Window}
+  \KwIn{$\Sol$}
+  \KwOut{$\bar{\Sol}$}
+
+  \SetKwFunction{NewVisit}{NewVisit}
+  \SetKwFunction{Wait}{Wait}
+
+  \Begin
+  {
+    $\bar{\Sol} \leftarrow$\Wait{$\Sol$}\tcc*{Assign visit to its respective idle queue}
+    \If(\tcc*[f]{Add visit $i$ back in randomly})
+       {
+         $\bar{\bar{\Sol}} \leftarrow$ \NewVisit{$\bar{\Sol}$} $\not\in \varnothing$
+       }
+       {
+         \Return{$\bar{\bar{\Sol}}$} \tcc*[f]{Return visit}
+       }
+
+       \Return{($\varnothing$)}\tcc*{Return nothing}
+  }
+\end{algorithm}
+\end{frame}
+
+
+\begin{frame}[label={sec:org3db9695}]{Charge Schedule Generation*}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
+    \LinesNumbered
+    \TitleOfAlgo{Candidate Solution Generator}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{NewVisit}{NewVisit}
+
+    \Begin
+    {
+        \tcc{Select an unscheduled BEB visit from a randomly indexed set of visits}
+        \ForEach {$\I_i \in \I$}
+        {
+            ($i, \bar{\I}$, $\bar{\C}$) $\leftarrow$ \NewVisit{($\I_i$, $\I$, $\C$)}\tcc*{Assign the bus to a charger}
+        }
+            \Return{($0, \bar{\I}$, $\bar{\C}$)}
+    }
+  \end{algorithm}
+
+\begin{center}
+\scalebox{0.65}{
+\begin{minipage}{1.5\linewidth}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Perturb schedule algorithm} \label{alg:perturb-schedule}
+
+    \LinesNumbered
+    \TitleOfAlgo{Perturb Schedule}
+    \KwIn{$\Sol$}
+    \KwOut{$\bar{\Sol}$}
+
+    \SetKwFunction{PGF}{PGF}
+
+    \Begin
+    {
+        $p \leftarrow [false; n_A]$\tcc*{Create vector to track priority routes}
+        $y^i \leftarrow [1.0; n_V]$\tcc*{Create weight vector for index selection}
+        \tcc{Loop through the visits in reverse order}
+        \ForEach{$\I_i \leftarrow \I_{|\I|} \text{ TO } \I_{1}$}
+        {
+            \tcc{If the current visit is part of a priority route}
+            \If{$p_{\I_{i.b}} = true$}{$y^i_{\I_i} = y^i_{\I_{i.\xi}}$\;}
+            \tcc{Else if the current visit's SOC does below the allowed threshold}
+            \ElseIf{$\I_{i.\eta} \le \nu_{\I_{i.b}} \kappa_{\I_{i.b}}$}{
+                $p_{\I_{i.b}} = true$\tcc*{Indicate the current BEB's routes are to be prioritized}
+                $y^i_{\I_i} = \kappa_{\I_{i.b}} (\nu_{\I_{i.b}}\kappa_{\I_{i.b}} - \I_{i.\eta})$\tcc*{Calculate the weight of the current visit}
+            }
+        }
+        $\I_i\leftarrow\; \W^{y^i}_{\I}$\tcc*{Select an index with a weighted distribution}
+        $i \leftarrow\; \I_i$\tcc*{Extract visit index}
+        $y^p \leftarrow [y^p_1, y^p_2, ...]$\tcc*{Define the weight of each primitive generator}
+        $PGF \leftarrow\; \W^{y^p}_{[1,n_G]}$\tcc*{Select a generator function with weighted distribution}
+        $\bar{\Sol} \leftarrow$ \PGF{($i$, $\I$, $\C$)}\tcc*{Excecute the generator function}
+        \Return{($0, \bar{\I}$, $\bar{\C}$)}
+    }
+\end{algorithm}
+\end{minipage}}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[label={sec:org77b160c}]{Results - What Is In The Thesis*}
+\begin{center}
+\begin{tabular}{lrr}
+\alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
+\hline
+MILP & 3600 & N/A\\[0pt]
+Quick & 2275.25 & 0.25\\[0pt]
+Heuristic & 3640.4 & 0.4\\[0pt]
+\end{tabular}
+\end{center}
+
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \(T_0 = 99999\)
+\item \(\beta = 0.999\)
+\end{itemize}
+\end{column}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \(|t| = 3797\)
+\item \(n_K = 500\)
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:org400d489}]{Schedule- What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orgb076795}]{Schedule - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org7379980}]{Charger Count - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org903c912}]{Charger Count - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org95c10c6}]{Power - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
+\end{figure}
+\end{frame}
+\begin{frame}[label={sec:org9c3e1ef}]{Energy - What Is In The Thesis}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:org7f71a0d}]{What Happened?}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.6\textwidth]{img/score-diverge}
+\end{figure}
+
+\begin{itemize}
+\item Candidate solutions diverge
+\item Hard time handling ``difficult'' routes
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:org2f03746}]{Score Convergence Comparison}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+Before Fix
+\end{center}
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-diverge}
+\end{figure}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{center}
+After Fix
+\end{center}
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-convergence}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 \end{document}
