@@ -1,16 +1,33 @@
 #+TITLE:A SIMULATED ANNEALING APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM
+#+author: Alexander Brown
+#+date: \today
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [bigger]
 #+OPTIONS: H:2
-#+date: \today
+
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 
 #+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
 
+#+latex_header:\logo{\includegraphics[height=0.5cm]{img/u-state-black.png}}
+
 #+latex_header: \usepackage[ruled]{algorithm2e}             % Algorithms
 #+latex_header: \usepackage{tikz}                           % Draw stuff
 #+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
+
+#+latex_header: \institute[USU] % (optional)
+#+latex_header: {
+#+latex_header:   College of Engineering\\
+#+latex_header:   Utah State University
+#+latex_header: }
+
+#+latex_header: \addtobeamertemplate{navigation symbols}{}{%
+#+latex_header:     \usebeamerfont{footline}%
+#+latex_header:     \usebeamercolor[fg]{footline}%
+#+latex_header:     \hspace{1em}%
+#+latex_header:     \insertframenumber/\inserttotalframenumber
+#+latex_header: }
 
 # =========================================================================================================================
 # Custom commands
@@ -47,6 +64,10 @@
 
 * Introduction
 ** Problem Description
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./img/visit.pdf]]
+
+** Problem Description :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -59,7 +80,7 @@
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-- Each is has a paired route with a discharges of $\Delta_i$
+- Each route has a paired route with discharge of $\Delta_i$
 - The charge is not allowed to go below $\nu_b \kappa_i$ during operational hours
 - Each bus is required to finish the day with a minimum charge of $\beta_b \kappa_i$[fn:2]
 
