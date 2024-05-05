@@ -2,3 +2,7 @@ main.pdf
 *.aux
 *.log
 auto/
+*.nav
+*.out
+*.snm
+*.toc
