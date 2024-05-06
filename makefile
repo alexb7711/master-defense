@@ -32,10 +32,6 @@ FIGURES_PDF     = $(patsubst %.tex, %.pdf, $(FIGURES_TEX))
 ##------------------------------------------------------------------------------
 #
 all: images ## Build full thesis (LaTeX + figures)
-	@command -v emacs && make emacs || echo "Emacs not installed... skipping"
-	@printf "Generating $(TARGET)...\n"
-	@bash -e $(SCRIPTS)/relative-path-bibtex $(DOC_SRC)
-	@bash -e $(SCRIPTS)/build-pdf $(basename $(DOC_SRC)) $(TARGET)
 
 ##------------------------------------------------------------------------------
 #

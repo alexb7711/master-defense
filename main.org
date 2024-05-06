@@ -1,28 +1,75 @@
 #+TITLE:A SIMULATED ANNEALING APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM
 #+author: Alexander Brown
 #+date: \today
+
 #+startup: beamer
 #+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [bigger]
+#+LaTeX_CLASS_OPTIONS: [presentation]
 #+OPTIONS: H:2
+#+OPTIONS:   tex:t d:nil todo:t pri:nil tags:nil
 
-#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+# ##############################################################################
+# Helpful URLs
+# ##############################################################################
 
-#+BEAMER_HEADER: \AtBeginSection{\frame{\sectionpage}}
-#+LaTeX_CLASS_options: [aspectratio=169]
+# https://orgmode.org/worg/exporters/beamer/tutorial.html
+# https://github.com/dfeich/org-babel-examples/blob/master/beamer/beamer-example.org?plain=1
 
-#+latex_header:\logo{\includegraphics[height=0.5cm]{img/u-state-black.png}}
+# ##############################################################################
+# Packages
+# ##############################################################################
 
+#+latex_header: \usepackage{appendixnumberbeamer}
 #+latex_header: \usepackage[ruled]{algorithm2e}             % Algorithms
 #+latex_header: \usepackage{tikz}                           % Draw stuff
 #+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
 #+latex_header: \usepackage{subcaption}                     % Subfigures
+#+latex_header: \usepackage{animate}
+
+# ##############################################################################
+# Slide Customization
+# ##############################################################################
+
+# ==============================================================================
+#
+#+latex:\renewcommand{\arraystretch}{1.5}
+
+# ==============================================================================
+# 16:9
+#+LaTeX_CLASS_options: [aspectratio=169]
+
+# ==============================================================================
+# Control layout of individual slides
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+
+# ==============================================================================
+# Add USU logo
+#+latex_header:\logo{\includegraphics[height=0.5cm]{img/u-state-black.png}}
+
+# ==============================================================================
+# Add current section slides
+#+BEAMER_HEADER: \AtBeginSection[]{
+
+# This line inserts a table of contents with the current section highlighted at
+# the beginning of each section
+#+BEAMER_HEADER: \begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}
+
+# In order to have the miniframes/smoothbars navigation bullets even though we do not use subsections
+# q.v. https://tex.stackexchange.com/questions/2072/beamer-navigation-circles-without-subsections/2078#2078
+#+BEAMER_HEADER: \subsection{}
+#+BEAMER_HEADER: }
+
+# ==============================================================================
+# Institute
 
 #+latex_header: \institute[USU] % (optional)
 #+latex_header: {
 #+latex_header:   College of Engineering\\
 #+latex_header:   Utah State University
 #+latex_header: }
+
+# ==============================================================================
+# Slide numbers
 
 #+latex_header: \addtobeamertemplate{navigation symbols}{}{%
 #+latex_header:     \usebeamerfont{footline}%
@@ -31,8 +78,9 @@
 #+latex_header:     \insertframenumber/\inserttotalframenumber
 #+latex_header: }
 
-# =========================================================================================================================
+# ##############################################################################
 # Custom commands
+
 #+latex_header: \newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{gray}{#1}}
 
 #+latex_header: \newcommand{\T}{\mathcal{T}}                % To make it clear the difference
@@ -62,11 +110,10 @@
 #+latex_header: \newcommand{\Jsetq}{\mathbb{J}}             % Set of visits 1-J for queue active times
 #+latex_header: \newcommand{\Hset}{H}                       % Set of visits 1-H
 
-# https://orgmode.org/worg/exporters/beamer/tutorial.html
-
 * Introduction
+** TODO Brief State Of The Art
 ** Problem Description
-#+ATTR_LATEX: :width 0.7\textwidth
+#+ATTR_LATEX: :width 0.55\textwidth
 [[./img/visit.pdf]]
 
 ** Problem Description :noexport:
@@ -74,7 +121,7 @@
 - What are we trying to solve
 - Mini literature review
 
-** Problem Description
+** Problem Description :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -92,32 +139,10 @@
 - Each bus is required to finish the day with a minimum charge of $\beta_b \kappa_i$[fn:2]
 
 ** The Berth Allocation Problem[fn:3]
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.9\textwidth]{img/berthing-sky-picture}
-\end{figure}
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./img/berthing-sky-picture.png]]
 
-** The Berth Allocation Problem
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- Vessels move down toward the quay
-- Recieve service
-- Exit to the right
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics{img/bap}
-    \label{subfig:bapexample}
-\end{figure}
-
-** The Berth Allocation Problem
+** The Berth Allocation Problem :noexport:
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.7
@@ -136,6 +161,30 @@
     \includegraphics[width=\textwidth]{img/spatiotemporal-packing}
 \end{figure}
 
+** The Berth Allocation Problem
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+
+- Vessels move down toward the quay
+- Receive service
+- Exit to the right
+-----
+- A variant of the rectangle packing problem
+- Solves the problem of optimally assigning incoming vessels to be serviced
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+
+#+ATTR_LATEX: :width 0.5\textwidth
+[[./img/bap.pdf]]
+
+#+ATTR_LATEX: :width 0.5\textwidth
+[[./img/spatiotemporal-packing.pdf]]
+
 ** The Position Allocation Problem
 *** Left
 :PROPERTIES:
@@ -151,11 +200,11 @@
 :BEAMER_col: 0.5
 :END:
 
-\begin{figure}[htpb]
-\centering
-    \includegraphics{img/pap}
-    \label{subfig:papexample}
-\end{figure}
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./img/pap.pdf]]
+
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./img/visit.pdf]]
 
 * The Position Allocation Problem Approach With Linear Battery Dynamic
 ** Requirements For BEB Implementation
@@ -166,7 +215,7 @@
 - Minimize consumption cost
 - Encourage slow charger use for battery health
 
-** Objective Function
+** Objective Function :noexport:
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
@@ -176,31 +225,26 @@
 - $g_{iq} \epsilon_q$: Consumption cost
 
 ** Constraints
+\begin{equation*}
+\label{eq:objective}
+	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
+\end{equation*}
+
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 
 \begin{equation*}
-    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0
-\end{equation*}
-\begin{equation*}
-    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1
-\end{equation*}
-\begin{equation*}
-    \sigma_{ij} + \sigma_{ji} \leq 1
-\end{equation*}
-\begin{equation*}
-    \psi_{ij} + \psi_{ji} \leq 1
-\end{equation*}
-\begin{equation*}
-    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
-\end{equation*}
-\begin{equation*}
-    \sum_{q=1}^{n_Q} w_{iq} = 1
-\end{equation*}
-\begin{equation*}
-    v_i = \sum_{q=1}^{n_Q} qw_{iq}
+\begin{array}{l}
+    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0 \\
+    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1 \\
+    \sigma_{ij} + \sigma_{ji} \leq 1 \\
+    \psi_{ij} + \psi_{ji} \leq 1 \\
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1 \\
+    \sum_{q=1}^{n_Q} w_{iq} = 1 \\
+    v_i = \sum_{q=1}^{n_Q} qw_{iq} \\
+\end{array}
 \end{equation*}
 
 *** Right
@@ -209,22 +253,14 @@
 :END:
 
 \begin{equation*}
-    s_i + u_i = d_i
-\end{equation*}
-\begin{equation*}
-    a_i \leq u_i \leq (T - s_i)
-\end{equation*}
-\begin{equation*}
-    d_i \leq \tau_i
-\end{equation*}
-\begin{equation*}
-    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i}
-\end{equation*}
-\begin{equation*}
-    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i}
-\end{equation*}
-\begin{equation*}
-    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i}
+\begin{array}{l}
+  s_i + u_i = d_i \\
+  a_i \leq u_i \leq (T - s_i) \\
+  d_i \leq \tau_i \\
+  \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i} \\
+  \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i} \\
+  \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i} \\
+\end{array}
 \end{equation*}
 
 ** Packing Constraints :noexport:
@@ -458,12 +494,26 @@
 
 * The Simulated Annealing Approach With Linear Battery Dynamics
 ** Simulated Annealing
-- Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
-- The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
-- Within the SA process there are three key components
-  - Cooling Schedule
-  - Acceptance Criteria
-  - Generation Mechanisms
+*** Left                                                        :B_columns:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+# - Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
+# - The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
+# - Within the SA process there are three key components
+#   - Cooling Schedule
+#   - Acceptance Criteria
+#   - Generation Mechanisms
+
+*** Right                                                       :B_columns:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+# \begin{frame}{Embedded Animation}
+#   \animategraphics[loop,controls,width=\linewidth]{10}{img/tsp-}{0}{16}
+# \end{frame}
+
 ** Cooling Schedule
 *** Left
 :PROPERTIES:
@@ -678,7 +728,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
 \end{figure}
 
-* The Simulated Annealing Approach With Non-Linear Battery Dynamics
+* TODO The Simulated Annealing Approach With Non-Linear Battery Dynamics
+
 ** Introduction
 - Higher fidelity in approximating charge at high SOC
 - Implemented in SA for simplicity
@@ -688,7 +739,13 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 ** Results
 - Figures!
 
-* Supplemental Slides
+* Appendix
+  :PROPERTIES:
+  :BEAMER_env: appendix
+  :END:
+** Appendix
+   :PROPERTIES:
+   :END:
 ** Supplemental Material :noexport:
 ** Mixed Integer Linear Programming*
 
