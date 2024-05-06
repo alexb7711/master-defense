@@ -5,6 +5,8 @@
 #+startup: beamer
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [presentation]
+#+BEAMER_THEME: default
+#+BEAMER_COLOR_THEME: seahorse
 #+OPTIONS: H:2
 #+OPTIONS:   tex:t d:nil todo:t pri:nil tags:nil
 
@@ -77,6 +79,7 @@
 # ==============================================================================
 # Slide numbers
 
+#+latex_header: \beamertemplatenavigationsymbolsempty
 #+latex_header: \addtobeamertemplate{navigation symbols}{}{%
 #+latex_header:     \usebeamerfont{footline}%
 #+latex_header:     \usebeamercolor[fg]{footline}%
@@ -185,7 +188,7 @@
 :BEAMER_col: 0.6
 :END:
 
-#+ATTR_LATEX: :width 0.5\textwidth
+#+ATTR_LATEX: :width 0.6\textwidth
 [[./img/bap.pdf]]
 
 #+ATTR_LATEX: :width 0.5\textwidth
@@ -530,11 +533,11 @@
 \begin{figure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=\textwidth]{img/milp-pap/charge-milp}
+    \includegraphics[width=0.95\textwidth]{img/milp-pap/charge-milp}
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=\textwidth]{img/milp-pap/charge-qin}
+    \includegraphics[width=0.95\textwidth]{img/milp-pap/charge-qin}
 \end{subfigure}
 \end{figure}
 
@@ -563,8 +566,8 @@
   - Acceptance Criteria
   - Generation Mechanisms
 
-#+ATTR_LATEX: :width 0.7\linewidth
-[[./img/score-convergence.pdf]]
+# +ATTR_LATEX: :width 0.6\linewidth
+# [[./img/score-convergence.pdf]]
 
 *** Right                                                       :B_columns:
 :PROPERTIES:
@@ -573,7 +576,6 @@
 
 \centering
 \animategraphics[width=0.9\linewidth]{10}{img/tsp/tsp-}{0}{87}
-
 
 ** Cooling Schedule
 *** Left
@@ -599,7 +601,7 @@
   \end{equation*}
 #+end_src
 
-** Acceptance Criteria[fn:4]
+** Acceptance Criteria[fn:5]
 #+name: eq:candaccept
 \begin{equation*}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
@@ -852,17 +854,17 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 #+latex: {\scriptsize
 - Qin heavily utilizes fast charger
-- PAP has more focus on slow chargers, but utilizes fast charger more readily than SA
+- PAP emphasizes slow queues, but utilizes fast chargers readily
 #+latex: }
 
 \begin{figure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-milp}
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-milp}
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-qin}
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-qin}
 \end{subfigure}
 \end{figure}
 
@@ -871,20 +873,19 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.5
 :END:
 
-
 #+latex: {\scriptsize
 - SA techniques heavily utilize slow charging
-- Fast chargers used sparingly
+- SA techniques utilize fast chargers more sparingly
 #+latex: }
 
 \begin{figure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
 \end{subfigure}
 \end{figure}
 
@@ -1179,6 +1180,7 @@ After Fix
 \end{figure}
 
 * Footnotes
+[fn:5] https://en.wikipedia.org/wiki/Simulated_annealing
 [fn:4] https://en.wikipedia.org/wiki/Simulated_annealing
 [fn:3] https://www.mdpi.com/2077-1312/11/7/1280
 [fn:2] PAP application only
