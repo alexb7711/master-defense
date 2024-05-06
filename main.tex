@@ -1,4 +1,4 @@
-% Created 2024-05-05 Sun 20:24
+% Created 2024-05-06 Mon 12:24
 % Intended LaTeX compiler: pdflatex
 \documentclass[aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
@@ -17,8 +17,15 @@
 \usepackage{tikz}                           % Draw stuff
 \usetikzlibrary{arrows.meta}                % Arrows for tikz
 \usepackage{subcaption}                     % Subfigures
-\usepackage{animate}
-\logo{\includegraphics[height=0.5cm]{img/u-state-black.png}}
+\usepackage{animate}                        % Created animated things
+\renewcommand{\arraystretch}{1.5}
+\logo{
+\begin{tikzpicture}[overlay,remember picture]
+\node[left=0.2cm] at (current page.26){
+\includegraphics[height=0.5cm]{img/u-state-black.png}
+};
+\end{tikzpicture}
+}
 \institute[USU] % (optional)
 {
 College of Engineering\\
@@ -77,25 +84,24 @@ Utah State University
 \tableofcontents
 \end{frame}
 
-\renewcommand{\arraystretch}{1.5}
 
 \section{Introduction}
-\label{sec:orge8e3a67}
-\begin{frame}[label={sec:org47020d9}]{Brief State Of The Art}
+\label{sec:org658ea24}
+\begin{frame}[label={sec:org62c9196}]{Brief State Of The Art}
 \end{frame}
-\begin{frame}[label={sec:org832a969}]{Problem Description}
+\begin{frame}[label={sec:orgcea059b}]{Problem Description}
 \begin{center}
 \includegraphics[width=0.55\textwidth]{./img/visit.pdf}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org36d721f}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
+\begin{frame}[label={sec:orgfd1698c}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{center}
 \includegraphics[width=0.8\textwidth]{./img/berthing-sky-picture.png}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org8787299}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:orgde6409a}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{itemize}
@@ -123,7 +129,7 @@ Utah State University
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7ec92f4}]{The Position Allocation Problem}
+\begin{frame}[label={sec:org02d72ef}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -147,8 +153,10 @@ Utah State University
 \end{frame}
 
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:orgd733516}
-\begin{frame}[label={sec:orgdbec7b9}]{Requirements For BEB Implementation}
+\label{sec:org1abb528}
+\begin{frame}[label={sec:org1fecaff}]{Requirements For BEB Implementation}
+\begin{columns}
+\begin{column}{0.6\columnwidth}
 \begin{itemize}
 \item Charges must be able to be tracked
 \item Service time is unknown
@@ -157,9 +165,21 @@ Utah State University
 \item Minimize consumption cost
 \item Encourage slow charger use for battery health
 \end{itemize}
+\end{column}
+
+\begin{column}{0.4\columnwidth}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{./img/pap.pdf}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{./img/visit.pdf}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orga81b6d1}]{Constraints}
+\begin{frame}[label={sec:orgb3068d7}]{Constraints}
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
@@ -195,66 +215,186 @@ Utah State University
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orga17c210}]{Results}
-\begin{itemize}
-\item Executed for 7200 seconds (2 hours)
-\item \(T = 24\)
-\item \(n_V = 338\)
-\item \(n_A = 35\)
-\item \(\alpha_i = 90\%\);  \(\nu_i = 20\%\);  \(\beta_i = 70\%\)
-\item \(\forall q \in \{n_B + 1, n_B + 2,..., n_B + n_C \}; m_q = 1000q\)
-\end{itemize}
-\end{frame}
-
-\begin{frame}[label={sec:org389122d}]{Schedules}
+\begin{frame}[label={sec:org77c141a}]{Constraints}
 \begin{columns}
-\begin{column}{0.5\columnwidth}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/schedule-milp-pap}
-\end{figure}
+\begin{column}{0.4\columnwidth}
+\begin{equation*}
+\begin{array}{l}
+    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0 \\
+    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1 \\
+    \sigma_{ij} + \sigma_{ji} \leq 1 \\
+    \psi_{ij} + \psi_{ji} \leq 1 \\
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1 \\
+\end{array}
+\end{equation*}
+
+\noindent\rule{\textwidth}{0.5pt}
+
+\begin{itemize}
+\item Used to ensure that gray rectangles do not overlap
+\item \(\sigma_{ij}\) establishes temporal ordering when active
+\item \(\psi_{ij}\) establishes spacial ordering when active
+\end{itemize}
 \end{column}
 
-\begin{column}{0.5\columnwidth}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/schedule-qin}
+\begin{column}{0.6\columnwidth}
+\begin{figure}
+    \centering
+    \scalebox{0.4}{
+      \centering
+        \begin{tikzpicture}
+          % Variables
+          \def \arrx   {2.0}
+          \def \initx  {3.5}
+          \def \endx   {8.5}
+          \def \depx   {10.0}
+          \def \yshift {5}
+
+          % Axis
+          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+          % Rectangles
+          \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+          \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+          \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+          \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+          % X-axis labels
+          \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
+          \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
+          \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
+          \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
+
+          % Y-axis labels
+          \node[rotate=90] at (-1, 2.25) {Queue 1};
+          \node[rotate=90] at (-1, 7.25) {Queue 2};
+          \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+          % Vertical lines
+          \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+          \draw[dashed] (\initx,\yshift)--(\initx,0);
+          \draw[dashed] (\endx,\yshift)--(\endx,0);
+          \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+          % Horizontal lines
+          \draw[dotted] (0, 4.5) -- (15, 4.5);
+          \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+        \end{tikzpicture}
+      }
+      \label{fig:spacial-and-temporal-constr}
 \end{figure}
 \end{column}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org34fe430}]{Power And Energy Use}
+\begin{frame}[label={sec:org882077f}]{Parameters}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item Executed for 7200 seconds (2 hours)
+\item \(T = 24\)
+\item \(n_V = 338\)
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item \(n_A = 35\)
+\item \(\alpha_i = 90\%\);  \(\nu_i = 20\%\);  \(\beta_i = 70\%\)
+\item \(\forall q \in \{n_B + 1, n_B + 2,..., n_B + n_C \}; m_q = 1000q\)
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orgbbf9dfd}]{Schedules}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=\textwidth]{img/energy-milp-pap}
+    \includegraphics[width=\textwidth]{img/milp-pap/schedule-milp-pap}
 \end{figure}
+
+\begin{itemize}
+\item Utilized more slow chargers for longer durations
+\item Fast chargers utilized more sparingly
+\end{itemize}
 \end{column}
 
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=\textwidth]{img/power-milp-pap}
+    \includegraphics[width=\textwidth]{img/milp-pap/schedule-qin}
 \end{figure}
+
+\begin{itemize}
+\item Extensive use of fast chargers
+\item \alert{Buggy version of Qin, keep because that is in the publication?}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:org02167a4}]{SOC And Energy Use}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=\textwidth]{img/milp-pap/charge-milp}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=\textwidth]{img/milp-pap/charge-qin}
+\end{subfigure}
+\end{figure}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item SOC of Qin allowed to drop to 0
+\item PAP maintained minimum SOC and final SOC
+\item PAP accumulated energy is larger due to minimum SOC constraints
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=\textwidth]{./img/milp-pap/energy-milp-pap.pdf}
+\end{center}
 \end{column}
 \end{columns}
 \end{frame}
 
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:orge7799e2}
-\begin{frame}[label={sec:org284bf69}]{Simulated Annealing}
+\label{sec:orgda6f075}
+\begin{frame}[label={sec:org8af30af}]{Simulated Annealing\footnote{\url{https://en.wikipedia.org/wiki/Simulated\_annealing}\label{org99ea8cf}}}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
+\begin{itemize}
+\item A probabilistic technique for approximating the global optimum of a given function.
+\item Often applied to problems that contain many local solutions
+\item Three key components:
+\begin{itemize}
+\item Cooling Schedule
+\item Acceptance Criteria
+\item Generation Mechanisms
+\end{itemize}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{./img/score-convergence.pdf}
+\end{center}
 \end{column}
 
 \begin{column}{0.5\columnwidth}
+\centering
+\animategraphics[width=0.9\linewidth]{10}{img/tsp/tsp-}{0}{87}
 \end{column}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org4511f48}]{Cooling Schedule}
+
+\begin{frame}[label={sec:org7c76ddd}]{Cooling Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -276,18 +416,34 @@ t_m = \beta t_{m-1}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgff04102}]{Acceptance Criteria}
-\begin{equation}
+\begin{frame}[label={sec:org4b0a523}]{Acceptance Criteria\textsuperscript{\ref{org99ea8cf}}}
+\begin{equation*}
 \label{eq:candaccept}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \begin{cases}
   1                   & \Delta E > 0 \\
   e^{- \frac{\Delta E}{t_m}} & \text{otherwise}
 \end{cases}
-\end{equation}
+\end{equation*}
+
+\begin{columns}
+\begin{column}{0.7\columnwidth}
+\centering
+\animategraphics[width=\linewidth]{10}{img/sa-visual/sa-}{0}{274}
+\end{column}
+
+\begin{column}{0.3\columnwidth}
+\begin{figure}[t!]
+  \centering \includegraphics[width=\textwidth]{img/geometric.png}
+  \label{fig:geometric}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgd1d6309}]{Generation Mechanisms - Primitive Functions}
+\begin{frame}[label={sec:org5041555}]{Generation Mechanisms - Primitive Functions}
+\begin{columns}
+\begin{column}{0.4\columnwidth}
 \begin{itemize}
 \item New Visit: Move a bus from a wait queue to charge queue
 \item Slide Visit: Change the charge duration of a visit
@@ -295,16 +451,120 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \item Wait: Move a visit to its idle queue
 \item New Window: Execute Wait then New Visit primitives
 \end{itemize}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\begin{figure}
+    \centering
+    \scalebox{0.4}{
+      \centering
+        \begin{tikzpicture}
+          % Variables
+          \def \arrx   {2.0}
+          \def \initx  {3.5}
+          \def \endx   {8.5}
+          \def \depx   {10.0}
+          \def \yshift {5}
+
+          % Axis
+          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+          % Rectangles
+          \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+          \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+          \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+          \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+          % X-axis labels
+          \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
+          \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
+          \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
+          \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
+
+          % Y-axis labels
+          \node[rotate=90] at (-1, 2.25) {Queue 1};
+          \node[rotate=90] at (-1, 7.25) {Queue 2};
+          \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+          % Vertical lines
+          \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+          \draw[dashed] (\initx,\yshift)--(\initx,0);
+          \draw[dashed] (\endx,\yshift)--(\endx,0);
+          \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+          % Horizontal lines
+          \draw[dotted] (0, 4.5) -- (15, 4.5);
+          \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+        \end{tikzpicture}
+      }
+      \label{fig:spacial-and-temporal-constr}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb1c7f8c}]{Generation Mechanisms - Wrapper Functions}
+\begin{frame}[label={sec:orga6c19e8}]{Generation Mechanisms - Wrapper Functions}
+\begin{columns}
+\begin{column}{0.4\columnwidth}
 \begin{itemize}
 \item Charge Schedule Generation: Iterate through each visit and execute New Visit
 \item Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
 \end{itemize}
+\end{column}
+
+\begin{column}{0.6\columnwidth}
+\begin{figure}
+    \centering
+    \scalebox{0.4}{
+      \centering
+        \begin{tikzpicture}
+          % Variables
+          \def \arrx   {2.0}
+          \def \initx  {3.5}
+          \def \endx   {8.5}
+          \def \depx   {10.0}
+          \def \yshift {5}
+
+          % Axis
+          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+          % Rectangles
+          \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+          \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+          \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+          \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+          % X-axis labels
+          \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
+          \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
+          \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
+          \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
+
+          % Y-axis labels
+          \node[rotate=90] at (-1, 2.25) {Queue 1};
+          \node[rotate=90] at (-1, 7.25) {Queue 2};
+          \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+          % Vertical lines
+          \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+          \draw[dashed] (\initx,\yshift)--(\initx,0);
+          \draw[dashed] (\endx,\yshift)--(\endx,0);
+          \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+          % Horizontal lines
+          \draw[dotted] (0, 4.5) -- (15, 4.5);
+          \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+        \end{tikzpicture}
+      }
+      \label{fig:spacial-and-temporal-constr}
+\end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org835c00d}]{Objective Function}
+\begin{frame}[label={sec:org837830e}]{Objective Function}
 \begin{equation*}
   J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
 \end{equation*}
@@ -331,7 +591,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7663fdc}]{Constraints}
+\begin{frame}[label={sec:org814ff73}]{Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -377,7 +637,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org51718b5}]{Results}
+\begin{frame}[label={sec:orge9db199}]{Parameters}
 \begin{center}
 \begin{tabular}{lrr}
 \alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
@@ -404,13 +664,13 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org4b38d1b}]{Schedule}
+\begin{frame}[label={sec:orgba99f42}]{Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 {\scriptsize
 \begin{itemize}
-\item Point 1
-\item Point 2
+\item Qin heavily utilizes fast charger
+\item PAP has more focus on slow chargers, but utilizes fast charger more readily than SA
 \end{itemize}
 }
 
@@ -421,7 +681,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-quinn}
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-qin}
 \end{subfigure}
 \end{figure}
 \end{column}
@@ -429,8 +689,8 @@ Heuristic & 1916 & 0.5\\[0pt]
 \begin{column}{0.5\columnwidth}
 {\scriptsize
 \begin{itemize}
-\item Point 3
-\item Point 4
+\item SA techniques heavily utilize slow charging
+\item Fast chargers used sparingly
 \end{itemize}
 }
 
@@ -448,48 +708,113 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8c673d3}]{Power}
+\begin{frame}[label={sec:org362b147}]{Power}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-milp-qin}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-milp-qin}
 \end{figure}
+
+\begin{itemize}
+\item Heuristic SA maintained the lowest demand peak
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-sa}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-sa}
 \end{figure}
-\end{frame}
-\begin{frame}[label={sec:org5d89058}]{Energy}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
-\end{figure}
+
+
+\begin{itemize}
+\item Quick SA peak demand comparable to the PAP peak
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
 
+\begin{frame}[label={sec:org2b264be}]{Energy}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
+\begin{itemize}
+\item PAP maintained lowest energy consumption
+\item Second lowest consumed energy by the heuristic SA (185 kW difference)
+\item Trade off of the lower peak demand
+\end{itemize}
+\end{column}
+
+\begin{column}{0.7\columnwidth}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:org905a0fb}]{Energy}
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
+\end{figure}
+\end{frame}
 \section{{\bfseries\sffamily TODO} The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org5e346d5}
+\label{sec:org7476bce}
 
-\begin{frame}[label={sec:org81f590f}]{Introduction}
+\begin{frame}[label={sec:org9cf97c1}]{Introduction}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
 \begin{itemize}
 \item Higher fidelity in approximating charge at high SOC
 \item Implemented in SA for simplicity
 \end{itemize}
+\end{column}
+
+\begin{column}{0.7\columnwidth}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./img/nonlinear-bat.png}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:orgbbf8502}]{Non-Linear Battery Dynamics Model}
-\begin{itemize}
-\item Show function
-\item Show plots
-\end{itemize}
+
+\begin{frame}[label={sec:org4400209}]{Non-Linear Battery Dynamics Model}
+\begin{columns}
+\begin{column}{0.3\columnwidth}
+\begin{equation*}
+  \eta_{\xi_i} = \bar{a}_q \eta_i - \bar{b}_q \kappa_{\Xi_i}
+\end{equation*}
+
+\begin{equation*}
+\begin{array}{cc}
+  \bar{a}_q = e^{a_q dt} & \bar{b}_q = e^{a_q dt} - 1
+\end{array}
+\end{equation*}
+\end{column}
+
+\begin{column}{0.7\columnwidth}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./img/nonlinear-bat.png}
+\end{center}
+\end{column}
+\end{columns}
 \end{frame}
-\begin{frame}[label={sec:org11616e4}]{Results}
+
+\begin{frame}[label={sec:org7fe5df0}]{Results}
 \begin{itemize}
 \item Figures!
 \end{itemize}
 \end{frame}
 
 \appendix
-\begin{frame}[label={sec:orga2f7b02}]{Appendix}
+\begin{frame}[label={sec:orga0c4e54}]{Appendix}
 \end{frame}
-\begin{frame}[label={sec:org7d6467d}]{Mixed Integer Linear Programming*}
+
+\begin{frame}[label={sec:org36a30e0}]{Supplemental Material}
+\end{frame}
+\begin{frame}[label={sec:org56caabd}]{Mixed Integer Linear Programming}
 \begin{align*}
 \text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
 \text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
@@ -505,7 +830,9 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{frame}
 
 
-\begin{frame}[label={sec:org33197d8}]{New Visit*}
+\begin{frame}[label={sec:org2c164ca}]{SA Primitive Generators}
+\end{frame}
+\begin{frame}[label={sec:org8bdf2cb}]{New Visit}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New visit algorithm}
@@ -537,7 +864,7 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orgc53ccc8}]{Slide Visit}
+\begin{frame}[label={sec:org37f92b3}]{Slide Visit}
 \begin{algorithm}[H]
   \scriptsize
   \caption{Slide Visit Algorithm} \label{alg:slide-visit}
@@ -564,7 +891,7 @@ Heuristic & 1916 & 0.5\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org02e7778}]{New Charger}
+\begin{frame}[label={sec:orge946684}]{New Charger}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
@@ -588,7 +915,7 @@ Heuristic & 1916 & 0.5\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org00c6422}]{Wait}
+\begin{frame}[label={sec:orga5f4b0d}]{Wait}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Wait algorithm} \label{alg:wait}
@@ -608,7 +935,7 @@ Heuristic & 1916 & 0.5\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org441ca4a}]{New Window}
+\begin{frame}[label={sec:orgef0f2af}]{New Window}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New window algorithm} \label{alg:new-window}
@@ -636,8 +963,9 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{algorithm}
 \end{frame}
 
-
-\begin{frame}[label={sec:orgc425b0b}]{Charge Schedule Generation*}
+\begin{frame}[label={sec:orge343fa2}]{SA Wrapper Functions}
+\end{frame}
+\begin{frame}[label={sec:orgb4d1605}]{Charge Schedule Generation}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
@@ -658,7 +986,9 @@ Heuristic & 1916 & 0.5\\[0pt]
             \Return{($0, \bar{\I}$, $\bar{\C}$)}
     }
   \end{algorithm}
+\end{frame}
 
+\begin{frame}[label={sec:org80456b4}]{Charge Schedule Perturbation}
 \begin{center}
 \scalebox{0.65}{
 \begin{minipage}{1.5\linewidth}
@@ -700,8 +1030,9 @@ Heuristic & 1916 & 0.5\\[0pt]
 \end{center}
 \end{frame}
 
-
-\begin{frame}[label={sec:org4acf9ea}]{Results - What Is In The Thesis*}
+\begin{frame}[label={sec:orgee7a0b7}]{SA Thesis Results}
+\end{frame}
+\begin{frame}[label={sec:orge902e52}]{Parameters}
 \begin{center}
 \begin{tabular}{lrr}
 \alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
@@ -728,18 +1059,24 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org731a100}]{Schedule- What Is In The Thesis}
+\begin{frame}[label={sec:org9531c96}]{Schedule}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
 \end{figure}
+\end{column}
+\begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
 \end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org2df0a6b}]{Schedule - What Is In The Thesis}
+\begin{frame}[label={sec:org4461c51}]{Schedule}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
@@ -750,29 +1087,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org059db5e}]{Charger Count - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:org55120e2}]{Charger Count - What Is In The Thesis}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
-\end{figure}
-\end{frame}
-
-\begin{frame}[label={sec:org0f050e4}]{Power - What Is In The Thesis}
+\begin{frame}[label={sec:org78ec94f}]{Power}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
@@ -782,16 +1097,16 @@ Heuristic & 3640.4 & 0.4\\[0pt]
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
 \end{figure}
 \end{frame}
-\begin{frame}[label={sec:orga92a3c0}]{Energy - What Is In The Thesis}
+\begin{frame}[label={sec:org1e2c068}]{Energy}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:org5f79272}]{What Happened?}
+\begin{frame}[label={sec:org41db234}]{What Happened?}
 \end{frame}
-\begin{frame}[label={sec:orgc62d95a}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:orgdd81232}]{How To Resolve This Problem?}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/score-convergence}
@@ -813,7 +1128,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgee40dce}]{Score Convergence Comparison}
+\begin{frame}[label={sec:org356ca1b}]{Score Convergence Comparison}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}

@@ -24,7 +24,7 @@
 #+latex_header: \usepackage{tikz}                           % Draw stuff
 #+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
 #+latex_header: \usepackage{subcaption}                     % Subfigures
-#+latex_header: \usepackage{animate}
+#+latex_header: \usepackage{animate}                        % Created animated things
 
 # ##############################################################################
 # Slide Customization
@@ -32,7 +32,7 @@
 
 # ==============================================================================
 #
-#+latex:\renewcommand{\arraystretch}{1.5}
+#+latex_header:\renewcommand{\arraystretch}{1.5}
 
 # ==============================================================================
 # 16:9
@@ -44,7 +44,13 @@
 
 # ==============================================================================
 # Add USU logo
-#+latex_header:\logo{\includegraphics[height=0.5cm]{img/u-state-black.png}}
+#+latex_header:\logo{
+#+latex_header:\begin{tikzpicture}[overlay,remember picture]
+#+latex_header:\node[left=0.2cm] at (current page.26){
+#+latex_header:\includegraphics[height=0.5cm]{img/u-state-black.png}
+#+latex_header:};
+#+latex_header:\end{tikzpicture}
+#+latex_header:}
 
 # ==============================================================================
 # Add current section slides
@@ -208,12 +214,27 @@
 
 * The Position Allocation Problem Approach With Linear Battery Dynamic
 ** Requirements For BEB Implementation
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
 - Charges must be able to be tracked
 - Service time is unknown
 - Accommodate chargers of different speeds
 - Minimize charger count
 - Minimize consumption cost
 - Encourage slow charger use for battery health
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./img/pap.pdf]]
+
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./img/visit.pdf]]
 
 ** Objective Function :noexport:
 \begin{equation*}
@@ -294,24 +315,36 @@
     \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
 \end{equation*}
 
-** Packing Constraints :noexport:
+** Constraints
 *** Left
 :PROPERTIES:
-:BEAMER_col: 0.5
+:BEAMER_col: 0.4
 :END:
 
-- Used to ensure that individual rectangles do not overlap
+\begin{equation*}
+\begin{array}{l}
+    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0 \\
+    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1 \\
+    \sigma_{ij} + \sigma_{ji} \leq 1 \\
+    \psi_{ij} + \psi_{ji} \leq 1 \\
+    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1 \\
+\end{array}
+\end{equation*}
+
+-----
+
+- Used to ensure that gray rectangles do not overlap
 - $\sigma_{ij}$ establishes temporal ordering when active
 - $\psi_{ij}$ establishes spacial ordering when active
 
 *** Right
 :PROPERTIES:
-:BEAMER_col: 0.5
+:BEAMER_col: 0.6
 :END:
 #+begin_src latex
       \begin{figure}
       \centering
-      \scalebox{0.33}{
+      \scalebox{0.4}{
         \centering
           \begin{tikzpicture}
             % Variables
@@ -331,10 +364,10 @@
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
             % X-axis labels
-            \node [below,align=center] at (\arrx,0) {\scriptsize Arrival     \\ \scriptsize Time \\ $a_D$};
-            \node [below, align=center] at (\initx,0) {\scriptsize Charge    \\ \scriptsize Initiation  \\ $u_D$};
-            \node [below, align=center] at (\endx,0) {\scriptsize Charge     \\ \scriptsize End \\ $d_D$};
-            \node [below, align=center] at (\depx,0) {\scriptsize Departure  \\ \scriptsize Time \\ $e_D$};
+            \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
+            \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
+            \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
+            \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
 
             % Y-axis labels
             \node[rotate=90] at (-1, 2.25) {Queue 1};
@@ -436,12 +469,21 @@
     v_i = \sum_{q=1}^{n_Q} qw_{iq}
 \end{equation*}
 
-** Results
+** Parameters
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 - Executed for 7200 seconds (2 hours)
 - $T = 24$
 - $n_V = 338$
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 - $n_A = 35$
--  $\alpha_i = 90\%$;  $\nu_i = 20\%$;  $\beta_i = 70\%$
+- $\alpha_i = 90\%$;  $\nu_i = 20\%$;  $\beta_i = 70\%$
 - $\forall q \in \{n_B + 1, n_B + 2,..., n_B + n_C \}; m_q = 1000q$
 
 ** Schedules
@@ -451,8 +493,11 @@
 :END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=\textwidth]{img/schedule-milp-pap}
+    \includegraphics[width=\textwidth]{img/milp-pap/schedule-milp-pap}
 \end{figure}
+
+- Utilized more slow chargers for longer durations
+- Fast chargers utilized more sparingly
 
 *** Right
 :PROPERTIES:
@@ -460,8 +505,11 @@
 :END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=\textwidth]{img/schedule-qin}
+    \includegraphics[width=\textwidth]{img/milp-pap/schedule-qin}
 \end{figure}
+
+- Extensive use of fast chargers
+- *Buggy version of Qin, keep because that is in the publication?*
 
 ** Fast Charger Count :noexport:
 \begin{figure}[htpb]
@@ -473,46 +521,59 @@
     \includegraphics[width=\textwidth]{img/charger-count-slow-milp-pap}
 \end{figure}
 
-** Power And Energy Use
+** SOC And Energy Use
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-\begin{figure}[htpb]
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=\textwidth]{img/energy-milp-pap}
+    \includegraphics[width=\textwidth]{img/milp-pap/charge-milp}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=\textwidth]{img/milp-pap/charge-qin}
+\end{subfigure}
 \end{figure}
 
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/power-milp-pap}
-\end{figure}
+
+- SOC of Qin allowed to drop to 0
+- PAP maintained minimum SOC and final SOC
+- PAP accumulated energy is larger due to minimum SOC constraints
+
+#+ATTR_LATEX: :width \textwidth
+[[./img/milp-pap/energy-milp-pap.pdf]]
 
 * The Simulated Annealing Approach With Linear Battery Dynamics
-** Simulated Annealing
+** Simulated Annealing[fn:4]
 *** Left                                                        :B_columns:
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-# - Named after its analogized process where a crystalline solid is heated then allowed to cool at a slow rate until it achieves its most regular possible crystal lattice configuration
-# - The algorithm is often applied to problems that contain many local solutions as it employs a stochastic approach that explores the solution space for an approximate global optimum.
-# - Within the SA process there are three key components
-#   - Cooling Schedule
-#   - Acceptance Criteria
-#   - Generation Mechanisms
+- A probabilistic technique for approximating the global optimum of a given function.
+- Often applied to problems that contain many local solutions
+- Three key components:
+  - Cooling Schedule
+  - Acceptance Criteria
+  - Generation Mechanisms
+
+#+ATTR_LATEX: :width 0.7\linewidth
+[[./img/score-convergence.pdf]]
 
 *** Right                                                       :B_columns:
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 
-# \begin{frame}{Embedded Animation}
-#   \animategraphics[loop,controls,width=\linewidth]{10}{img/tsp-}{0}{16}
-# \end{frame}
+\centering
+\animategraphics[width=0.9\linewidth]{10}{img/tsp/tsp-}{0}{87}
+
 
 ** Cooling Schedule
 *** Left
@@ -538,28 +599,162 @@
   \end{equation*}
 #+end_src
 
-** Acceptance Criteria
+** Acceptance Criteria[fn:4]
 #+name: eq:candaccept
-\begin{equation}
+\begin{equation*}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \begin{cases}
   1                   & \Delta E > 0 \\
   e^{- \frac{\Delta E}{t_m}} & \text{otherwise}
 \end{cases}
-\end{equation}
+\end{equation*}
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+\centering
+\animategraphics[width=\linewidth]{10}{img/sa-visual/sa-}{0}{274}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+
+#+begin_src latex
+  \begin{figure}[t!]
+    \centering \includegraphics[width=\textwidth]{img/geometric.png}
+    \label{fig:geometric}
+  \end{figure}
+#+end_src
 
 ** Generation Mechanisms - Primitive Functions
+*** Left                                                        :B_columns:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
 - New Visit: Move a bus from a wait queue to charge queue
 - Slide Visit: Change the charge duration of a visit
 - New Charger: Move a visit to a new charger
 - Wait: Move a visit to its idle queue
 - New Window: Execute Wait then New Visit primitives
 
+*** Right                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.4}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % X-axis labels
+            \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
+            \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
+            \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
+            \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {Queue 1};
+            \node[rotate=90] at (-1, 7.25) {Queue 2};
+            \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+            % Vertical lines
+            \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+            \draw[dashed] (\initx,\yshift)--(\initx,0);
+            \draw[dashed] (\endx,\yshift)--(\endx,0);
+            \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+            % Horizontal lines
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
+
 ** Generation Mechanisms - Wrapper Functions
+*** Left                                                        :B_columns:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
 - Charge Schedule Generation: Iterate through each visit and execute New Visit
 - Perturb Schedule: Randomly execute one of the primitives with a weighted distribution
 
+*** Right                                                   :B_columns:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.4}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % X-axis labels
+            \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
+            \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
+            \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
+            \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {Queue 1};
+            \node[rotate=90] at (-1, 7.25) {Queue 2};
+            \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+            % Vertical lines
+            \draw[dashed] (\arrx,\yshift)--(\arrx,0);
+            \draw[dashed] (\initx,\yshift)--(\initx,0);
+            \draw[dashed] (\endx,\yshift)--(\endx,0);
+            \draw[dashed] (\depx,\yshift)--(\depx,0);
+
+            % Horizontal lines
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
+
 ** Objective Function
+
 \begin{equation*}
   J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
 \end{equation*}
@@ -628,7 +823,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
       a_i \leq u_i \leq d_i \le e_i \le \mathcal{T}
   \end{equation*}
 
-** Results
+** Parameters
 
 | *Model*     | *Execution Time* [s] | *Iteration* [s] |
 |-----------+--------------------+---------------|
@@ -656,8 +851,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :END:
 
 #+latex: {\scriptsize
-- Point 1
-- Point 2
+- Qin heavily utilizes fast charger
+- PAP has more focus on slow chargers, but utilizes fast charger more readily than SA
 #+latex: }
 
 \begin{figure}
@@ -667,7 +862,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-quinn}
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-qin}
 \end{subfigure}
 \end{figure}
 
@@ -678,8 +873,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 
 #+latex: {\scriptsize
-- Point 3
-- Point 4
+- SA techniques heavily utilize slow charging
+- Fast chargers used sparingly
 #+latex: }
 
 \begin{figure}
@@ -714,28 +909,99 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{figure}
 
 ** Power
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-milp-qin}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-milp-qin}
 \end{figure}
+
+- Heuristic SA maintained the lowest demand peak
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/power-sa}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-sa}
 \end{figure}
+
+
+- Quick SA peak demand comparable to the PAP peak
+
+** Energy
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+
+- PAP maintained lowest energy consumption
+- Second lowest consumed energy by the heuristic SA (185 kW difference)
+- Trade off of the lower peak demand
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
+\end{figure}
+
 ** Energy
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/energy}
+    \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
-
 * TODO The Simulated Annealing Approach With Non-Linear Battery Dynamics
 
 ** Introduction
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
 - Higher fidelity in approximating charge at high SOC
 - Implemented in SA for simplicity
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+
+[[./img/nonlinear-bat.png]]
+
 ** Non-Linear Battery Dynamics Model
-- Show function
-- Show plots
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+#+begin_export latex
+\begin{equation*}
+  \eta_{\xi_i} = \bar{a}_q \eta_i - \bar{b}_q \kappa_{\Xi_i}
+\end{equation*}
+#+end_export
+
+#+begin_export latex
+\begin{equation*}
+\begin{array}{cc}
+  \bar{a}_q = e^{a_q dt} & \bar{b}_q = e^{a_q dt} - 1
+\end{array}
+\end{equation*}
+#+end_export
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+
+[[./img/nonlinear-bat.png]]
+
 ** Results
 - Figures!
 
@@ -746,8 +1012,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 ** Appendix
    :PROPERTIES:
    :END:
-** Supplemental Material :noexport:
-** Mixed Integer Linear Programming*
+
+** Supplemental Material
+** Mixed Integer Linear Programming
 
 \begin{align*}
 \text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
@@ -761,8 +1028,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 - $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
 
 
-** SA Primitive Generators :noexport:
-** New Visit*
+** SA Primitive Generators
+** New Visit
 #+include: alg/new-visit.org
 ** Slide Visit
 #+include: alg/slide-visit.org
@@ -773,15 +1040,15 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 ** New Window
 #+include: alg/new-window.org
 
-
-** SA Wrapper Functions :noexport:
-** Charge Schedule Generation*
+** SA Wrapper Functions
+** Charge Schedule Generation
 #+include: alg/charge-schedule-generation.org
+
+** Charge Schedule Perturbation
 #+include: alg/tweak-schedule.org
 
-
-** SA Old Results :noexport:
-** Results - What Is In The Thesis*
+** SA Thesis Results
+** Parameters
 | *Model*     | *Execution Time* [s] | *Iteration* [s] |
 |-----------+--------------------+---------------|
 | MILP      |               3600 |           N/A |
@@ -801,17 +1068,25 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 - $|t| = 3797$
 - $n_K = 500$
 
-** Schedule- What Is In The Thesis
+** Schedule
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
 \end{figure}
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
 \end{figure}
 
-** Schedule - What Is In The Thesis
+** Schedule
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
@@ -821,7 +1096,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
 \end{figure}
 
-** Charger Count - What Is In The Thesis
+** Charger Count :noexport:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
@@ -831,7 +1106,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
 \end{figure}
 
-** Charger Count - What Is In The Thesis
+** Charger Count :noexport:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
@@ -841,7 +1116,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
 \end{figure}
 
-** Power - What Is In The Thesis
+** Power
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
@@ -850,7 +1125,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
 \end{figure}
-** Energy - What Is In The Thesis
+** Energy
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
@@ -904,7 +1179,7 @@ After Fix
 \end{figure}
 
 * Footnotes
-
+[fn:4] https://en.wikipedia.org/wiki/Simulated_annealing
 [fn:3] https://www.mdpi.com/2077-1312/11/7/1280
 [fn:2] PAP application only
 [fn:1]  A visit describes when a bus arrives, assigned a charge queue, and then departs
