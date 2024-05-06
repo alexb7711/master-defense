@@ -6,7 +6,7 @@
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [presentation]
 #+BEAMER_THEME: default
-#+BEAMER_COLOR_THEME: seahorse
+#+BEAMER_COLOR_THEME: dolphin
 #+OPTIONS: H:2
 #+OPTIONS:   tex:t d:nil todo:t pri:nil tags:nil
 
