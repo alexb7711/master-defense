@@ -22,6 +22,7 @@
 # ##############################################################################
 
 #+latex_header: \usepackage{appendixnumberbeamer}
+#+latex_header: \usepackage{amssymb}
 #+latex_header: \usepackage{tabularx}
 #+latex_header: \usepackage[ruled]{algorithm2e}             % Algorithms
 #+latex_header: \usepackage{tikz}                           % Draw stuff
@@ -122,6 +123,9 @@
 
 * Introduction
 ** TODO Brief State Of The Art
+
+#+include: ./soa.org
+
 ** Problem Description
 #+ATTR_LATEX: :width 0.55\textwidth
 [[./img/visit.pdf]]
@@ -807,9 +811,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.5
 :END:
 - Demand cost
-  - $p_{T_p}[h] = \frac{1}{T_p} \sum_{h-\frac{T_p}{dt}+1}^h p_h$
+  - $p_{T_p,h} = \frac{1}{T_p} \sum_{k = h-\frac{T_p}{dt}+1}^h p_k\; dt$
+  - $p_{max} = \max\limits_{k \in [h-\frac{T_p}{dt}+1, h]}\; p_{T_p,h}$
   - $p_d = \max(p_{fix}, p_{max})$
-  - $p_{max} = \max\limits_{h \in H}p_{T_p}[h]$
 
 *** Right
 :PROPERTIES:
@@ -1000,9 +1004,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
 * TODO The Simulated Annealing Approach With Non-Linear Battery Dynamics
-
 ** Introduction
-
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
@@ -1018,7 +1020,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 [[./img/nonlinear-bat.png]]
 
 ** Non-Linear Battery Dynamics Model
-
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
@@ -1045,7 +1046,47 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 [[./img/nonlinear-bat.png]]
 
 ** Results
-- Figures!
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex: {\scriptsize
+- Minimized demand power
+- Larger energy consumption due to fast charger duration
+#+latex: }
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/power-sa-nonlinear}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/energy-sa-nonlinear}
+\end{subfigure}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex: {\scriptsize
+- Similar schedule output, longer fast charger durations due to nonlinear model
+- Minimum SOC of 85 kWh
+#+latex: }
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/schedule-sa-nonlinear}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+\end{subfigure}
+\end{figure}
 
 * Appendix
   :PROPERTIES:
@@ -1055,7 +1096,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
    :PROPERTIES:
    :END:
 
-** Supplemental Material
 ** Mixed Integer Linear Programming
 
 \begin{align*}
@@ -1117,7 +1157,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-milp}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-milp}
 \end{figure}
 *** Right
 :PROPERTIES:
@@ -1125,17 +1165,26 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
 \end{figure}
 
 ** Schedule
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
 \end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
 \end{figure}
 
 ** Charger Count :noexport:
@@ -1159,13 +1208,22 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{figure}
 
 ** Power
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
 \end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/power-sa}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/power-sa}
 \end{figure}
 ** Energy
 \begin{figure}[htpb]
@@ -1219,6 +1277,11 @@ After Fix
 \centering
     \includegraphics[width=\textwidth]{img/score-convergence}
 \end{figure}
+
+
+** References
+#+cite_export: bibtex plain
+#+print_bibliography:
 
 * Footnotes
 [fn:5] https://en.wikipedia.org/wiki/Simulated_annealing

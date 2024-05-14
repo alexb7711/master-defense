@@ -6,3 +6,8 @@ auto/
 *.out
 *.snm
 *.toc
+main.fdb_latexmk
+main.bbl
+main.blg
+main.dvi
+main.fls
