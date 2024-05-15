@@ -1024,14 +1024,14 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 - Quick SA peak demand comparable to the PAP peak
 
-** TODO Energy and SOC
+** Energy and SOC
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
 :END:
 
 - PAP maintained lowest energy consumption
-- Second lowest consumed energy by the heuristic SA (185 kW difference)
+- Second lowest consumed energy by the heuristic SA (*185* kW difference)
 - Trade off of the lower peak demand
 
 *** Right
