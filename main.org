@@ -872,24 +872,70 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 ** Parameters
 
-| *Model*     | *Execution Time* [s] | *Iteration* [s] |
-|-----------+--------------------+---------------|
-| MILP      |               1900 |           N/A |
-| Quick     |             1532.8 |           0.4 |
-| Heuristic |               1916 |           0.5 |
-
 *** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+| *Model*     | *Execution Time* [s] |
+|-----------+--------------------|
+| MILP      |               1900 |
+| Quick     |             1532.8 |
+| Heuristic |               1916 |
+
+**** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 - $T_0 = 90000$
 - $\beta = 0.997$
-*** Right
+
+**** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 - $|t| = 3797$
 - $n_K = 500$
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.3}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {Queue 1};
+            \node[rotate=90] at (-1, 7.25) {Queue 2};
+            \node[rotate=90] at (-1, 12.25) {Queue 3};
+
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
 
 ** Schedule
 *** Left
@@ -1003,7 +1049,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \centering
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
-* TODO The Simulated Annealing Approach With Non-Linear Battery Dynamics
+
+* The Simulated Annealing Approach With Non-Linear Battery Dynamics
 ** Introduction
 *** Left
 :PROPERTIES:
@@ -1043,7 +1090,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.7
 :END:
 
-[[./img/nonlinear-bat.png]]
+[[./img/nonlinear-bat-lin.png]]
 
 ** Results
 *** Left
@@ -1231,19 +1278,26 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
 \end{figure}
 
-** What Happened?
 ** How To Resolve This Problem?
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/score-convergence}
+    \includegraphics[width=\textwidth]{img/score-convergence}
 \end{figure}
 
 - Reverse search and weight the visit indices
 - Be more aggressive in exploiting the best solution
 
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=0.6\textwidth]{img/score-diverge}
+    \includegraphics[width=\textwidth]{img/score-diverge}
 \end{figure}
 
 - Candidate solutions diverge
