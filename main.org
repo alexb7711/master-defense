@@ -371,22 +371,10 @@
             \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
-            % X-axis labels
-            \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
-            \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
-            \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
-            \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
-
             % Y-axis labels
             \node[rotate=90] at (-1, 2.25) {Queue 1};
             \node[rotate=90] at (-1, 7.25) {Queue 2};
             \node[rotate=90] at (-1, 12.25) {Queue 3};
-
-            % Vertical lines
-            \draw[dashed] (\arrx,\yshift)--(\arrx,0);
-            \draw[dashed] (\initx,\yshift)--(\initx,0);
-            \draw[dashed] (\endx,\yshift)--(\endx,0);
-            \draw[dashed] (\depx,\yshift)--(\depx,0);
 
             % Horizontal lines
             \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -712,22 +700,10 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
-            % X-axis labels
-            \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
-            \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
-            \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
-            \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
-
             % Y-axis labels
             \node[rotate=90] at (-1, 2.25) {Queue 1};
             \node[rotate=90] at (-1, 7.25) {Queue 2};
             \node[rotate=90] at (-1, 12.25) {Queue 3};
-
-            % Vertical lines
-            \draw[dashed] (\arrx,\yshift)--(\arrx,0);
-            \draw[dashed] (\initx,\yshift)--(\initx,0);
-            \draw[dashed] (\endx,\yshift)--(\endx,0);
-            \draw[dashed] (\depx,\yshift)--(\depx,0);
 
             % Horizontal lines
             \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -773,22 +749,10 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
-            % X-axis labels
-            \node [below,align=center] at (\arrx,0) {\large Arrival     \\ \large Time};
-            \node [below, align=center] at (\initx,0) {\large Charge    \\ \large Start};
-            \node [below, align=center] at (\endx,0) {\large Charge     \\ \large End};
-            \node [below, align=center] at (\depx,0) {\large Departure  \\ \large Time};
-
             % Y-axis labels
             \node[rotate=90] at (-1, 2.25) {Queue 1};
             \node[rotate=90] at (-1, 7.25) {Queue 2};
             \node[rotate=90] at (-1, 12.25) {Queue 3};
-
-            % Vertical lines
-            \draw[dashed] (\arrx,\yshift)--(\arrx,0);
-            \draw[dashed] (\initx,\yshift)--(\initx,0);
-            \draw[dashed] (\endx,\yshift)--(\endx,0);
-            \draw[dashed] (\depx,\yshift)--(\depx,0);
 
             % Horizontal lines
             \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -984,7 +948,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.3
 :END:
 
-- PAP maintained lowest energy consumption
+- PAP maintained the lowest energy consumption
 - Second lowest consumed energy by the heuristic SA (185 kW difference)
 - Trade off of the lower peak demand
 
@@ -1003,7 +967,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \centering
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
-* TODO The Simulated Annealing Approach With Non-Linear Battery Dynamics
+
+* The Simulated Annealing Approach With Non-Linear Battery Dynamics
 ** Introduction
 *** Left
 :PROPERTIES:
@@ -1051,10 +1016,10 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.5
 :END:
 
-#+latex: {\scriptsize
+#+latex:{\scriptsize
 - Minimized demand power
 - Larger energy consumption due to fast charger duration
-#+latex: }
+#+latex:}
 
 \begin{figure}
 \begin{subfigure}[t]{\textwidth}
@@ -1072,10 +1037,10 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.5
 :END:
 
-#+latex: {\scriptsize
+#+latex:{\scriptsize
 - Similar schedule output, longer fast charger durations due to nonlinear model
 - Minimum SOC of 85 kWh
-#+latex: }
+#+latex:}
 
 \begin{figure}
 \begin{subfigure}[t]{\textwidth}
