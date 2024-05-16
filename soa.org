@@ -1,20 +1,21 @@
+#+latex:{\scriptsize
 #+ATTR_LATEX: :environment tabularx :width \textwidth :align XXXXXXX
-|-----------------------------------+--------+-------------+----------------+--------------------+----------------------+----------------|
-| Ref                               | Demand | Consumption | Linear Battery | Non-linear Battery | Charger Minimization | Battery Health |
-|-----------------------------------+--------+-------------+----------------+--------------------+----------------------+----------------|
-| [cite:@zhou-2020-bi-objec]        | \checkmark     |             |                |                    |                      |                |
-| [cite:@whitaker-2023-a-network]   | \checkmark     |             |                | \checkmark                 |                      |                |
-| [cite:@zhou-2020-bi-objec]        | \checkmark     |             |                |                    |                      |                |
-| [cite:@zhou-2020-collab-optim]    | \checkmark     |             |                |                    |                      |                |
-| [cite:@duan-2021-refor-mixed]     | \checkmark     |             |                |                    |                      |                |
-| [cite:@rinaldi-2020-mixed-fleet]  | \checkmark     |             |                |                    |                      |                |
-| [cite:@jahic-2019-preem]          | \checkmark     | \checkmark          | \checkmark             | \checkmark                 |                      |                |
-| [cite:@frendo-2021-open-sourc]    | \checkmark     | \checkmark          | \checkmark             |                    |                      |                |
-| [cite:@qin-2016-numer-analy]      | \checkmark     | \checkmark          | \checkmark             |                    |                      |                |
-| [cite:@mortensen-2023-cost-minim] | \checkmark     | \checkmark          | \checkmark             |                    |                      |                |
-| BEB PAP                           | \checkmark     | \checkmark          | \checkmark             |                    | \checkmark                   | \checkmark             |
-| SA BEB PAP                        | \checkmark     | \checkmark          | \checkmark             | \checkmark                 | ?                    | \checkmark             |
-|-----------------------------------+--------+-------------+----------------+--------------------+----------------------+----------------|
+|-----------------------------------+--------+-------------+--------+------------+--------------+----------------|
+| Ref                               | Demand | Consumption | Linear | Non-linear | Charger Min. | Battery Health |
+|-----------------------------------+--------+-------------+--------+------------+--------------+----------------|
+| [cite:@zhou-2020-bi-objec]        | \checkmark     |             | 1      |            | \checkmark           |                |
+| [cite:@whitaker-2023-a-network]   | \checkmark     |             |        | \checkmark         | \checkmark           | \checkmark             |
+| [cite:@zhou-2020-collab-optim]    | \checkmark     |             | 2      |            |              |                |
+| [cite:@duan-2021-refor-mixed]     | \checkmark     |             | 3      |            |              |                |
+| [cite:@rinaldi-2020-mixed-fleet]  | \checkmark     |             | \checkmark     |            |              |                |
+| [cite:@jahic-2019-preem]          | \checkmark     | \checkmark          | \checkmark     | \checkmark         |              |                |
+| [cite:@frendo-2021-open-sourc]    | \checkmark     | \checkmark          | \checkmark     |            |              |                |
+| [cite:@qin-2016-numer-analy]      | \checkmark     | \checkmark          | \checkmark     |            |              |                |
+| [cite:@mortensen-2023-cost-minim] | \checkmark     | \checkmark          | \checkmark     |            |              |                |
+| BPAP                              | \checkmark     | \checkmark          | \checkmark     |            | \checkmark           | \checkmark             |
+| SA BPAP                           | \checkmark     | \checkmark          | \checkmark     | \checkmark         | 4            | \checkmark             |
+|-----------------------------------+--------+-------------+--------+------------+--------------+----------------|
+#+latex:}
 
 #+begin_comment
 Ref # of table
