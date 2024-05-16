@@ -122,7 +122,7 @@
 #+latex_header: \newcommand{\Hset}{H}                       % Set of visits 1-H
 
 * Introduction
-** TODO Brief State Of The Art
+** Brief State Of The Art
 
 #+include: ./soa.org
 
