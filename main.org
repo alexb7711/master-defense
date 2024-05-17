@@ -1,4 +1,4 @@
-#+TITLE:A SIMULATED ANNEALING APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM
+#+TITLE:A POSITION ALLOCATION PROBLEM APPROACH TO THE BATTERY ELECTRIC BUS CHARGING PROBLEM
 #+author: Alexander Brown
 #+date: \today
 
@@ -257,6 +257,14 @@
 - All arrivals are considered unique
 - Service times are assumed to be known
 
+-----
+
+- Discrete charger queues
+- Multiple chargers
+- Bus can have multiple visits
+- Propagate battery SOC across visits
+- Unknown charge times
+
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -265,8 +273,33 @@
 #+ATTR_LATEX: :width 0.8\textwidth
 [[./img/pap.pdf]]
 
-#+ATTR_LATEX: :width 0.7\textwidth
-[[./img/visit.pdf]]
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.3}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
 
 * The Position Allocation Problem Approach With Linear Battery Dynamic
 ** Requirements For BEB Implementation
@@ -301,7 +334,7 @@
 - $w_{iq} m_q$: Assignment cost
 - $g_{iq} \epsilon_q$: Consumption cost
 
-** Constraints
+** Mixed Integer Linear Program
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
@@ -337,6 +370,8 @@
   \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i} \\
   \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i} \\
   \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i} \\
+  \eta_{\Gamma^0_b} = \alpha_{\Gamma_i} \kappa_{\Gamma_i} \\
+  \eta_{\Gamma^f_b} \geq \beta_{\Gamma_b} \kappa_{\Gamma_b}    \\
 \end{array}
 \end{equation*}
 
@@ -524,8 +559,7 @@
 | $n_V$     |   338 |
 | $n_A$     |    35 |
 | $\alpha_i$     |   90% |
-| $\beta_i$     |   70% |
-| $\nu_i$     |   20% |
+| $\nu_i$     |   25% |
 | $\beta_i$     |   70% |
 | $m_q$     | 1000q |
 
@@ -580,7 +614,7 @@
     \includegraphics[width=\textwidth]{img/milp-pap/schedule-milp-pap}
 \end{figure}
 
-- Utilized more slow chargers for longer durations
+- Slow chargers utilized for frequently
 - Fast chargers utilized more sparingly
 
 *** Right
@@ -592,8 +626,8 @@
     \includegraphics[width=\textwidth]{img/milp-pap/schedule-qin}
 \end{figure}
 
-- Extensive use of fast chargers
 - Slow chargers used for short durations
+- Extensive use of fast chargers
 
 ** Fast Charger Count :noexport:
 \begin{figure}[htpb]
@@ -875,7 +909,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{equation*}
   \begin{equation*}
       \label{seq:c7}
-      \kappa_{\Xi_i} \geq \eta_{i} + r_{q_i}s_i
+      \kappa_{b_i} \geq \eta_{i} + r_{q_i}s_i
   \end{equation*}
   \begin{equation*}
       \label{seq:c8}
