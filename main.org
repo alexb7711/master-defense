@@ -260,7 +260,7 @@
 -----
 
 - Discrete charger queues
-- Multiple chargers
+- Multiple charger types
 - Bus can have multiple visits
 - Propagate battery SOC across visits
 - Unknown charge times
@@ -309,7 +309,7 @@
 :END:
 - Charges must be able to be tracked
 - Service time is unknown
-- Accommodate chargers of different speeds
+- Accommodate different charger rates
 - Minimize charger count
 - Minimize consumption cost
 - Encourage slow charger use for battery health
@@ -674,6 +674,7 @@
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
+
 - A probabilistic technique for approximating the global optimum of a given function.
 - Often applied to problems that contain many local solutions
 - Three key components:
@@ -731,7 +732,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.7
 :END:
 \centering
-\animategraphics[width=\linewidth]{10}{img/sa-visual/sa-}{0}{274}
+\animategraphics[width=\linewidth]{10}{img/sa-visual/sa-}{90}{274}
 
 *** Right
 :PROPERTIES:
@@ -991,7 +992,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 #+latex: {\scriptsize
 - Qin heavily utilizes fast charger
-- PAP emphasizes slow queues, but utilizes fast chargers readily
+- BPAP emphasizes slow queues, but utilizes fast chargers readily
 #+latex: }
 
 \begin{figure}
@@ -1070,7 +1071,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 
 - Quick SA peak demand comparable to the PAP peak
 
-** Energy and SOC
+** SOC and Energy
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
@@ -1094,7 +1095,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
 \end{figure}
 
-** Energy and Scores
+** Scores and Energy
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.35
@@ -1142,7 +1143,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :END:
 #+begin_export latex
 \begin{equation*}
-  \eta_{\xi_i} = \bar{a}_q \eta_i - \bar{b}_q \kappa_{\Xi_i}
+\eta_{\xi_i} = \bar{a}_q \eta_i - \bar{b}_q \kappa_{b_i}
 \end{equation*}
 #+end_export
 
@@ -1162,6 +1163,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 [[./img/nonlinear-bat-lin.png]]
 
 ** Results
+
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -1204,6 +1206,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{subfigure}
 \end{figure}
 
+** \center Questions?
 * Appendix
   :PROPERTIES:
   :BEAMER_env: appendix
