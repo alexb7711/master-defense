@@ -24,6 +24,7 @@
 #+latex_header: \usepackage{appendixnumberbeamer}
 #+latex_header: \usepackage{amssymb}
 #+latex_header: \usepackage{tabularx}
+#+latex_header: \usepackage[group-separator={,}, group-minimum-digits=3]{siunitx}   % Format numbers
 #+latex_header: \usepackage[ruled]{algorithm2e}             % Algorithms
 #+latex_header: \usepackage{tikz}                           % Draw stuff
 #+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
@@ -122,13 +123,60 @@
 #+latex_header: \newcommand{\Hset}{H}                       % Set of visits 1-H
 
 * Introduction
+** Problem Description
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./img/route-schedule.pdf]]
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.4}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
+
+            % Horizontal lines
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
+
 ** Brief State Of The Art
 
 #+include: ./soa.org
-
-** Problem Description
-#+ATTR_LATEX: :width 0.55\textwidth
-[[./img/visit.pdf]]
 
 ** Problem Description :noexport:
 - Introduce the problem
@@ -363,7 +411,7 @@
             \def \yshift {5}
 
             % Axis
-            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
             % Rectangles
             \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -372,9 +420,9 @@
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
             % Y-axis labels
-            \node[rotate=90] at (-1, 2.25) {Queue 1};
-            \node[rotate=90] at (-1, 7.25) {Queue 2};
-            \node[rotate=90] at (-1, 12.25) {Queue 3};
+            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
             % Horizontal lines
             \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -500,7 +548,7 @@
             \def \yshift {5}
 
             % Axis
-            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
             % Rectangles
             \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -509,9 +557,9 @@
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
             % Y-axis labels
-            \node[rotate=90] at (-1, 2.25) {Queue 1};
-            \node[rotate=90] at (-1, 7.25) {Queue 2};
-            \node[rotate=90] at (-1, 12.25) {Queue 3};
+            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
             \draw[dotted] (0, 4.5) -- (15, 4.5);
             \draw[dotted] (0, 9.5) -- (15, 9.5);
@@ -692,7 +740,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \def \yshift {5}
 
             % Axis
-            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
             % Rectangles
             \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -701,9 +749,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
             % Y-axis labels
-            \node[rotate=90] at (-1, 2.25) {Queue 1};
-            \node[rotate=90] at (-1, 7.25) {Queue 2};
-            \node[rotate=90] at (-1, 12.25) {Queue 3};
+            \node[rotate=90] at (-1, 2.25) {\huge Idle 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
             % Horizontal lines
             \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -730,8 +778,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 #+begin_src latex
       \begin{figure}
       \centering
-      \scalebox{0.4}{
         \centering
+      \scalebox{0.4}{
           \begin{tikzpicture}
             % Variables
             \def \arrx   {2.0}
@@ -741,7 +789,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \def \yshift {5}
 
             % Axis
-            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
             % Rectangles
             \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -750,9 +798,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
             % Y-axis labels
-            \node[rotate=90] at (-1, 2.25) {Queue 1};
-            \node[rotate=90] at (-1, 7.25) {Queue 2};
-            \node[rotate=90] at (-1, 12.25) {Queue 3};
+            \node[rotate=90] at (-1, 2.25) {\huge \textbf Idle 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
             % Horizontal lines
             \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -868,7 +916,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 #+begin_src latex
       \begin{figure}
       \centering
-      \scalebox{0.3}{
+      \scalebox{0.4}{
         \centering
           \begin{tikzpicture}
             % Variables
@@ -879,7 +927,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \def \yshift {5}
 
             % Axis
-            \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
             % Rectangles
             \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -888,9 +936,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
             \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
             % Y-axis labels
-            \node[rotate=90] at (-1, 2.25) {Queue 1};
-            \node[rotate=90] at (-1, 7.25) {Queue 2};
-            \node[rotate=90] at (-1, 12.25) {Queue 3};
+            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
             \draw[dotted] (0, 4.5) -- (15, 4.5);
             \draw[dotted] (0, 9.5) -- (15, 9.5);
@@ -994,8 +1042,12 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :BEAMER_col: 0.3
 :END:
 
-- PAP maintained the lowest energy consumption
-- Second lowest consumed energy by the heuristic SA (*185* kW difference)
+- SOC threshold deficits:
+  - quick: 2.24 kWh
+  - heuristic: 5.74 kWh
+- Energy delta:
+  - quick: 191.47 kWh
+  - heuristic: 58.46 kWh
 - Trade off of the lower peak demand
 
 *** Right
@@ -1008,7 +1060,26 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
     \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
 \end{figure}
 
-** Energy
+** Energy and Scores
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.35
+:END:
+
+#+ATTR_LATEX: :environment tabular :align l|c
+|--------------+----------------|
+| Schedule     | Score          |
+|--------------+----------------|
+| BPAP         | \num{18500000} |
+| Qin-Modified | \num{34578526} |
+| Heuristic    | \num{11673937} |
+| Quick        | \num{11234577} |
+|--------------+----------------|
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.75
+:END:
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}

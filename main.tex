@@ -1,4 +1,4 @@
-% Created 2024-05-16 Thu 17:01
+% Created 2024-05-16 Thu 18:32
 % Intended LaTeX compiler: pdflatex
 \documentclass[aspectratio=169]{beamer}
 \usepackage[utf8]{inputenc}
@@ -15,6 +15,7 @@
 \usepackage{appendixnumberbeamer}
 \usepackage{amssymb}
 \usepackage{tabularx}
+\usepackage[group-separator={,}, group-minimum-digits=3]{siunitx}   % Format numbers
 \usepackage[ruled]{algorithm2e}             % Algorithms
 \usepackage{tikz}                           % Draw stuff
 \usetikzlibrary{arrows.meta}                % Arrows for tikz
@@ -90,8 +91,55 @@ Utah State University
 
 
 \section{Introduction}
-\label{sec:orgcdcd50f}
-\begin{frame}[label={sec:org0e4a231}]{Brief State Of The Art}
+\label{sec:org6513b23}
+\begin{frame}[label={sec:orgcb8a04d}]{Problem Description}
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{./img/route-schedule.pdf}
+\end{center}
+\end{column}
+
+\begin{column}{0.5\columnwidth}
+\begin{figure}
+    \centering
+    \scalebox{0.4}{
+      \centering
+        \begin{tikzpicture}
+          % Variables
+          \def \arrx   {2.0}
+          \def \initx  {3.5}
+          \def \endx   {8.5}
+          \def \depx   {10.0}
+          \def \yshift {5}
+
+          % Axis
+          \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
+
+          % Rectangles
+          \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+          \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+          \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+          \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+          % Y-axis labels
+          \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+          \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+          \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
+
+          % Horizontal lines
+          \draw[dotted] (0, 4.5) -- (15, 4.5);
+          \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+        \end{tikzpicture}
+      }
+      \label{fig:spacial-and-temporal-constr}
+\end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[label={sec:orge96cdc1}]{Brief State Of The Art}
 {\scriptsize
 \begin{center}
 \begin{tabularx}{\textwidth}{XXXXXXX}
@@ -115,19 +163,13 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
 }
 \end{frame}
 
-\begin{frame}[label={sec:org8d36bb6}]{Problem Description}
-\begin{center}
-\includegraphics[width=0.55\textwidth]{./img/visit.pdf}
-\end{center}
-\end{frame}
-
-\begin{frame}[label={sec:org15d00bf}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
+\begin{frame}[label={sec:org2f446ed}]{The Berth Allocation Problem\footnote{\url{https://www.mdpi.com/2077-1312/11/7/1280}}}
 \begin{center}
 \includegraphics[width=0.8\textwidth]{./img/berthing-sky-picture.png}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org2be3c71}]{The Berth Allocation Problem}
+\begin{frame}[label={sec:org88309f1}]{The Berth Allocation Problem}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{itemize}
@@ -155,7 +197,7 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org24632c8}]{The Position Allocation Problem}
+\begin{frame}[label={sec:org4772795}]{The Position Allocation Problem}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -179,8 +221,8 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
 \end{frame}
 
 \section{The Position Allocation Problem Approach With Linear Battery Dynamic}
-\label{sec:org60a8b62}
-\begin{frame}[label={sec:org5c15bf7}]{Requirements For BEB Implementation}
+\label{sec:org620b3a5}
+\begin{frame}[label={sec:org824043f}]{Requirements For BEB Implementation}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{itemize}
@@ -205,7 +247,7 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgcca8597}]{Constraints}
+\begin{frame}[label={sec:org0f63675}]{Constraints}
 \begin{equation*}
 \label{eq:objective}
 	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
@@ -241,7 +283,7 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orga7a07d4}]{Constraints}
+\begin{frame}[label={sec:orgc52a803}]{Constraints}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{equation*}
@@ -277,7 +319,7 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
           \def \yshift {5}
 
           % Axis
-          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+          \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
           % Rectangles
           \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -286,9 +328,9 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
           \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
           % Y-axis labels
-          \node[rotate=90] at (-1, 2.25) {Queue 1};
-          \node[rotate=90] at (-1, 7.25) {Queue 2};
-          \node[rotate=90] at (-1, 12.25) {Queue 3};
+          \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+          \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+          \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
           % Horizontal lines
           \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -302,7 +344,7 @@ SA BPAP & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 4 
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org5d8abf9}]{Parameters}
+\begin{frame}[label={sec:org1b71715}]{Parameters}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{center}
@@ -334,7 +376,7 @@ Execution & 2 hr\\[0pt]
           \def \yshift {5}
 
           % Axis
-          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+          \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
           % Rectangles
           \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -343,9 +385,9 @@ Execution & 2 hr\\[0pt]
           \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
           % Y-axis labels
-          \node[rotate=90] at (-1, 2.25) {Queue 1};
-          \node[rotate=90] at (-1, 7.25) {Queue 2};
-          \node[rotate=90] at (-1, 12.25) {Queue 3};
+          \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+          \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+          \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
           \draw[dotted] (0, 4.5) -- (15, 4.5);
           \draw[dotted] (0, 9.5) -- (15, 9.5);
@@ -358,7 +400,7 @@ Execution & 2 hr\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgfbc2ee0}]{Schedules}
+\begin{frame}[label={sec:org6224a30}]{Schedules}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
@@ -386,7 +428,7 @@ Execution & 2 hr\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb339502}]{SOC And Energy Use}
+\begin{frame}[label={sec:org0bdd2a5}]{SOC And Energy Use}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -420,8 +462,8 @@ Max & 388 & 368.354\\[0pt]
 \end{frame}
 
 \section{The Simulated Annealing Approach With Linear Battery Dynamics}
-\label{sec:org8f7277c}
-\begin{frame}[label={sec:org23b5b17}]{Simulated Annealing\footnote{\url{https://en.wikipedia.org/wiki/Simulated\_annealing}}}
+\label{sec:orgfe70491}
+\begin{frame}[label={sec:org29f71e4}]{Simulated Annealing\footnote{\url{https://en.wikipedia.org/wiki/Simulated\_annealing}}}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -443,7 +485,7 @@ Max & 388 & 368.354\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgae18097}]{Cooling Schedule}
+\begin{frame}[label={sec:org6259bea}]{Cooling Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{itemize}
@@ -465,7 +507,7 @@ t_m = \beta t_{m-1}
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org893a4d6}]{Acceptance Criteria\footnote{\url{https://en.wikipedia.org/wiki/Simulated\_annealing}}}
+\begin{frame}[label={sec:orgc8cdd19}]{Acceptance Criteria\footnote{\url{https://en.wikipedia.org/wiki/Simulated\_annealing}}}
 \begin{equation*}
 \label{eq:candaccept}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
@@ -490,7 +532,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org5551281}]{Generation Mechanisms - Primitive Functions}
+\begin{frame}[label={sec:orge1346f8}]{Generation Mechanisms - Primitive Functions}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{itemize}
@@ -516,7 +558,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
           \def \yshift {5}
 
           % Axis
-          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+          \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
           % Rectangles
           \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -525,9 +567,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
           \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
           % Y-axis labels
-          \node[rotate=90] at (-1, 2.25) {Queue 1};
-          \node[rotate=90] at (-1, 7.25) {Queue 2};
-          \node[rotate=90] at (-1, 12.25) {Queue 3};
+          \node[rotate=90] at (-1, 2.25) {\huge Idle 1};
+          \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+          \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
           % Horizontal lines
           \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -541,7 +583,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgdfded04}]{Generation Mechanisms - Wrapper Functions}
+\begin{frame}[label={sec:orga740fea}]{Generation Mechanisms - Wrapper Functions}
 \begin{columns}
 \begin{column}{0.4\columnwidth}
 \begin{itemize}
@@ -553,8 +595,8 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \begin{column}{0.6\columnwidth}
 \begin{figure}
     \centering
-    \scalebox{0.4}{
       \centering
+    \scalebox{0.4}{
         \begin{tikzpicture}
           % Variables
           \def \arrx   {2.0}
@@ -564,7 +606,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
           \def \yshift {5}
 
           % Axis
-          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+          \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
           % Rectangles
           \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -573,9 +615,9 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
           \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
           % Y-axis labels
-          \node[rotate=90] at (-1, 2.25) {Queue 1};
-          \node[rotate=90] at (-1, 7.25) {Queue 2};
-          \node[rotate=90] at (-1, 12.25) {Queue 3};
+          \node[rotate=90] at (-1, 2.25) {\huge \textbf Idle 1};
+          \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+          \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
           % Horizontal lines
           \draw[dotted] (0, 4.5) -- (15, 4.5);
@@ -589,7 +631,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8f5b326}]{Objective Function}
+\begin{frame}[label={sec:org233d9e8}]{Objective Function}
 \begin{equation*}
   J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
 \end{equation*}
@@ -616,7 +658,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org3fbaea9}]{Constraints}
+\begin{frame}[label={sec:org05fde0e}]{Constraints}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{equation*}
@@ -662,7 +704,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7b49bb5}]{Parameters}
+\begin{frame}[label={sec:org28269bb}]{Parameters}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -695,7 +737,7 @@ Heuristic & 1916\\[0pt]
 \begin{column}{0.5\columnwidth}
 \begin{figure}
     \centering
-    \scalebox{0.3}{
+    \scalebox{0.4}{
       \centering
         \begin{tikzpicture}
           % Variables
@@ -706,7 +748,7 @@ Heuristic & 1916\\[0pt]
           \def \yshift {5}
 
           % Axis
-          \draw [thick,<->] (0,15) node[above]{Queues} -- (0,0) -- (15,0) node[right]{Time};
+          \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
           % Rectangles
           \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
@@ -715,9 +757,9 @@ Heuristic & 1916\\[0pt]
           \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
           % Y-axis labels
-          \node[rotate=90] at (-1, 2.25) {Queue 1};
-          \node[rotate=90] at (-1, 7.25) {Queue 2};
-          \node[rotate=90] at (-1, 12.25) {Queue 3};
+          \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+          \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+          \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
 
           \draw[dotted] (0, 4.5) -- (15, 4.5);
           \draw[dotted] (0, 9.5) -- (15, 9.5);
@@ -730,7 +772,7 @@ Heuristic & 1916\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgc23441a}]{Schedule}
+\begin{frame}[label={sec:orgceb74bb}]{Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 {\scriptsize
@@ -774,7 +816,7 @@ Heuristic & 1916\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org07468a7}]{Power}
+\begin{frame}[label={sec:orga62979b}]{Power}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
@@ -801,12 +843,20 @@ Heuristic & 1916\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8a32464}]{Energy and SOC}
+\begin{frame}[label={sec:org8a85dca}]{Energy and SOC}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{itemize}
-\item PAP maintained the lowest energy consumption
-\item Second lowest consumed energy by the heuristic SA (\alert{185} kW difference)
+\item SOC threshold deficits:
+\begin{itemize}
+\item quick: 2.24 kWh
+\item heuristic: 5.74 kWh
+\end{itemize}
+\item Energy delta:
+\begin{itemize}
+\item quick: 191.47 kWh
+\item heuristic: 58.46 kWh
+\end{itemize}
 \item Trade off of the lower peak demand
 \end{itemize}
 \end{column}
@@ -820,16 +870,35 @@ Heuristic & 1916\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org56cd632}]{Energy}
+\begin{frame}[label={sec:org9cc05a3}]{Energy}
+\begin{columns}
+\begin{column}{0.35\columnwidth}
+\begin{center}
+\begin{tabular}{l|c}
+\hline
+Schedule & Score\\[0pt]
+\hline
+BPAP & \num{18500000}\\[0pt]
+Qin-Modified & \num{34578526}\\[0pt]
+Heuristic & \num{11673937}\\[0pt]
+Quick & \num{11234577}\\[0pt]
+\hline
+\end{tabular}
+\end{center}
+\end{column}
+
+\begin{column}{0.75\columnwidth}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
+\end{column}
+\end{columns}
 \end{frame}
 
 \section{The Simulated Annealing Approach With Non-Linear Battery Dynamics}
-\label{sec:org34c35de}
-\begin{frame}[label={sec:org1b9f94c}]{Introduction}
+\label{sec:org0467c50}
+\begin{frame}[label={sec:org623e62a}]{Introduction}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{itemize}
@@ -846,7 +915,7 @@ Heuristic & 1916\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org70b1aa3}]{Non-Linear Battery Dynamics Model}
+\begin{frame}[label={sec:orgd5034c5}]{Non-Linear Battery Dynamics Model}
 \begin{columns}
 \begin{column}{0.3\columnwidth}
 \begin{equation*}
@@ -868,7 +937,7 @@ Heuristic & 1916\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org86f8e90}]{Results}
+\begin{frame}[label={sec:orgffba4c7}]{Results}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 {\scriptsize
@@ -913,10 +982,10 @@ Heuristic & 1916\\[0pt]
 \end{frame}
 
 \appendix
-\begin{frame}[label={sec:org6ba120a}]{Appendix}
+\begin{frame}[label={sec:orgd591243}]{Appendix}
 \end{frame}
 
-\begin{frame}[label={sec:orgc4e1eda}]{Mixed Integer Linear Programming}
+\begin{frame}[label={sec:orgd7ad6be}]{Mixed Integer Linear Programming}
 \begin{align*}
 \text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
 \text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
@@ -932,9 +1001,9 @@ Heuristic & 1916\\[0pt]
 \end{frame}
 
 
-\begin{frame}[label={sec:orgb528344}]{SA Primitive Generators}
+\begin{frame}[label={sec:orgcc914e5}]{SA Primitive Generators}
 \end{frame}
-\begin{frame}[label={sec:org4cdece2}]{New Visit}
+\begin{frame}[label={sec:org1215a99}]{New Visit}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New visit algorithm}
@@ -966,7 +1035,7 @@ Heuristic & 1916\\[0pt]
 \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org8d48115}]{Slide Visit}
+\begin{frame}[label={sec:org792a4a1}]{Slide Visit}
 \begin{algorithm}[H]
   \scriptsize
   \caption{Slide Visit Algorithm} \label{alg:slide-visit}
@@ -993,7 +1062,7 @@ Heuristic & 1916\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org9125671}]{New Charger}
+\begin{frame}[label={sec:orgd40c961}]{New Charger}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New Charger Algorithm} \label{alg:new-charger} \LinesNumbered \TitleOfAlgo{New Charger} \KwIn{$\Sol$}
@@ -1017,7 +1086,7 @@ Heuristic & 1916\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orgde145fc}]{Wait}
+\begin{frame}[label={sec:org13994d0}]{Wait}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Wait algorithm} \label{alg:wait}
@@ -1037,7 +1106,7 @@ Heuristic & 1916\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org27fddf7}]{New Window}
+\begin{frame}[label={sec:org4b776c1}]{New Window}
 \begin{algorithm}[H]
   \scriptsize
   \caption{New window algorithm} \label{alg:new-window}
@@ -1065,9 +1134,9 @@ Heuristic & 1916\\[0pt]
 \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:orgc93f09a}]{SA Wrapper Functions}
+\begin{frame}[label={sec:org40c2a16}]{SA Wrapper Functions}
 \end{frame}
-\begin{frame}[label={sec:orga6f3ed6}]{Charge Schedule Generation}
+\begin{frame}[label={sec:org02b08cc}]{Charge Schedule Generation}
 \begin{algorithm}[H]
 \scriptsize
 \caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
@@ -1090,7 +1159,7 @@ Heuristic & 1916\\[0pt]
   \end{algorithm}
 \end{frame}
 
-\begin{frame}[label={sec:org5eb3f27}]{Charge Schedule Perturbation}
+\begin{frame}[label={sec:orge50cbe7}]{Charge Schedule Perturbation}
 \begin{center}
 \scalebox{0.65}{
 \begin{minipage}{1.5\linewidth}
@@ -1132,9 +1201,9 @@ Heuristic & 1916\\[0pt]
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgabd9bea}]{SA Thesis Results}
+\begin{frame}[label={sec:orgdfeab6a}]{SA Thesis Results}
 \end{frame}
-\begin{frame}[label={sec:org01bda1b}]{Parameters}
+\begin{frame}[label={sec:orge33b385}]{Parameters}
 \begin{center}
 \begin{tabular}{lrr}
 \alert{Model} & \alert{Execution Time} [s] & \alert{Iteration} [s]\\[0pt]
@@ -1161,7 +1230,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb9446ed}]{Schedule}
+\begin{frame}[label={sec:orgdd1bb7b}]{Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
@@ -1178,7 +1247,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb68f368}]{Schedule}
+\begin{frame}[label={sec:org1f85608}]{Schedule}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
@@ -1196,7 +1265,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orga607d80}]{Power}
+\begin{frame}[label={sec:org79835f4}]{Power}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
@@ -1213,14 +1282,14 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org6ad0999}]{Energy}
+\begin{frame}[label={sec:org8bbe365}]{Energy}
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
 \end{figure}
 \end{frame}
 
-\begin{frame}[label={sec:orgca3bc7c}]{How To Resolve This Problem?}
+\begin{frame}[label={sec:org80d772a}]{How To Resolve This Problem?}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{figure}[htpb]
@@ -1248,7 +1317,7 @@ Heuristic & 3640.4 & 0.4\\[0pt]
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orga718350}]{Score Convergence Comparison}
+\begin{frame}[label={sec:orgd92d74b}]{Score Convergence Comparison}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -1275,7 +1344,7 @@ After Fix
 \end{frame}
 
 
-\begin{frame}[label={sec:org05cd742}]{References}
+\begin{frame}[label={sec:org3ea4642}]{References}
 \bibliographystyle{plain}
 \bibliography{/home/alex/Documents/citation-database/lit-ref,/home/alex/Documents/citation-database/lib-ref}
 \end{frame}
