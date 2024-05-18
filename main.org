@@ -30,10 +30,33 @@
 #+latex_header: \usetikzlibrary{arrows.meta}                % Arrows for tikz
 #+latex_header: \usepackage{subcaption}                     % Subfigures
 #+latex_header: \usepackage{animate}                        % Created animated things
+#+latex_header: \usepackage{xcolor}
 
 # ##############################################################################
 # Slide Customization
 # ##############################################################################
+
+
+# ==============================================================================
+#
+#+latex_header: % Syntax: \colorboxed[<color model>]{<color specification>}{<math formula>}
+#+latex_header: \newcommand*{\colorboxed}{}
+#+latex_header: \def\colorboxed#1#{%
+#+latex_header:   \colorboxedAux{#1}%
+#+latex_header: }
+#+latex_header: \newcommand*{\colorboxedAux}[3]{%
+#+latex_header:   % #1: optional argument for color model
+#+latex_header:   % #2: color specification
+#+latex_header:   % #3: formula
+#+latex_header:   \begingroup
+#+latex_header:     \colorlet{cb@saved}{.}%
+#+latex_header:     \color#1{#2}%
+#+latex_header:     \boxed{%
+#+latex_header:       \color{cb@saved}%
+#+latex_header:       #3%
+#+latex_header:     }%
+#+latex_header:   \endgroup
+#+latex_header: }
 
 # ==============================================================================
 #
@@ -173,55 +196,15 @@
         \label{fig:spacial-and-temporal-constr}
   \end{figure}
 #+end_src
-
+** Overall Objective
+** Model Objectives
 ** Brief State Of The Art
 
 #+include: ./soa.org
 
-** Problem Description :noexport:
-- Introduce the problem
-- What are we trying to solve
-- Mini literature review
-
-** Problem Description :noexport:
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- Fleet size of $n_A$ buses
-- $n_V$ visits[fn:1] divided between the $n_A$ buses
-- Each bus in initialized with a charge of $\alpha_b \kappa_i$
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- Each route has a paired route with discharge of $\Delta_i$
-- The charge is not allowed to go below $\nu_b \kappa_i$ during operational hours
-- Each bus is required to finish the day with a minimum charge of $\beta_b \kappa_i$[fn:2]
-
 ** The Berth Allocation Problem[fn:3]
 #+ATTR_LATEX: :width 0.8\textwidth
 [[./img/berthing-sky-picture.png]]
-
-** The Berth Allocation Problem :noexport:
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.7
-:END:
-- A variant of the rectangle packing problem
-- Solves the problem of optimally assigning incoming vessels to be serviced
-  - $\mathbb{O}$: Spatiotemporal allocations for vessels
-  - $O$: Time horizon and berthing space
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.3
-:END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/spatiotemporal-packing}
-\end{figure}
 
 ** The Berth Allocation Problem
 *** Left
@@ -252,52 +235,60 @@
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
+src_latex{{\begin{center} {\small \underline{PAP Behavior}}}\end{center}}
+
+#+latex:{\small
 - Service flow is left to right
 - Single charger type
 - All arrivals are considered unique
 - Service times are assumed to be known
+#+latex:}
 
 -----
 
+src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
+
+#+latex:{\small
 - Discrete charger queues
 - Multiple charger types
 - Bus can have multiple visits
 - Propagate battery SOC across visits
 - Unknown charge times
+#+latex:}
 
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 
-#+ATTR_LATEX: :width 0.8\textwidth
+#+ATTR_LATEX: :width 0.7\textwidth
 [[./img/pap.pdf]]
 
 #+begin_src latex
-      \begin{figure}
+  \begin{figure}
+    \centering
+    \scalebox{0.3}{
       \centering
-      \scalebox{0.3}{
-        \centering
-          \begin{tikzpicture}
-            % Variables
-            \def \arrx   {2.0}
-            \def \initx  {3.5}
-            \def \endx   {8.5}
-            \def \depx   {10.0}
-            \def \yshift {5}
+      \begin{tikzpicture}
+        % Variables
+        \def \arrx   {2.0}
+        \def \initx  {3.5}
+        \def \endx   {8.5}
+        \def \depx   {10.0}
+        \def \yshift {5}
 
-            % Axis
-            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
+        % Axis
+        \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
 
-            % Rectangles
-            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
-            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
-            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
-            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+        % Rectangles
+        \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+        \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+        \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+        \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
 
-          \end{tikzpicture}
-        }
-        \label{fig:spacial-and-temporal-constr}
+      \end{tikzpicture}
+    }
+    \label{fig:spacial-and-temporal-constr}
   \end{figure}
 #+end_src
 
@@ -305,7 +296,7 @@
 ** Requirements For BEB Implementation
 *** Left
 :PROPERTIES:
-:BEAMER_col: 0.6
+:BEAMER_col: 0.5
 :END:
 - Charges must be able to be tracked
 - Service time is unknown
@@ -316,7 +307,7 @@
 
 *** Right
 :PROPERTIES:
-:BEAMER_col: 0.4
+:BEAMER_col: 0.5
 :END:
 
 #+ATTR_LATEX: :width 0.8\textwidth
@@ -325,101 +316,80 @@
 #+ATTR_LATEX: :width 0.7\textwidth
 [[./img/visit.pdf]]
 
-** Objective Function :noexport:
-\begin{equation*}
-\label{eq:objective}
-	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
-\end{equation*}
-
-- $w_{iq} m_q$: Assignment cost
-- $g_{iq} \epsilon_q$: Consumption cost
-
 ** Mixed Integer Linear Program
 \begin{equation*}
 \label{eq:objective}
-	\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)
+	\colorboxed{red}{\min \sum_{i=1}^{n_V} \sum_{q=1}^{n_Q} \Big( w_{iq} m_q + g_{iq} \epsilon_q \Big)}
 \end{equation*}
 
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
+:BEAMER_env: beamercolorbox
+:BEAMER_opt: shadow=true,rounded=true
 :END:
 
+#+latex:{\small
 \begin{equation*}
+\colorboxed{blue}{
 \begin{array}{l}
     u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0 \\
     v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1 \\
     \sigma_{ij} + \sigma_{ji} \leq 1 \\
     \psi_{ij} + \psi_{ji} \leq 1 \\
     \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1 \\
+\end{array}}
+\end{equation*}
+\begin{equation*}
+\colorboxed{orange}{
+\begin{array}{l}
     \sum_{q=1}^{n_Q} w_{iq} = 1 \\
     v_i = \sum_{q=1}^{n_Q} qw_{iq} \\
-\end{array}
+\end{array}}
 \end{equation*}
+#+latex:}
 
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 
+#+latex:{\small
 \begin{equation*}
+\colorboxed{purple}{
 \begin{array}{l}
   s_i + u_i = d_i \\
   a_i \leq u_i \leq (T - s_i) \\
   d_i \leq \tau_i \\
+\end{array}}
+\end{equation*}
+\begin{equation*}
+\colorboxed{green}{
+\begin{array}{l}
   \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i} \\
   \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i} \\
   \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i} \\
   \eta_{\Gamma^0_b} = \alpha_{\Gamma_i} \kappa_{\Gamma_i} \\
   \eta_{\Gamma^f_b} \geq \beta_{\Gamma_b} \kappa_{\Gamma_b}    \\
-\end{array}
+\end{array}}
 \end{equation*}
+#+latex:}
 
-** Packing Constraints :noexport:
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-- Used to ensure that individual rectangles do not overlap
-- $\sigma_{ij}$ establishes temporal ordering when active
-- $\psi_{ij}$ establishes spacial ordering when active
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-\begin{equation*}
-    u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0
-\end{equation*}
-\begin{equation*}
-    v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1
-\end{equation*}
-\begin{equation*}
-    \sigma_{ij} + \sigma_{ji} \leq 1
-\end{equation*}
-\begin{equation*}
-    \psi_{ij} + \psi_{ji} \leq 1
-\end{equation*}
-\begin{equation*}
-    \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1
-\end{equation*}
-
-** Constraints
+** Queuing Constraints
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.4
 :END:
 
 \begin{equation*}
+\colorboxed{blue}{
 \begin{array}{l}
     u_j - u_i - s_i - (\sigma_{ij} - 1)T \geq 0 \\
     v_j - v_i - (\psi_{ij} - 1)n_Q \geq 1 \\
     \sigma_{ij} + \sigma_{ji} \leq 1 \\
     \psi_{ij} + \psi_{ji} \leq 1 \\
     \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \geq 1 \\
-\end{array}
+\end{array}}
 \end{equation*}
 
 -----
@@ -468,92 +438,15 @@
         \label{fig:spacial-and-temporal-constr}
   \end{figure}
 #+end_src
-** Packing Constraints :noexport:
-** Linear Battery Dynamic Constraints :noexport:
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
- - Calculates the charge for the next visit
- - Ensures the current charge is above the minimum charge threshold
- - Ensures the current charge is below the battery capacity
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{equation*}
-    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i = \eta_{\gamma_i}
-\end{equation*}
-\begin{equation*}
-    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q - \Delta_i \geq \nu_{\Gamma_i} \kappa_{\Gamma_i}
-\end{equation*}
-\begin{equation*}
-    \eta_i + \sum_{q=1}^{n_Q} g_{iq} r_q \leq \kappa_{\Gamma_i}
-\end{equation*}
-
-** Bilinear Linearization Constraints :noexport:
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-- Linearization of bilinear terms
-
-#+begin_src latex
-\begin{equation*}
-    \label{eq:giq_cases}
-    g_{iq} =
-    \begin{cases}
-        s_i & w_{iq} = 1 \\
-        0 & w_{iq} = 0
-    \end{cases}.
-\end{equation*}
-#+end_src
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{equation*}
-    s_i - (1 - w_{iq})M \leq g_{iq}
-\end{equation*}
-\begin{equation*}
-    s_i \geq g_{iq}
-\end{equation*}
-\begin{equation*}
-    Mw_{iq} \geq g_{iq}
-\end{equation*}
-\begin{equation*}
-    0 \leq g_{iq}
-\end{equation*}
-
-** Charging Queue Constraints :noexport:
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-- Ensure only one queue is selected per visit
-- Convert vector representation of queue selection to an integer
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{equation*}
-    \sum_{q=1}^{n_Q} w_{iq} = 1
-\end{equation*}
-\begin{equation*}
-    v_i = \sum_{q=1}^{n_Q} qw_{iq}
-\end{equation*}
-
 ** Parameters
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
 :END:
-#+ATTR_LATEX: :environment tabular :align |l|l|
+#+ATTR_LATEX: :environment tabular :align l|l
+|-----------+-------|
+| Parameter | Value |
+|-----------+-------|
 | Execution |  2 hr |
 | $T$       | 24 hr |
 | $n_V$     |   338 |
@@ -562,6 +455,7 @@
 | $\nu_i$     |   25% |
 | $\beta_i$     |   70% |
 | $m_q$     | 1000q |
+|-----------+-------|
 
 *** Right
 :PROPERTIES:
@@ -614,8 +508,8 @@
     \includegraphics[width=\textwidth]{img/milp-pap/schedule-milp-pap}
 \end{figure}
 
-- Slow chargers utilized for frequently
-- Fast chargers utilized more sparingly
+- Slow chargers utilized more frequently
+- Fast chargers utilized sparingly
 
 *** Right
 :PROPERTIES:
@@ -629,16 +523,6 @@
 - Slow chargers used for short durations
 - Extensive use of fast chargers
 
-** Fast Charger Count :noexport:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/charger-count-fast-milp-pap}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/charger-count-slow-milp-pap}
-\end{figure}
-
 ** SOC And Energy Use
 *** Left
 :PROPERTIES:
@@ -646,14 +530,14 @@
 :END:
 
 #+ATTR_LATEX: :environment tabular :align l|cccc
-|------+---------+---------|
-|      |    MILP |     Qin |
-|------+---------+---------|
-| /    |       < |       < |
-| Mean | 265.873 |  355.93 |
-| Min  |   97.04 |   0.000 |
-| Max  |     388 | 368.354 |
-|------+---------+---------|
+|------+------------+-----------|
+|      | MILP [kWh] | Qin [kWh] |
+|------+------------+-----------|
+| /    |          < |         < |
+| Mean |    265.873 |    355.93 |
+| Min  |      97.04 |     0.000 |
+| Max  |        388 |   368.354 |
+|------+------------+-----------|
 
 - SOC of Qin allowed to drop to 0
 - PAP maintained minimum SOC and final SOC
@@ -669,6 +553,392 @@
 - PAP accumulated energy is larger due to minimum SOC constraints
 
 * The Simulated Annealing Approach With Linear Battery Dynamics
+** Objective Function And Constraints
+
+\begin{equation*}
+  \colorboxed{red}{J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]}
+\end{equation*}
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+latex:{\footnotesize
+- $p_d$: Demand cost
+  - $p_{T_p,h} = \frac{1}{T_p} \sum_{k = h-\frac{T_p}{dt}+1}^h p_k\; dt$
+  - $p_{max} = \max\limits_{k \in [h-\frac{T_p}{dt}+1, h]}\; p_{T_p,h}$
+  - $p_d = \max(p_{fix}, p_{max})$
+
+  \begin{equation*}
+    \colorboxed{purple}{
+        \begin{array}{c}
+          s_i = d_i - u_i \\
+          a_i \leq u_i \leq d_i \le e_i \le \mathcal{T} \\
+    \end{array}}
+  \end{equation*}
+
+  \begin{equation*}
+    \colorboxed{green}{
+        \begin{array}{c}
+          \eta_{\xi_i} = \eta_{i} + r_{q_i}s_i - \Delta_i \\
+          \kappa_{b_i} \geq \eta_{i} + r_{q_i}s_i \\
+    \end{array}}
+  \end{equation*}
+#+latex:}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+latex:{\footnotesize
+- $\epsilon_{q_i}r_{q_i}$: Assignment Cost
+- $z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i})$: Penalty Function
+- $z_c r_{q_i} s_i$: Consumption Cost
+
+  \begin{equation*}
+    \colorboxed{blue}{
+    \begin{array}{l}
+      u_j - d_i - (\sigma_{ij} - 1)T \ge 0 \\
+      q_j - q_i - 1 - (\psi_{ij} - 1)Q \ge 0 \\
+      \sigma_{ij} + \sigma_{ji} \le 1 \\
+      \psi_{ij} + \psi_{ji} \le 1 \\
+      \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \ge 1
+    \end{array}}
+  \end{equation*}
+#+latex:}
+
+** Parameters
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex:{\small
+*NOTES*:
+- Results are different from what is presented in the thesis
+- BPAP model does not take demand cost into consideration
+#+latex:}
+
+#+ATTR_LATEX: :environment tabular :align l|c
+| *Model*     | *Execution Time* [s] |
+|-----------+--------------------|
+| /         |                  < |
+| BPAP      |               1900 |
+| Quick     |               1533 |
+| Heuristic |               1916 |
+|-----------+--------------------|
+
+**** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $T_0 = 90000$
+- $\beta = 0.997$
+
+**** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- $|t| = 3797$
+- $n_K = 500$
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.4}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
+
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
+
+** Schedule
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex: {\scriptsize
+- Qin heavily utilizes fast charger
+- BPAP emphasizes slow queues, but utilizes fast chargers readily
+#+latex: }
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-milp}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-qin}
+\end{subfigure}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex: {\scriptsize
+- SA techniques heavily utilize slow charging
+- SA techniques utilize fast chargers more sparingly
+#+latex: }
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+\end{subfigure}
+\end{figure}
+
+** Power
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-milp-qin}
+\end{figure}
+
+- Heuristic SA maintained the lowest demand peak
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-sa}
+\end{figure}
+
+
+- Quick SA peak demand comparable to the PAP peak
+
+** SOC and Energy
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+
+- SOC threshold deficits:
+  - quick: 2.24 kWh
+  - heuristic: 5.74 kWh
+- Energy delta:
+  - quick: 191.47 kWh
+  - heuristic: 58.46 kWh
+- Trade off of the lower peak demand
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
+\end{figure}
+
+** Scores and Energy
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.35
+:END:
+
+#+ATTR_LATEX: :environment tabular :align l|c
+|--------------+----------------|
+| Schedule     | Score          |
+|--------------+----------------|
+| BPAP         | \num{18500000} |
+| Qin-Modified | \num{34578526} |
+| Heuristic    | \num{11673937} |
+| Quick        | \num{11234577} |
+|--------------+----------------|
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.75
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
+\end{figure}
+
+* Summary and Questions
+** TODO Summary
+** TODO Publications
+** Questions?
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\centering
+\Huge Questions?
+
+* Appendix
+  :PROPERTIES:
+  :BEAMER_env: appendix
+  :END:
+
+** Appendix
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\centering
+\Huge Appendix
+
+** The Simulated Annealing Approach With Non-Linear Battery Dynamics
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\centering
+\Huge SA with Non-Linear Battery Dynamics
+
+** Introduction
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+- Higher fidelity in approximating charge at high SOC
+- Implemented in SA for simplicity
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+
+[[./img/nonlinear-bat.png]]
+
+** Non-Linear Battery Dynamics Model
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+#+begin_export latex
+\begin{equation*}
+\eta_{\xi_i} = \bar{a}_q \eta_i - \bar{b}_q \kappa_{b_i}
+\end{equation*}
+#+end_export
+
+#+begin_export latex
+\begin{equation*}
+\begin{array}{cc}
+  \bar{a}_q = e^{a_q dt} & \bar{b}_q = e^{a_q dt} - 1
+\end{array}
+\end{equation*}
+#+end_export
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+
+[[./img/nonlinear-bat-lin.png]]
+
+** Results
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex:{\scriptsize
+- Minimized demand power
+- Larger energy consumption due to fast charger duration
+#+latex:}
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/power-sa-nonlinear}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/energy-sa-nonlinear}
+\end{subfigure}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+latex:{\scriptsize
+- Similar schedule output, longer fast charger durations due to nonlinear model
+- Minimum SOC of 85 kWh
+#+latex:}
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/schedule-sa-nonlinear}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/schedule-sa-heuristic}
+\end{subfigure}
+\end{figure}
+
+
+** Mixed Integer Linear Programming
+
+\begin{align*}
+\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
+\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
+                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
+                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
+\end{align*}
+
+- $J$: Objective function
+- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
+- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
+
+
+** Simulated Annealing
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\centering
+\Huge Simulated Annealing
+
 ** Simulated Annealing[fn:4]
 *** Left                                                        :B_columns:
 :PROPERTIES:
@@ -731,6 +1001,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :PROPERTIES:
 :BEAMER_col: 0.7
 :END:
+
 \centering
 \animategraphics[width=\linewidth]{10}{img/sa-visual/sa-}{90}{274}
 
@@ -847,389 +1118,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{figure}
 #+end_src
 
-** Objective Function
-
-\begin{equation*}
-  J(\mathbb{I}) = z_d p_d + \sum_{i=1}^{n_V} \Big[ \epsilon_{q_i}r_{q_i} + z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i}) + z_c r_{q_i} s_i \Big]
-\end{equation*}
-
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- Demand cost
-  - $p_{T_p,h} = \frac{1}{T_p} \sum_{k = h-\frac{T_p}{dt}+1}^h p_k\; dt$
-  - $p_{max} = \max\limits_{k \in [h-\frac{T_p}{dt}+1, h]}\; p_{T_p,h}$
-  - $p_d = \max(p_{fix}, p_{max})$
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- $\epsilon_{q_i}r_{q_i}$: Assignment Cost
-- $z_p \phi_i(\eta_i - \nu_{b_i} \kappa_{b_i})$: Penalty Function
-- $z_c r_{q_i} s_i$: Consumption Cost
-
-** Constraints
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-  \begin{equation*}
-      \label{seq:c0}
-      u_j - d_i - (\sigma_{ij} - 1)T \ge 0
-  \end{equation*}
-  \begin{equation*}
-      \label{seq:c1}
-      q_j - q_i - 1 - (\psi_{ij} - 1)Q \ge 0
-  \end{equation*}
-  \begin{equation*}
-      \label{seq:c2}
-      \sigma_{ij} + \sigma_{ji} \le 1
-  \end{equation*}
-  \begin{equation*}
-     \label{seq:c3}
-      \psi_{ij} + \psi_{ji} \le 1
-  \end{equation*}
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-  \begin{equation*}
-      \label{seq:c4}
-      \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \ge 1
-  \end{equation*}
-  \begin{equation*}
-      \label{seq:c5}
-      s_i = d_i - u_i
-  \end{equation*}
-  \begin{equation*}
-      \label{seq:c6}
-       \eta_{\xi_i} = \eta_{i} + r_{q_i}s_i - \Delta_i
-  \end{equation*}
-  \begin{equation*}
-      \label{seq:c7}
-      \kappa_{b_i} \geq \eta_{i} + r_{q_i}s_i
-  \end{equation*}
-  \begin{equation*}
-      \label{seq:c8}
-      a_i \leq u_i \leq d_i \le e_i \le \mathcal{T}
-  \end{equation*}
-
-** Parameters
-
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-| *Model*     | *Execution Time* [s] |
-|-----------+--------------------|
-| MILP      |               1900 |
-| Quick     |             1532.8 |
-| Heuristic |               1916 |
-
-**** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- $T_0 = 90000$
-- $\beta = 0.997$
-
-**** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-- $|t| = 3797$
-- $n_K = 500$
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-#+begin_src latex
-      \begin{figure}
-      \centering
-      \scalebox{0.4}{
-        \centering
-          \begin{tikzpicture}
-            % Variables
-            \def \arrx   {2.0}
-            \def \initx  {3.5}
-            \def \endx   {8.5}
-            \def \depx   {10.0}
-            \def \yshift {5}
-
-            % Axis
-            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
-
-            % Rectangles
-            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
-            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
-            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
-            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
-
-            % Y-axis labels
-            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
-            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
-            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
-
-            \draw[dotted] (0, 4.5) -- (15, 4.5);
-            \draw[dotted] (0, 9.5) -- (15, 9.5);
-
-          \end{tikzpicture}
-        }
-        \label{fig:spacial-and-temporal-constr}
-  \end{figure}
-#+end_src
-
-** Schedule
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-#+latex: {\scriptsize
-- Qin heavily utilizes fast charger
-- BPAP emphasizes slow queues, but utilizes fast chargers readily
-#+latex: }
-
-\begin{figure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-milp}
-\end{subfigure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-qin}
-\end{subfigure}
-\end{figure}
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-#+latex: {\scriptsize
-- SA techniques heavily utilize slow charging
-- SA techniques utilize fast chargers more sparingly
-#+latex: }
-
-\begin{figure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
-\end{subfigure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
-\end{subfigure}
-\end{figure}
-
-** Charger Count :noexport:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-slow-sa}
-\end{figure}
-
-** Charger Count :noexport:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-good/charger-count-fast-sa}
-\end{figure}
-
-** Power
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-milp-qin}
-\end{figure}
-
-- Heuristic SA maintained the lowest demand peak
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-sa}
-\end{figure}
-
-
-- Quick SA peak demand comparable to the PAP peak
-
-** SOC and Energy
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.3
-:END:
-
-- SOC threshold deficits:
-  - quick: 2.24 kWh
-  - heuristic: 5.74 kWh
-- Energy delta:
-  - quick: 191.47 kWh
-  - heuristic: 58.46 kWh
-- Trade off of the lower peak demand
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.7
-:END:
-
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
-\end{figure}
-
-** Scores and Energy
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.35
-:END:
-
-#+ATTR_LATEX: :environment tabular :align l|c
-|--------------+----------------|
-| Schedule     | Score          |
-|--------------+----------------|
-| BPAP         | \num{18500000} |
-| Qin-Modified | \num{34578526} |
-| Heuristic    | \num{11673937} |
-| Quick        | \num{11234577} |
-|--------------+----------------|
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.75
-:END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
-\end{figure}
-
-* The Simulated Annealing Approach With Non-Linear Battery Dynamics
-** Introduction
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.3
-:END:
-- Higher fidelity in approximating charge at high SOC
-- Implemented in SA for simplicity
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.7
-:END:
-
-[[./img/nonlinear-bat.png]]
-
-** Non-Linear Battery Dynamics Model
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.3
-:END:
-#+begin_export latex
-\begin{equation*}
-\eta_{\xi_i} = \bar{a}_q \eta_i - \bar{b}_q \kappa_{b_i}
-\end{equation*}
-#+end_export
-
-#+begin_export latex
-\begin{equation*}
-\begin{array}{cc}
-  \bar{a}_q = e^{a_q dt} & \bar{b}_q = e^{a_q dt} - 1
-\end{array}
-\end{equation*}
-#+end_export
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.7
-:END:
-
-[[./img/nonlinear-bat-lin.png]]
-
-** Results
-
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-#+latex:{\scriptsize
-- Minimized demand power
-- Larger energy consumption due to fast charger duration
-#+latex:}
-
-\begin{figure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/power-sa-nonlinear}
-\end{subfigure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/energy-sa-nonlinear}
-\end{subfigure}
-\end{figure}
-
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-
-#+latex:{\scriptsize
-- Similar schedule output, longer fast charger durations due to nonlinear model
-- Minimum SOC of 85 kWh
-#+latex:}
-
-\begin{figure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/schedule-sa-nonlinear}
-\end{subfigure}
-\begin{subfigure}[t]{\textwidth}
-\centering
-    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
-\end{subfigure}
-\end{figure}
-
-** \center Questions?
-* Appendix
-  :PROPERTIES:
-  :BEAMER_env: appendix
-  :END:
-** Appendix
-   :PROPERTIES:
-   :END:
-
-** Mixed Integer Linear Programming
-
-\begin{align*}
-\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
-\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
-                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
-                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
-\end{align*}
-
-- $J$: Objective function
-- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
-- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
-
-
-** SA Primitive Generators
 ** New Visit
 #+include: alg/new-visit.org
 ** Slide Visit
@@ -1241,7 +1129,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 ** New Window
 #+include: alg/new-window.org
 
-** SA Wrapper Functions
 ** Charge Schedule Generation
 #+include: alg/charge-schedule-generation.org
 
@@ -1249,6 +1136,13 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 #+include: alg/tweak-schedule.org
 
 ** SA Thesis Results
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\centering
+\Huge Thesis Results
+
 ** Parameters
 | *Model*     | *Execution Time* [s] | *Iteration* [s] |
 |-----------+--------------------+---------------|
@@ -1304,26 +1198,6 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
-\end{figure}
-
-** Charger Count :noexport:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-slow-sa}
-\end{figure}
-
-** Charger Count :noexport:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-milp-qin}
-\end{figure}
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/charger-count-fast-sa}
 \end{figure}
 
 ** Power
