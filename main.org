@@ -1012,7 +1012,10 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 \end{subfigure}
 \end{figure}
 
-** TODO Publications
+** Publications
+
+[[./img/pub.png]]
+
 ** Questions?
 :PROPERTIES:
 :BEAMER_env: fullframe
