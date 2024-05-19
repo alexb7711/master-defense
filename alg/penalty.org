@@ -1,0 +1,8 @@
+#+name: eq:penalty
+\begin{equation}
+  \phi(x) =
+  \begin{cases}
+    0   & x \ge 0 \\
+    x^2 & x < 0\text{.}
+  \end{cases}
+\end{equation}

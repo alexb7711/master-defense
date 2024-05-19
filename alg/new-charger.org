@@ -8,13 +8,18 @@
 
       \Begin
       {
-        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
-        $q \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+        $i \leftarrow \Sol_{i}$\tcc*{Extract visit index}
+        $\I \leftarrow \Sol_{\I}$\tcc*{Extract visit tuple}
+        $\C \leftarrow \Sol_{\C}$\tcc*{Extract visit charger availability}
 
-        \If(\tcc*[f]{If there is time available in $C_{q}$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$\bar{\C}_{i.q}$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+        $\bar{q} \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
+
+        \If(\tcc*[f]{If there is time available in $C_{q}$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \FindFreeTime{$\bar{\C}_{i.q}$, $i$, $\bar{q}$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
         {
           \tcc{Return visit, note $u$ and $d$ are the original inital/final charge times.}
-          \Return{($i, \I, (q,\I_{i.u}, \I_{i.d}),\bar{\C}$)}
+          $\bar{I}_{i.q} \leftarrow \bar{q}$\tcc*{Update visit tuple with new charge queue}
+          \Return{($i, \bar{I}, \bar{\C}$)}
         }
 
         \Return{($\varnothing$)}\tcc*{Return nothing}

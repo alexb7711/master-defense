@@ -43,14 +43,14 @@
 #+latex:\setbeamercolor{block body example}{fg=black,bg=YellowGreen!50}
 #+latex:\setbeamercolor{example text}{fg=black}
 
-#+latex:\setbeamercolor{block title alerted}{fg=Maroon,bg=red!60}
-#+latex:\setbeamercolor{block body alerted}{fg=black,bg=red!40}
+#+latex:\setbeamercolor{block title alerted}{fg=Blue,bg=SkyBlue!60}
+#+latex:\setbeamercolor{block body alerted}{fg=black,bg=SkyBlue!40}
 #+latex:\setbeamercolor{alerted text}{fg=black}
 
-#+latex:\setbeamercolor{block title}{fg=Blue,bg=SkyBlue!70}
-#+latex:\setbeamercolor{block body}{fg=black,bg=SkyBlue!50}
-#+latex:\setbeamercolor{itemize item}{fg=black}
-#+latex:\setbeamercolor{itemize subitem}{fg=black}
+# +latex:\setbeamercolor{block title}{fg=Blue,bg=SkyBlue!70}
+# +latex:\setbeamercolor{block body}{fg=black,bg=SkyBlue!50}
+# +latex:\setbeamercolor{itemize item}{fg=black}
+# +latex:\setbeamercolor{itemize subitem}{fg=black}
 
 # ==============================================================================
 #
@@ -98,7 +98,7 @@
 
 # This line inserts a table of contents with the current section highlighted at
 # the beginning of each section
-#+BEAMER_HEADER: \begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}
+# +BEAMER_HEADER: \begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}
 
 # In order to have the miniframes/smoothbars navigation bullets even though we do not use subsections
 # q.v. https://tex.stackexchange.com/questions/2072/beamer-navigation-circles-without-subsections/2078#2078
@@ -158,14 +158,31 @@
 #+latex_header: \newcommand{\Hset}{H}                       % Set of visits 1-H
 
 * Introduction
+** Section
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\tableofcontents[currentsection]
+
 ** Problem Description
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 
-#+ATTR_LATEX: :width 0.8\textwidth
-[[./img/route-schedule.pdf]]
+#+ATTR_LATEX: :environment tabular :align l|ccc
+| Bus | Start [h] | Stop [h] | Discharge [kWh] |
+|-----+-----------+----------+-----------------|
+|   / |           |          |               < |
+|   1 |         1 |      1.5 |              50 |
+|   1 |         2 |     2.25 |              10 |
+|   2 |         0 |     0.75 |              15 |
+|   2 |      1.25 |        2 |              10 |
+|   2 |       2.5 |        3 |              12 |
+|   3 |         2 |        3 |              20 |
+|   \vdots |         \vdots |        \vdots |               \vdots |
+|-----+-----------+----------+-----------------|
 
 *** Right
 :PROPERTIES:
@@ -270,7 +287,6 @@
 ** Model Objectives - BPAP
 :PROPERTIES:
 :END:
-
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -278,6 +294,7 @@
 
 **** BEB Implementation of the PAP (BPAP)
 :PROPERTIES:
+:BEAMER_env: alertblock
 :END:
 
 #+latex:{\footnotesize
@@ -460,6 +477,26 @@ src_latex{\begin{center} {\small \underline{Desired Behavior}}\end{center}}
 #+end_src
 
 * The Position Allocation Problem Approach With Linear Battery Dynamic
+** Section
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+*** src_latex{ }
+:PROPERTIES:
+:END:
+
+#+ATTR_LATEX: :width 0.5\textwidth
+[[./img/pap.pdf]]
+
+
+*** src_latex{ }
+:PROPERTIES:
+:BEAMER_env: alertblock
+:END:
+
+\tableofcontents[currentsection]
+
 ** Requirements For BEB Implementation
 *** Left
 :PROPERTIES:
@@ -698,7 +735,7 @@ src_latex{\begin{center} {\small \underline{Desired Behavior}}\end{center}}
 
 #+ATTR_LATEX: :environment tabular :align l|cccc
 |------+------------+-----------|
-|      | MILP [kWh] | Qin [kWh] |
+|      | BPAP [kWh] | Qin [kWh] |
 |------+------------+-----------|
 | /    |          < |         < |
 | Mean |    265.873 |    355.93 |
@@ -720,6 +757,25 @@ src_latex{\begin{center} {\small \underline{Desired Behavior}}\end{center}}
 - PAP accumulated energy is larger due to minimum SOC constraints
 
 * The Simulated Annealing Approach With Linear Battery Dynamics
+** Section
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+*** src_latex{ }
+:PROPERTIES:
+:END:
+
+#+ATTR_LATEX: :width 0.4\textwidth
+[[./img/score-convergence.pdf]]
+
+*** src_latex{ }
+:PROPERTIES:
+:BEAMER_env: exampleblock
+:END:
+
+\tableofcontents[currentsection]
+
 ** Objective Function And Constraints
 
 \begin{equation*}
@@ -915,7 +971,6 @@ _*NOTES*_:
     \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-sa}
 \end{figure}
 
-
 - Quick SA peak demand comparable to the PAP peak
 
 ** SOC and Energy
@@ -967,7 +1022,14 @@ _*NOTES*_:
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
 
-* TODO Summary and Questions
+* Summary and Questions
+** Section
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+
+\tableofcontents[currentsection]
+
 ** Summary
 
 *** Left
@@ -1024,7 +1086,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 \centering
 \Huge Questions?
 
-* Appendix
+* Appendix 
   :PROPERTIES:
   :BEAMER_env: appendix
   :END:
@@ -1051,7 +1113,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 - $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
 
 
-** The Simulated Annealing Approach With Non-Linear Battery Dynamics
+** The Simulated Annealing Approach With Non-Linear Battery Dynamics 
 :PROPERTIES:
 :BEAMER_env: fullframe
 :END:
@@ -1059,7 +1121,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 \centering
 \Huge SA with Non-Linear Battery Dynamics
 
-** Introduction
+** Introduction 
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
@@ -1074,7 +1136,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 
 [[./img/nonlinear-bat.png]]
 
-** Non-Linear Battery Dynamics Model
+** Non-Linear Battery Dynamics Model 
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.3
@@ -1100,7 +1162,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 
 [[./img/nonlinear-bat-lin.png]]
 
-** Results
+** Results 
 
 *** Left
 :PROPERTIES:
@@ -1143,9 +1205,9 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
     \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/schedule-sa-heuristic}
 \end{subfigure}
 \end{figure}
+ 
 
-
-** Simulated Annealing
+** Simulated Annealing 
 :PROPERTIES:
 :BEAMER_env: fullframe
 :END:
@@ -1153,7 +1215,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 \centering
 \Huge Simulated Annealing
 
-** Simulated Annealing[fn:4]
+** Simulated Annealing[fn:4] 
 *** Left                                                        :B_columns:
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -1177,7 +1239,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
 \centering
 \animategraphics[width=0.9\linewidth]{10}{img/tsp/tsp-}{0}{87}
 
-** Cooling Schedule
+** Cooling Schedule 
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -1201,7 +1263,7 @@ src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
   \end{equation*}
 #+end_src
 
-** Acceptance Criteria[fn:5]
+** Acceptance Criteria[fn:5] 
 #+name: eq:candaccept
 \begin{equation*}
 f(\mathbb{I},\bar{\mathbb{I}},t_m) =
@@ -1231,7 +1293,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{figure}
 #+end_src
 
-** Generation Mechanisms - Primitive Functions
+** Generation Mechanisms - Primitive Functions 
 *** Left                                                        :B_columns:
 :PROPERTIES:
 :BEAMER_col: 0.4
@@ -1283,7 +1345,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{figure}
 #+end_src
 
-** Generation Mechanisms - Wrapper Functions
+** Generation Mechanisms - Wrapper Functions 
 *** Left                                                        :B_columns:
 :PROPERTIES:
 :BEAMER_col: 0.4
@@ -1332,24 +1394,24 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
   \end{figure}
 #+end_src
 
-** New Visit
+** New Visit 
 #+include: alg/new-visit.org
-** Slide Visit
-#+include: alg/slide-visit.org
-** New Charger
-#+include: alg/new-charger.org
-** Wait
-#+include: alg/wait.org
-** New Window
+** Slide Visit 
+#+include: alg/slide-visit.org 
+** New Charger 
+#+include: alg/new-charger.org 
+** Wait 
+#+include: alg/wait.org 
+** New Window 
 #+include: alg/new-window.org
 
-** Charge Schedule Generation
+** Charge Schedule Generation 
 #+include: alg/charge-schedule-generation.org
 
-** Charge Schedule Perturbation
+** Charge Schedule Perturbation 
 #+include: alg/tweak-schedule.org
 
-** SA Thesis Results
+** SA Thesis Results 
 :PROPERTIES:
 :BEAMER_env: fullframe
 :END:
@@ -1357,7 +1419,7 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 \centering
 \Huge Thesis Results
 
-** Parameters
+** Parameters 
 | *Model*     | *Execution Time* [s] | *Iteration* [s] |
 |-----------+--------------------+---------------|
 | MILP      |               3600 |           N/A |
@@ -1377,41 +1439,40 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 - $|t| = 3797$
 - $n_K = 500$
 
-** Schedule
+** Schedule 
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-milp}
-\end{figure}
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-quinn}
-\end{figure}
+src_latex{\begin{center} {\small \underline{Before}}\end{center}}
 
-** Schedule
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
 \begin{figure}[htpb]
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-bad/schedule-sa-quick}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
+\end{subfigure}
 \end{figure}
 
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-\begin{figure}[htpb]
+
+src_latex{\begin{center} {\small \underline{After}}\end{center}}
+
+\begin{figure}
+\begin{subfigure}[t]{\textwidth}
 \centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/schedule-sa-heuristic}
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-sa-quick}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.75\textwidth]{img/sa-pap-paper-good/schedule-sa-heuristic}
+\end{subfigure}
 \end{figure}
 
 ** Power
@@ -1419,51 +1480,51 @@ f(\mathbb{I},\bar{\mathbb{I}},t_m) =
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/power-milp-qin}
-\end{figure}
 
-*** Right
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
+src_latex{\begin{center} {\small \underline{Before}}\end{center}}
+
 \begin{figure}[htpb]
 \centering
     \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/power-sa}
 \end{figure}
-** Energy
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=0.6\textwidth]{img/sa-pap-paper-bad/energy}
-\end{figure}
-
-** How To Resolve This Problem?
-*** Left
-:PROPERTIES:
-:BEAMER_col: 0.5
-:END:
-\begin{figure}[htpb]
-\centering
-    \includegraphics[width=\textwidth]{img/score-convergence}
-\end{figure}
-
-- Reverse search and weight the visit indices
-- Be more aggressive in exploiting the best solution
 
 *** Right
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
+
+src_latex{\begin{center} {\small \underline{After}}\end{center}}
+
 \begin{figure}[htpb]
 \centering
-    \includegraphics[width=\textwidth]{img/score-diverge}
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/power-sa}
 \end{figure}
 
-- Candidate solutions diverge
-- Hard time handling "difficult" routes
+** Energy
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
 
-** Score Convergence Comparison
+src_latex{\begin{center} {\small \underline{Before}}\end{center}}
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-bad/energy}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+src_latex{\begin{center} {\small \underline{After}}\end{center}}
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/sa-pap-paper-good/energy}
+\end{figure}
+** Score Convergence Comparison 
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
@@ -1492,6 +1553,31 @@ After Fix
     \includegraphics[width=\textwidth]{img/score-convergence}
 \end{figure}
 
+
+** How To Resolve This Problem? 
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-convergence}
+\end{figure}
+
+- Reverse search and weight the visit indices
+- Be more aggressive in exploiting the best solution
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-diverge}
+\end{figure}
+
+- Candidate solutions diverge
+- Hard time handling "difficult" routes
 
 ** References
 #+cite_export: bibtex plain

@@ -1,0 +1,16 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+    \scriptsize
+    \caption{Purge algorithm} \label{alg:purge}
+      \LinesNumbered
+      \TitleOfAlgo{Purge}
+      \KwIn{$\Sol$}
+      \KwOut{$\bar{\Sol}$}
+
+      \Begin
+      {
+        $\bar{\C} \leftarrow \C \setminus \C_{i.q_i}$\tcc*{Remove assignment of visit $i$ to charger $q_i$}
+        \Return{$(i, \I, \bar{\C})$}\tcc*{Return updated tuple}
+      }
+    \end{algorithm}
+#+end_src

@@ -1,0 +1,53 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+  \scriptsize
+  \caption{Find free time algorithm checks whether the BEB time at the station, $[a_i, e_i]$ fits within the charger availability $[C_L,C_U]$. If it does, a random charge time slice is returned, otherwise the null value is returned.}
+  \label{alg:find-free-time}
+      \LinesNumbered
+      \TitleOfAlgo{Find Free Time}
+      \KwIn{$(\C, i, q, a, e)$}
+      \KwOut{($\bar{\C}, \bar{u}, \bar{d})$}
+
+      \Begin
+      { \tcc{Extract the lower and upper bounds.}
+        $C_L \leftarrow \C_{i.q}$\;
+        $C_U \leftarrow \C_{i.q}$\;
+
+        \If(\tcc*[f]{If $C_L \le a \le e \le C_U$ (\autoref{subfig:sandwich})}){$C_L \leq a$ and $C_U \geq e$}
+        {
+          $\bar{u}\leftarrow$ $\U_{[a,e]}$\;
+          $\bar{d}\leftarrow$ $\U_{[\bar{u},e]}$\;
+        }
+        \ElseIf(\tcc*[f]{Else if $a \le C_L \le e < C_U$ (\autoref{subfig:all})}){$C_L \ge a$ and $C_U \geq e$}
+        {
+          $\bar{u}\leftarrow$ $\U_{[C_L,e]}$\;
+          $\bar{d}\leftarrow$ $\U_{[\bar{u},e]}$\;
+        }
+        \ElseIf(\tcc*[f]{Else if $C_L \le a \le C_U < e$ (\autoref{subfig:egu})}){$C_L \leq a$ and $C_U \le e$}
+        {
+          $\bar{u}\leftarrow$ $\U_{[a,C_U]}$\;
+          $\bar{d}\leftarrow$ $\U_{[\bar{u},C_U]}$\;
+        }
+        \ElseIf(\tcc*[f]{Else if $a \leq C_L \leq C_D \leq u$ (\autoref{subfig:invertsandwhich})}){$C_L \ge a$ and $C_U \le e$}
+        {
+          $\bar{u}\leftarrow$ $\U_{[C_L,C_U]}$\;
+          $\bar{d}\leftarrow$ $\U_{[\bar{u},C_U]}$\;
+        }
+        \Else(\tcc*[f]{Otherwise the bus cannot be scheduled in this time frame (\autoref{subfig:invalid-lower}, \autoref{subfig:invalid-upper})})
+        {
+          $\bar{u}\leftarrow$ $\varnothing$\;
+          $\bar{d}\leftarrow$ $\varnothing$\;
+        }
+
+        \If (\tcc*[f]{If an assignment was made}) {$\bar{u},\bar{d} \ne \varnothing$}
+        {
+          $\bar{\C}_q' \leftarrow \C_q' \cup \{[\bar{u},\bar{d}]\}$\tcc*{Update the compliment of the charger free time slices}
+          \Return{($\bar{C},\bar{u},\bar{d}$)}
+        }
+        \Else(\tcc*[f]{Otherwise the assignment failed})
+        {
+          \Return{($C,\varnothing, \varnothing$)}
+        }
+      }
+  \end{algorithm}
+#+end_src

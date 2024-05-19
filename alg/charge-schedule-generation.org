@@ -4,8 +4,8 @@
   \caption{Charge schedule generation algorithm} \label{alg:charge-schedule-generation}
       \LinesNumbered
       \TitleOfAlgo{Candidate Solution Generator}
-      \KwIn{$\Sol$}
-      \KwOut{$\bar{\Sol}$}
+      \KwIn{$(\I, \C)$}
+      \KwOut{$(\bar{\I}, \bar{\C})$}
 
       \SetKwFunction{NewVisit}{NewVisit}
 
@@ -16,7 +16,7 @@
           {
               ($i, \bar{\I}$, $\bar{\C}$) $\leftarrow$ \NewVisit{($\I_i$, $\I$, $\C$)}\tcc*{Assign the bus to a charger}
           }
-              \Return{($0, \bar{\I}$, $\bar{\C}$)}
+              \Return{($\bar{\I}$, $\bar{\C}$)}
       }
     \end{algorithm}
 #+end_src

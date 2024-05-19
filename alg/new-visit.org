@@ -9,20 +9,25 @@
     \KwOut{$\bar{\Sol}$}
 
     \SetKwFunction{Union}{Union}
-    \SetKwFunction{findFreeTime}{findFreeTime}
+    \SetKwFunction{FindFreeTime}{FindFreeTime}
 
     \Begin
       {
         $i \leftarrow \Sol_{i}$\tcc*{Extract visit index}
+        $\I \leftarrow \Sol_{\I}$\tcc*{Extract visit tuple}
+        $\C \leftarrow \Sol_{\C}$\tcc*{Extract visit charger availability}
         $a \leftarrow \I_{i.a}$\tcc*{Extract the arrivial time for visit $i$}
         $e \leftarrow \I_{i.e}$\tcc*{Extract the departure time for visit $i$}
         $q \leftarrow \I_{i.q}$\tcc*{Extract the current charge queue for visit $i$}
         $\bar{q} \leftarrow \mathcal{U}_{Q}$\tcc*{Select a random charging queue with a uniform distribution}
-        $C \leftarrow \mathcal{U}_{\C_q}$\tcc*{Select a random time slice from $\C_q$}
+        $C \leftarrow \mathcal{U}_{\C_{\bar{q}}}$\tcc*{Select a random time slice from $\C_{\bar{q}}$}
 
-        \If(\tcc*[f]{If there is time available in $C_q^j$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C, i, q, a, e$} $\not\in \varnothing$}
+        \If(\tcc*[f]{If there is time available in $C$}){($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \FindFreeTime{$C, i, \bar{q}, a, e$} $\not\in \varnothing$}
            {
-             \Return{($i, (\bar{q},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return visit}
+             $\bar{I}_{i.q} \leftarrow \bar{q}$\tcc*{Update visit tuple with new charge queue}
+             $\bar{I}_{i.u} \leftarrow \bar{u}$\tcc*{Update visit tuple with new inital charge time}
+             $\bar{I}_{i.d} \leftarrow \bar{d}$\tcc*{Update visit tuple with new final charge time}
+             \Return{($i, \bar{I},\bar{C}$)}\tcc*[f]{Return visit}
            }
 
            \Return{($\varnothing$)}\tcc*{Return nothing}

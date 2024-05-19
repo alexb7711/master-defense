@@ -1,0 +1,42 @@
+\begin{multicols}{2}
+\begin{subequations}
+\label{eq:constraints}
+
+  \begin{equation}
+      \label{seq:c0}
+      u_j - d_i - (\sigma_{ij} - 1)T \ge 0
+  \end{equation}
+  \begin{equation}
+      \label{seq:c1}
+      q_j - q_i - 1 - (\psi_{ij} - 1)Q \ge 0
+  \end{equation}
+  \begin{equation}
+      \label{seq:c2}
+      \sigma_{ij} + \sigma_{ji} \le 1
+  \end{equation}
+  \begin{equation}
+     \label{seq:c3}
+      \psi_{ij} + \psi_{ji} \le 1
+  \end{equation}
+  \begin{equation}
+      \label{seq:c4}
+      \sigma_{ij} + \sigma_{ji} + \psi_{ij} + \psi_{ji} \ge 1
+  \end{equation}
+  \begin{equation}
+      \label{seq:c5}
+      s_i = d_i - u_i
+  \end{equation}
+  \begin{equation}
+      \label{seq:c6}
+       \eta_{\xi_i} = \eta_{i} + r_{q_i}s_i - \Delta_i
+  \end{equation}
+  \begin{equation}
+      \label{seq:c7}
+      \kappa_{b_i} \geq \eta_{i} + r_{q_i}s_i
+  \end{equation}
+  \begin{equation}
+      \label{seq:c8}
+      a_i \leq u_i \leq d_i \le e_i \le \T
+  \end{equation}
+\end{subequations}
+\end{multicols}

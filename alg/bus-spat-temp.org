@@ -1,0 +1,18 @@
+#+name: eq:bus-spat-temp
+\begin{subequations}
+\begin{equation}
+  \sigma_{ij} =
+  \begin{cases}
+    1 & \text{if } u_j \ge d_i, \; i \ne j\\
+    0 & \text{otherwise}
+  \end{cases}
+\end{equation}
+
+\begin{equation}
+  \psi_{ij} =
+  \begin{cases}
+    1 & \text{if } q_j \ge q_i,\; i \ne j\\
+    0 & \text{otherwise}
+  \end{cases}
+\end{equation}
+\end{subequations}

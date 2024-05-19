@@ -1,26 +1,32 @@
 #+begin_src latex
-  \begin{algorithm}[H]
-    \scriptsize
-    \caption{Slide Visit Algorithm} \label{alg:slide-visit}
-    \LinesNumbered
-    \TitleOfAlgo{Slide Visit}
-    \KwIn{$\Sol$}
-    \KwOut{$\bar{\Sol}$}
+      \begin{algorithm}[H]
+        \scriptsize
+        \caption{Slide Visit Algorithm} \label{alg:slide-visit}
+        \LinesNumbered
+        \TitleOfAlgo{Slide Visit}
+        \KwIn{$\Sol$}
+        \KwOut{$\bar{\Sol}$}
 
-      \SetKwFunction{Purge}{Purge}
+          \SetKwFunction{Purge}{Purge}
 
-      \Begin
-      {
-        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
-        $C \leftarrow \bar{C}_{i.q_i}$\tcc*{Get the time availability of the purged visit}
+          \Begin
+          {
+            $i \leftarrow \Sol_{i}$\tcc*{Extract visit index}
+            $\I \leftarrow \Sol_{\I}$\tcc*{Extract visit tuple}
+            $\C \leftarrow \Sol_{\C}$\tcc*{Extract visit charger availability}
 
-        \tcc{If there is time available in $C$}
-        \If{($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \findFreeTime{$C$, $\Sol_i$, $\I_q$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
-        {
-          \Return{($i, \I, (\I_{i.q_i},\bar{u},\bar{d}),\bar{C}$)}\tcc*[f]{Return updated visit}
-        }
+            $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+            $C \leftarrow \bar{C}_{i.q}$\tcc*{Get the time availability of the purged visit}
 
-          \Return{($\varnothing$)}\tcc*{Return nothing}
-      }
-    \end{algorithm}
+            \tcc{If there is time available in $C$}
+            \If{($\bar{C}, \bar{u}, \bar{d}$) $\leftarrow$ \FindFreeTime{$C$, $i$, $\I_{i.q}$, $\I_{i.a}, \I_{i.e}$} $\not\in \varnothing$}
+            {
+              $\bar{\I}_{i.u} \leftarrow \bar{u}$\tcc*{Update visit tuple with new inital charge time}
+              $\bar{\I}_{i.d} \leftarrow \bar{d}$\tcc*{Update visit tuple with new final charge time}
+              \Return{($i, \bar{\I},\bar{C}$)}\tcc*[f]{Return updated visit}
+            }
+
+              \Return{($\varnothing$)}\tcc*{Return nothing}
+          }
+        \end{algorithm}
 #+end_src

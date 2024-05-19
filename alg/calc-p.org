@@ -1,0 +1,29 @@
+#+begin_src latex
+  \begin{algorithm}[H]
+    \scriptsize
+    \caption{Calculate vector of power cosumption, $p$, by discretizing a charge time frame, $[u_i, d_i]$, into $n_h$ steps and calculating the appropriate index $h \in \{1,2,...,n_H\}$.} \label{alg:calc-p}
+    \LinesNumbered
+    \TitleOfAlgo{Calculate $p$}
+    \KwIn{$(\I, r)$}
+    \KwOut{$p$}
+
+    \Begin
+      {
+        $dt \leftarrow \frac{\T}{n_H}$\tcc*{Calculate the step size}
+        $p \leftarrow [0.0; n_H]$\tcc*{Allocate an $n_H \times 1$ vector filled with zeros}
+
+        \tcc{For each visit}
+        \ForEach {$\I_i \in \I$}
+        {
+          $n_h \leftarrow \frac{\I_{i.d} - \I_{i.u}}{dt}$\tcc*{Calculate the total number of steps in the time slice}
+
+          \tcc{For each index in the time slice $[u_i, d_i]$}
+          \ForEach {$h \in \{\frac{u_i}{dt}, \frac{u_i + dt}{dt}, ..., \frac{u_i + n_h dt}{dt}\}$}
+          {
+            $p[h] \leftarrow p[h] + r_{\I_{i.q}}$\tcc*{Add the consumed power during discrete step}
+          }
+        }
+        \Return{$p$}
+      }
+  \end{algorithm}
+#+end_src

@@ -1,19 +1,23 @@
 #+begin_src latex
-  \begin{algorithm}[H]
-  \scriptsize
-  \caption{Wait algorithm} \label{alg:wait}
-      \LinesNumbered
-      \TitleOfAlgo{Wait}
-      \KwIn{$\Sol$}
-      \KwOut{$\bar{\Sol}$}
+     \begin{algorithm}[H]
+     \scriptsize
+     \caption{Wait algorithm} \label{alg:wait}
+         \LinesNumbered
+         \TitleOfAlgo{Wait}
+         \KwIn{$\Sol$}
+         \KwOut{$\bar{\Sol}$}
 
-      \SetKwFunction{Purge}{Purge}
+         \SetKwFunction{Purge}{Purge}
 
-      \Begin
-      {
-        $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
-        $\bar{\C}'_{\I_{i.\Gamma_i}} \leftarrow \C' \cup \{[\I_{i.a}, \I_{i.e}]\}$\tcc*{Update the charger availability matrix for wait queue $\bar{\C}_{i.q_i}$}
-        \Return{$(i, \I, (\I_{i.b}, \I_{i.a}, \I_{i.e}), \bar{\C})$}\tcc*[f]{Return visit}
-      }
-    \end{algorithm}
+         \Begin
+         {
+           $(i, \I, \bar{\C}) \leftarrow$\Purge{$\Sol$}\tcc*{Purge visit $i$ from charger availibility matrix}
+           \tcc{Update the charger availability matrix for wait queue $\bar{\C}_{i.q_i}$}
+           $\bar{\C}'_{\I_{i.\Gamma_i}} \leftarrow \C' \cup \{[\I_{i.a}, \I_{i.e}]\}$\;
+           $\bar{\I}_{i.q} \leftarrow \I_{i.b}$\tcc*{Reassign bus to idle queue}
+           $\bar{\I}_{i.u} \leftarrow \I_{i.a}$\tcc*{Set initial charge time to the arrival time}
+           $\bar{\I}_{i.d} \leftarrow \I_{i.e}$\tcc*{Set the final charge time to the departure time}
+           \Return{$(i, \bar{\I}, \bar{\C})$}\tcc*[f]{Return visit}
+         }
+       \end{algorithm}
 #+end_src
