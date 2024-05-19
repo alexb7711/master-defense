@@ -4,7 +4,7 @@
 
 #+startup: beamer
 #+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [presentation]
+#+LATEX_CLASS_OPTIONS: [aspectratio=169,dvipsnames]
 #+BEAMER_THEME: default
 #+BEAMER_COLOR_THEME: dolphin
 #+OPTIONS: H:2
@@ -36,6 +36,21 @@
 # Slide Customization
 # ##############################################################################
 
+# ==============================================================================
+#
+
+#+latex:\setbeamercolor{block title example}{fg=ForestGreen,bg=YellowGreen!60}
+#+latex:\setbeamercolor{block body example}{fg=black,bg=YellowGreen!50}
+#+latex:\setbeamercolor{example text}{fg=black}
+
+#+latex:\setbeamercolor{block title alerted}{fg=Maroon,bg=Red!60}
+#+latex:\setbeamercolor{block body alerted}{fg=black,bg=Red!50}
+#+latex:\setbeamercolor{alerted text}{fg=black}
+
+#+latex:\setbeamercolor{block title}{fg=Blue,bg=SkyBlue!60}
+#+latex:\setbeamercolor{block body}{fg=black,bg=SkyBlue!50}
+#+latex:\setbeamercolor{itemize item}{fg=black}
+#+latex:\setbeamercolor{itemize subitem}{fg=black}
 
 # ==============================================================================
 #
@@ -62,9 +77,6 @@
 #
 #+latex_header:\renewcommand{\arraystretch}{1.5}
 
-# ==============================================================================
-# 16:9
-#+LaTeX_CLASS_options: [aspectratio=169]
 
 # ==============================================================================
 # Control layout of individual slides
@@ -197,7 +209,162 @@
   \end{figure}
 #+end_src
 ** Overall Objective
-** Model Objectives
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Create an operationally feasible schedule quickly
+- Minimize cost
+  - Demand cost
+  - Consumption cost
+- Battery dynamics
+  - Linear
+  - Non-linear
+- Consider battery health
+- Allow partial charging
+- Multiple charger types
+- Minimize total amount of chargers
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+begin_src latex
+      \begin{figure}
+      \centering
+      \scalebox{0.4}{
+        \centering
+          \begin{tikzpicture}
+            % Variables
+            \def \arrx   {2.0}
+            \def \initx  {3.5}
+            \def \endx   {8.5}
+            \def \depx   {10.0}
+            \def \yshift {5}
+
+            % Axis
+            \draw [thick,<->] (0,15) node[above]{\LARGE Queues} -- (0,0) -- (15,0) node[right]{\LARGE Time};
+
+            % Rectangles
+            \node[rectangle, draw, fill=gray, minimum width=4cm, minimum height = 3cm] at (3,12) {A};
+            \node[rectangle, draw, fill=gray, minimum width=3cm, minimum height = 3cm] at (9,12) {B};
+            \node[rectangle, draw, fill=gray, minimum width=5cm, minimum height = 3cm] at (6,7) {D};
+            \node[rectangle, draw, fill=gray, minimum width=6cm, minimum height = 3cm] at (12,2) {C};
+
+            % Y-axis labels
+            \node[rotate=90] at (-1, 2.25) {\huge Queue 1};
+            \node[rotate=90] at (-1, 7.25) {\huge Queue 2};
+            \node[rotate=90] at (-1, 12.25) {\huge Queue 3};
+
+            % Horizontal lines
+            \draw[dotted] (0, 4.5) -- (15, 4.5);
+            \draw[dotted] (0, 9.5) -- (15, 9.5);
+
+          \end{tikzpicture}
+        }
+        \label{fig:spacial-and-temporal-constr}
+  \end{figure}
+#+end_src
+** Model Objectives - BPAP
+:PROPERTIES:
+:END:
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+**** BEB Implementation of the PAP (BPAP)
+:PROPERTIES:
+:END:
+
+#+latex:{\footnotesize
+- Minimize cost
+  - Consumption cost
+- Battery dynamics
+  - Linear
+- Consider battery health
+- Allow partial charging
+- Multiple charger types
+- Minimize total amount of chargers
+#+latex:}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+[[./img/pap.pdf]]
+
+** Model Objectives - Linear SA
+:PROPERTIES:
+:END:
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+**** SA PAP with Linear Battery Dynamics
+:PROPERTIES:
+:BEAMER_env: exampleblock
+:END:
+
+#+latex:{\footnotesize
+- Create an operationally feasible schedule quickly
+- Minimize cost
+  - Demand cost
+  - Consumption cost
+- Linear battery dynamics
+- Consider battery health
+- Allow partial charging
+- Multiple charger types
+#+latex:}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=\textwidth]{img/score-convergence}
+\end{figure}
+
+** Model Objectives - Non-linear SA
+:PROPERTIES:
+:END:
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+**** SA PAP with Nonlinear Battery Dynamics
+:PROPERTIES:
+:BEAMER_env: alertblock
+:END:
+
+#+latex:{\footnotesize
+- Create an operationally feasible schedule quickly
+- Minimize cost
+  - Demand cost
+  - Consumption cost
+- Nonlinear battery dynamics
+- Consider battery health
+- Allow partial charging
+- Multiple charger types
+#+latex:}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+[[./img/nonlinear-bat.png]]
+
 ** Brief State Of The Art
 
 #+include: ./soa.org
@@ -235,7 +402,7 @@
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
-src_latex{{\begin{center} {\small \underline{PAP Behavior}}}\end{center}}
+src_latex{\begin{center} {\small \underline{PAP Behavior}}\end{center}}
 
 #+latex:{\small
 - Service flow is left to right
@@ -246,7 +413,7 @@ src_latex{{\begin{center} {\small \underline{PAP Behavior}}}\end{center}}
 
 -----
 
-src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
+src_latex{\begin{center} {\small \underline{Desired Behavior}}\end{center}}
 
 #+latex:{\small
 - Discrete charger queues
@@ -441,7 +608,7 @@ src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
 ** Parameters
 *** Left
 :PROPERTIES:
-:BEAMER_col: 0.3
+:BEAMER_col: 0.4
 :END:
 #+ATTR_LATEX: :environment tabular :align l|l
 |-----------+-------|
@@ -459,7 +626,7 @@ src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
 
 *** Right
 :PROPERTIES:
-:BEAMER_col: 0.7
+:BEAMER_col: 0.6
 :END:
 
 #+begin_src latex
@@ -608,19 +775,20 @@ src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
 #+latex:}
 
 ** Parameters
-
 *** Left
 :PROPERTIES:
 :BEAMER_col: 0.5
 :END:
 
+#+latex:\fbox{\parbox{\textwidth}{
 #+latex:{\small
-*NOTES*:
+_*NOTES*_:
 - Results are different from what is presented in the thesis
 - BPAP model does not take demand cost into consideration
-#+latex:}
+#+latex:}}}
 
 #+ATTR_LATEX: :environment tabular :align l|c
+|-----------+--------------------|
 | *Model*     | *Execution Time* [s] |
 |-----------+--------------------|
 | /         |                  < |
@@ -823,6 +991,20 @@ src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
 \centering
 \Huge Appendix
 
+** Mixed Integer Linear Programming
+
+\begin{align*}
+\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
+\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
+                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
+                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
+\end{align*}
+
+- $J$: Objective function
+- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
+- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
+
+
 ** The Simulated Annealing Approach With Non-Linear Battery Dynamics
 :PROPERTIES:
 :BEAMER_env: fullframe
@@ -915,20 +1097,6 @@ src_latex{{\begin{center} {\small \underline{Desired Behavior}}}\end{center}}
     \includegraphics[width=0.7\textwidth]{img/sa-nonlinear/schedule-sa-heuristic}
 \end{subfigure}
 \end{figure}
-
-
-** Mixed Integer Linear Programming
-
-\begin{align*}
-\text{max }        &J = \sum_j c_j x_j + \sum_k d_k y_k&         &               \\
-\text{subject to } &\sum_j a_{ij} x_j + \sum_k g_{ik} y_k \le b_i&  &(i = 1,2,...,m)\\
-                  &x_j \ge 0&                              &(j = 1,2,...,n)\\
-                  &y_k \in \mathbb{Z^+}&                   &(k = 1,2,...,n)\\
-\end{align*}
-
-- $J$: Objective function
-- $x_j \in \mathbb{R}$ and $y_k \in \mathbb{Z}^+$: Decision Variables
-- $c_j, d_k, a_{ij}, g_{ik}, b_i \in \mathbb{R}$: Parameters
 
 
 ** Simulated Annealing
