@@ -43,11 +43,11 @@
 #+latex:\setbeamercolor{block body example}{fg=black,bg=YellowGreen!50}
 #+latex:\setbeamercolor{example text}{fg=black}
 
-#+latex:\setbeamercolor{block title alerted}{fg=Maroon,bg=Red!60}
-#+latex:\setbeamercolor{block body alerted}{fg=black,bg=Red!50}
+#+latex:\setbeamercolor{block title alerted}{fg=Maroon,bg=red!60}
+#+latex:\setbeamercolor{block body alerted}{fg=black,bg=red!40}
 #+latex:\setbeamercolor{alerted text}{fg=black}
 
-#+latex:\setbeamercolor{block title}{fg=Blue,bg=SkyBlue!60}
+#+latex:\setbeamercolor{block title}{fg=Blue,bg=SkyBlue!70}
 #+latex:\setbeamercolor{block body}{fg=black,bg=SkyBlue!50}
 #+latex:\setbeamercolor{itemize item}{fg=black}
 #+latex:\setbeamercolor{itemize subitem}{fg=black}
@@ -333,7 +333,7 @@
     \includegraphics[width=\textwidth]{img/score-convergence}
 \end{figure}
 
-** Model Objectives - Non-linear SA
+** Model Objectives - Non-linear SA :noexport:
 :PROPERTIES:
 :END:
 
@@ -967,8 +967,51 @@ _*NOTES*_:
     \includegraphics[width=0.9\textwidth]{img/sa-pap-paper-good/energy-zoom}
 \end{figure}
 
-* Summary and Questions
-** TODO Summary
+* TODO Summary and Questions
+** Summary
+
+*** Left
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+src_latex{\begin{center} {\small \underline{BPAP}}\end{center}}
+
+#+latex:{\small
+#+ATTR_LATEX: :environment tabular :align l|cccc
+|------+------------+-----------|
+|      | MILP [kWh] | Qin [kWh] |
+|------+------------+-----------|
+| /    |          < |         < |
+| Mean |    265.873 |    355.93 |
+| Min  |      97.04 |     0.000 |
+| Max  |        388 |   368.354 |
+|------+------------+-----------|
+#+latex:}
+
+\begin{figure}[htpb]
+\centering
+    \includegraphics[width=0.7\textwidth]{img/milp-pap/schedule-milp-pap}
+\end{figure}
+
+*** Right
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+src_latex{\begin{center} {\small \underline{SA Techniques}}\end{center}}
+
+\begin{figure}[htpb]
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/power-sa}
+\end{subfigure}
+
+\begin{subfigure}[t]{\textwidth}
+\centering
+    \includegraphics[width=0.7\textwidth]{img/sa-pap-paper-good/energy-zoom}
+\end{subfigure}
+\end{figure}
+
 ** TODO Publications
 ** Questions?
 :PROPERTIES:
